@@ -103,7 +103,7 @@ export function DataSection() {
   const described = error ? describe(error) : null;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div>
         <Button
           disabled={exportData.isPending}
@@ -128,7 +128,7 @@ export function DataSection() {
           <ErrorPanel className="mt-3" message={described.message} code={described.code} />
         ) : null}
       </div>
-      <div>
+      <div className="border-t border-line pt-5">
         <DeleteDialog />
         <p className="mt-2 text-sm text-slate">{t("deleteNote")}</p>
       </div>

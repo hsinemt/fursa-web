@@ -622,7 +622,8 @@
       "enabled": "Envoyer les alertes sur Telegram",
       "saved": "Réglage Telegram enregistré",
       "unlink": "Délier Telegram",
-      "unlinkedToast": "Telegram a été délié"
+      "unlinkedToast": "Telegram a été délié",
+      "needsAlerts": "Les réglages Telegram se chargent avec vos alertes. Réessayez au-dessus."
     },
     "data": {
       "title": "Vos données",
@@ -641,6 +642,7 @@
       "cancel": "Annuler",
       "deleteConfirm": "Supprimer mon compte",
       "close": "Fermer"
-    }
+    },
+    "sections": "Sections des réglages"
   }
 }

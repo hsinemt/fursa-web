@@ -622,7 +622,8 @@
       "enabled": "Send alerts to Telegram",
       "saved": "Telegram setting saved",
       "unlink": "Unlink Telegram",
-      "unlinkedToast": "Telegram was unlinked"
+      "unlinkedToast": "Telegram was unlinked",
+      "needsAlerts": "Telegram settings load with your alerts. Try again above."
     },
     "data": {
       "title": "Your data",
@@ -641,6 +642,7 @@
       "cancel": "Cancel",
       "deleteConfirm": "Delete my account",
       "close": "Close"
-    }
+    },
+    "sections": "Settings sections"
   }
 }
