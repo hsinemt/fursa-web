@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   check:
+    name: Lint, types, tests, build, audit
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -48,3 +49,52 @@ jobs:
 
       - name: Audit dependencies
         run: pnpm audit --audit-level high
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compose file
+        run: docker compose config --quiet
+
+      - uses: docker/setup-buildx-action@v3
+
+      # Built, not pushed. Layers are cached between runs.
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          push: false
+          tags: fursa-web:ci
+          build-args: |
+            NEXT_PUBLIC_API_URL=http://localhost:8000
+            NEXT_PUBLIC_SITE_URL=http://localhost:3000
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test the container
+        run: |
+          docker run -d --name fursa-web -p 3000:3000 fursa-web:ci
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/feed || true)
+            [ "$code" = "200" ] && break
+            sleep 1
+          done
+          echo "GET /en/feed -> $code"
+          [ "$code" = "200" ]
+          # The style page must not exist in a production image
+          dev=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/dev/style)
+          echo "GET /en/dev/style -> $dev"
+          [ "$dev" = "404" ]
+          # Security headers are present
+          curl -sI http://localhost:3000/en/feed | grep -i '^content-security-policy:'
+          curl -sI http://localhost:3000/en/feed | grep -i '^x-frame-options: DENY'
+
+      - name: Container logs
+        if: failure()
+        run: docker logs fursa-web
