@@ -164,6 +164,14 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **Dates:** "3 days ago" for the row, the full date for "Posted" in the grid, in the person's language with Western digits.
 - **Errors:** a load failure is the error panel with a retry; for a 429 the message counts down and the retry waits. `job_not_found` says "This job is not in your matches." with a link back to the feed.
 
+## Notifications settings
+
+On the settings page, in the groups **Language**, **Appearance**, **Alerts**, **Telegram** and **Account** (a single column up to 640 px, each group under a hairline with a short explanation; "Your data" comes in step 9).
+
+- **Alerts:** a checkbox "Send me emails". When email is on, or Telegram is on, the fields **Daily or Instant**, **Digest hour (UTC)** (daily only) and **Minimum score** appear, with one line saying they apply to email and Telegram. One **Save** button (the only primary button of the page): it sends only what changed, says "No changes to save." when nothing did, and shows a toast after saving. If the person unsubscribed from emails, a quiet line says when.
+- **Telegram:** when not linked, one sentence and a secondary **Link Telegram** button. After it is pressed: a secondary **Open Telegram** link (new tab), the line "Open the link, then press Start in the chat. It works once and expires in N min.", and "Waiting for you to press Start in Telegram" with a quiet status dot while the page checks. When the link expires the page says so and offers Link Telegram again. When linked: "Telegram is linked.", a checkbox "Send alerts to Telegram" that saves at once (toast), and a destructive-text **Unlink Telegram** button.
+- Errors are the error panel with the code underneath, and a retry. No new colors.
+
 ## Right-to-left (Arabic)
 
 - Logical properties only (as in `fursa web.md`): `ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`, `text-start`.

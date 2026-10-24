@@ -42,7 +42,7 @@
     },
     "settings": {
       "title": "Settings",
-      "placeholder": "Notifications and your data will appear here."
+      "placeholder": "Language, appearance, alerts and your account."
     }
   },
   "actions": {
@@ -585,6 +585,34 @@
         "qualifications": "Qualifications",
         "benefits": "Benefits"
       }
+    }
+  },
+  "settings": {
+    "alerts": {
+      "title": "Alerts",
+      "help": "Fursa tells you about jobs that match well. Only new matches found after you switch a channel on are sent.",
+      "email": "Send me emails",
+      "unsubscribed": "You unsubscribed from emails on {date}.",
+      "shared": "The schedule and the minimum score apply to email and Telegram.",
+      "save": "Save",
+      "saved": "Alert settings saved",
+      "noChanges": "No changes to save."
+    },
+    "telegram": {
+      "title": "Telegram",
+      "help": "Get alerts in a Telegram chat. You need the Telegram app.",
+      "notLinked": "Telegram is not linked.",
+      "link": "Link Telegram",
+      "open": "Open Telegram",
+      "openHelp": "Open the link, then press Start in the chat. It works once and expires in {minutes} min.",
+      "waiting": "Waiting for you to press Start in Telegram",
+      "expired": "The link expired. Link Telegram again.",
+      "linked": "Telegram is linked.",
+      "linkedToast": "Telegram is linked",
+      "enabled": "Send alerts to Telegram",
+      "saved": "Telegram setting saved",
+      "unlink": "Unlink Telegram",
+      "unlinkedToast": "Telegram was unlinked"
     }
   }
 }
