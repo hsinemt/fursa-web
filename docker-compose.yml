@@ -1,0 +1,29 @@
+# Runs the production build of fursa-web on http://localhost:3000.
+#
+#   docker compose up -d --build
+#
+# Values come from .env (copy .env.example). NEXT_PUBLIC_API_URL is baked into the
+# image at build time, so after changing it run `docker compose up -d --build` again.
+# fursa-api is a separate project (its own compose file, port 8000): start it there.
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    image: fursa-web:local
+    ports:
+      - "3000:3000"
+    environment:
+      # Read at runtime by server code (used from the auth step onwards).
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-}
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

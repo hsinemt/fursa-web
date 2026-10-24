@@ -26,6 +26,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone", // smallest runtime for the Docker image
   pageExtensions,
   poweredByHeader: false,
   reactStrictMode: true,

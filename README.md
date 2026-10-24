@@ -17,6 +17,17 @@ It talks to `fursa-api` only over HTTP. Planning files: `fursa web.md` (how it i
 5. `pnpm dev`, then open <http://localhost:3000>.
 6. Style page (development only): <http://localhost:3000/en/dev/style>.
 
+## Docker
+
+```powershell
+Copy-Item .env.example .env     # once; set NEXT_PUBLIC_API_URL
+docker compose up -d --build    # http://localhost:3000
+docker compose logs -f web
+docker compose down
+```
+
+The image is a multi-stage build (standalone Next.js output, non-root user, read-only filesystem in compose). `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` are fixed at build time, so rebuild after changing them. The style page is not in the image. `fursa-api` runs from its own project.
+
 ## Commands
 
 | Command          | What it does                                                     |
