@@ -283,7 +283,8 @@ Where the build stands (update this when a step is merged).
 - **Done and merged:** step 9 (data export and account deletion, see `docs/adr/0008-account-data.md`) and the profile page redesign.
 - **Done, on `feat/pipeline`, waiting for review, push, pull request and merge:** step 10 (the pipeline board with drag and drop, see `docs/adr/0009-pipeline-board.md`).
 - **Waiting for merge:** `feat/settings-design` (settings page cards, account menu in the top bar, Profile and Settings moved out of the top bar).
-- **Next:** step 11, `feat/polish` (privacy and terms pages, polish, accessibility pass, e2e tests in LTR and RTL), cut from an up-to-date `main`.
+- **Done, on `feat/polish`, waiting for review, push, pull request and merge:** step 11 (Privacy and Terms pages, titles, error page, accessibility pass, Playwright end-to-end tests in LTR and RTL, see `docs/adr/0010-polish-and-end-to-end-tests.md`). It is stacked on `feat/pipeline`.
+- **Next:** v1 is complete once steps 10 and 11 are merged. Then the items in `fursa improvements.md` (mostly waiting for API changes), the welcome page revisit and the native-speaker review of the copy.
 - **Open improvements** (mostly waiting for API changes) are listed in `fursa improvements.md`: add an item when the user says "we will improve it", delete it when done.
 - **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
 
