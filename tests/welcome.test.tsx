@@ -104,7 +104,10 @@ describe.each(["en", "fr", "ar"] as const)("welcome page (%s)", (locale) => {
 
   it("says plainly that Fursa never applies for the user, and shows the data promise", () => {
     renderWelcome(locale);
-    expect(screen.getByText(m.promise.quote)).toBeInTheDocument();
+    const quote = screen.getAllByText(
+      (_, el) => el?.tagName === "P" && el.textContent === m.promise.quote,
+    );
+    expect(quote).toHaveLength(1);
     expect(screen.getByText(m.data.text)).toBeInTheDocument();
   });
 
