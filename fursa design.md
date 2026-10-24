@@ -78,8 +78,8 @@ Rules:
 
 Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 px and up. Everything must work at all three, in both modes and both directions.
 
-**Navigation items:** Feed, Pipeline, Profile, Settings. (Documents is added when the API supports it.)
-- **Laptop and tablet:** a thin top bar: wordmark, the four items (the current one has a 2 px accent underline), then the language and the **account menu** on the far side (in development, a Dev link before it).
+**Navigation items:** Feed, Pipeline, Profile, Settings (the top bar shows only Feed and Pipeline; the phone tab bar shows all four). (Documents is added when the API supports it.)
+- **Laptop and tablet:** a thin top bar: wordmark, the two work items **Feed** and **Pipeline** (the current one has a 2 px accent underline; Profile and Settings are not here, they are in the account menu), then the language and the **account menu** on the far side (in development, a Dev link before it).
 - **Public pages (welcome, privacy, terms):** the header is a floating bar that stays on screen while scrolling. It is a `--panel` bar with a hairline border and 8 px corners, inset from the page edges with a small gap above it, holding the masthead, the section links (laptop), language, appearance and Sign in. It gets the soft menu shadow once the page has scrolled. No line under it, no double rule.
 - **Phone:** a **bottom tab bar** with the four items (easy to reach with a thumb). Language, mode and account live under Settings.
 - The app's bar is `--panel`, flat, with a hairline below (or above on phones).

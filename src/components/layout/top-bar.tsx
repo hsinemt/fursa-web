@@ -4,11 +4,11 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
 import { LanguageSwitcher } from "./language-switcher";
-import { isCurrentNav, NAV_ITEMS } from "./nav-items";
+import { isCurrentNav, TOP_BAR_ITEMS } from "./nav-items";
 import { Wordmark } from "./wordmark";
 
 /**
- * Tablet and laptop: a thin top bar. Wordmark, the four items (the current one has a
+ * Tablet and laptop: a thin top bar. Wordmark, Feed and Pipeline (the current one has a
  * 2 px accent underline), then language and appearance on the far side.
  * Hidden on phones, where the bottom tab bar takes over.
  */
@@ -28,7 +28,7 @@ export function TopBar({
       <div className="flex h-14 w-full items-stretch gap-6 px-6">
         <Wordmark className="flex items-center" />
         <nav aria-label={a11y("mainNavigation")} className="flex items-stretch gap-1">
-          {NAV_ITEMS.map(({ key, href }) => {
+          {TOP_BAR_ITEMS.map(({ key, href }) => {
             const current = isCurrentNav(href, pathname);
             return (
               <Link
