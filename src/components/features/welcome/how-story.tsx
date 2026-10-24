@@ -15,18 +15,31 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
   const [active, setActive] = useState(0);
   const items = useRef<(HTMLLIElement | null)[]>([]);
 
+  // The current step is the one whose text is closest to the middle of the screen.
   useEffect(() => {
-    if (typeof IntersectionObserver === "undefined") return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.index));
+    const update = () => {
+      const middle = window.innerHeight / 2;
+      let best = 0;
+      let bestDistance = Infinity;
+      items.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const distance = Math.abs(rect.top + rect.height / 2 - middle);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = index;
         }
-      },
-      { rootMargin: "-45% 0px -45% 0px" },
-    );
-    items.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+      });
+      setActive(best);
+    };
+    const start = window.setTimeout(update, 0);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.clearTimeout(start);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   return (
@@ -61,7 +74,7 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
       </ol>
 
       <div className="hidden lg:block">
-        <div className="stage sticky top-28 grid">
+        <div className="stage sticky top-[calc(50vh-12rem)] grid">
           {scenes.map((scene, index) => (
             <div
               key={steps[index]?.key ?? index}
