@@ -12,7 +12,8 @@
     "feed": "Feed",
     "pipeline": "Pipeline",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "accountMenu": "Account menu"
   },
   "language": {
     "label": "Language",

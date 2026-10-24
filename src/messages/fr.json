@@ -12,7 +12,8 @@
     "feed": "Offres",
     "pipeline": "Suivi",
     "profile": "Profil",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "accountMenu": "Menu du compte"
   },
   "language": {
     "label": "Langue",

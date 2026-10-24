@@ -16,7 +16,7 @@ export function TopBar({
   themeControl,
   accountControl,
 }: {
-  themeControl: React.ReactNode;
+  themeControl?: React.ReactNode;
   accountControl?: React.ReactNode;
 }) {
   const t = useTranslations("nav");
