@@ -30,8 +30,7 @@
   },
   "pages": {
     "feed": {
-      "title": "Feed",
-      "placeholder": "Your matched jobs will appear here."
+      "title": "Feed"
     },
     "pipeline": {
       "title": "Pipeline",
@@ -257,6 +256,7 @@
     "partial": "Partial"
   },
   "status": {
+    "new": "New",
     "saved": "Saved",
     "applied": "Applied",
     "interview": "Interview",
@@ -480,5 +480,97 @@
     "title": "No matches yet.",
     "text": "Add your target roles so Fursa can find jobs.",
     "action": "Add your target roles"
+  },
+  "feed": {
+    "title": "Feed",
+    "bestFirst": "Best first",
+    "jobList": "Jobs",
+    "filterLabel": "Show jobs by status",
+    "filterAll": "All",
+    "loadMore": "Load more",
+    "loadingMore": "Loading more jobs",
+    "loadFailed": "Fursa could not load your jobs.",
+    "retry": "Try again",
+    "retryIn": "Try again in {seconds} s",
+    "closed": "Closed",
+    "empty": {
+      "title": "No matches yet.",
+      "text": "Fursa has not found a job that fits you so far. New matches appear here."
+    },
+    "emptyFilter": {
+      "title": "No jobs with this status.",
+      "text": "When you change a job to this status, it appears here."
+    },
+    "pickOne": "Choose a job in the list to read it here."
+  },
+  "job": {
+    "back": "Back to the feed",
+    "loadFailed": "Fursa could not load this job.",
+    "notFoundAction": "Back to the feed",
+    "openPosting": "Open posting",
+    "save": "Save",
+    "unsave": "Remove from saved",
+    "statusLabel": "Your status",
+    "statusFailed": "The status could not be changed. It was put back.",
+    "statusChanged": "Marked as {status}.",
+    "closed": "This posting is closed.",
+    "facts": {
+      "title": "Facts",
+      "level": "Level",
+      "workMode": "Work mode",
+      "type": "Type",
+      "place": "Place",
+      "posted": "Posted",
+      "source": "Source",
+      "languages": "Languages",
+      "visa": "Visa sponsorship",
+      "relocation": "Relocation support"
+    },
+    "workMode": {
+      "onsite": "On site",
+      "hybrid": "Hybrid",
+      "remote": "Remote"
+    },
+    "employment": {
+      "full_time": "Full time",
+      "part_time": "Part time",
+      "contract": "Contract",
+      "internship": "Internship",
+      "temporary": "Temporary"
+    },
+    "tri": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "per": {
+      "hour": "per hour",
+      "day": "per day",
+      "month": "per month",
+      "year": "per year"
+    },
+    "skills": {
+      "title": "Skills",
+      "matched": "Skills that match",
+      "missing": "Asked for, not in your profile"
+    },
+    "why": {
+      "title": "Why it matches",
+      "byAi": "Written by AI"
+    },
+    "breakdown": {
+      "title": "How the score is made",
+      "parts": {
+        "title": "Title",
+        "skills": "Skills",
+        "location": "Place",
+        "seniority": "Level",
+        "recency": "Freshness",
+        "similarity": "Similarity to your profile"
+      }
+    },
+    "description": {
+      "title": "Description",
+      "empty": "The posting has no description."
+    }
   }
 }

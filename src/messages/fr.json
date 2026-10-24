@@ -30,8 +30,7 @@
   },
   "pages": {
     "feed": {
-      "title": "Offres",
-      "placeholder": "Vos offres correspondantes apparaîtront ici."
+      "title": "Offres"
     },
     "pipeline": {
       "title": "Suivi",
@@ -257,6 +256,7 @@
     "partial": "Partiel"
   },
   "status": {
+    "new": "Nouvelle",
     "saved": "Enregistrée",
     "applied": "Envoyée",
     "interview": "Entretien",
@@ -480,5 +480,97 @@
     "title": "Aucune offre pour l’instant.",
     "text": "Ajoutez vos postes visés pour que Fursa trouve des offres.",
     "action": "Ajouter mes postes visés"
+  },
+  "feed": {
+    "title": "Offres",
+    "bestFirst": "Les meilleures d’abord",
+    "jobList": "Offres",
+    "filterLabel": "Afficher les offres par statut",
+    "filterAll": "Toutes",
+    "loadMore": "Afficher plus",
+    "loadingMore": "Chargement d’autres offres",
+    "loadFailed": "Fursa n’a pas pu charger vos offres.",
+    "retry": "Réessayer",
+    "retryIn": "Réessayer dans {seconds} s",
+    "closed": "Clôturée",
+    "empty": {
+      "title": "Aucune offre pour l’instant.",
+      "text": "Fursa n’a pas encore trouvé d’offre qui vous correspond. Les nouvelles offres apparaîtront ici."
+    },
+    "emptyFilter": {
+      "title": "Aucune offre avec ce statut.",
+      "text": "Quand vous donnez ce statut à une offre, elle apparaît ici."
+    },
+    "pickOne": "Choisissez une offre dans la liste pour la lire ici."
+  },
+  "job": {
+    "back": "Retour aux offres",
+    "loadFailed": "Fursa n’a pas pu charger cette offre.",
+    "notFoundAction": "Retour aux offres",
+    "openPosting": "Ouvrir l’annonce",
+    "save": "Enregistrer",
+    "unsave": "Retirer des enregistrées",
+    "statusLabel": "Votre statut",
+    "statusFailed": "Le statut n’a pas pu être changé. Il a été rétabli.",
+    "statusChanged": "Marquée comme « {status} ».",
+    "closed": "Cette annonce est clôturée.",
+    "facts": {
+      "title": "Informations",
+      "level": "Niveau",
+      "workMode": "Mode de travail",
+      "type": "Type",
+      "place": "Lieu",
+      "posted": "Publiée",
+      "source": "Source",
+      "languages": "Langues",
+      "visa": "Sponsoring de visa",
+      "relocation": "Aide à la mobilité"
+    },
+    "workMode": {
+      "onsite": "Sur site",
+      "hybrid": "Hybride",
+      "remote": "À distance"
+    },
+    "employment": {
+      "full_time": "Temps plein",
+      "part_time": "Temps partiel",
+      "contract": "Contrat",
+      "internship": "Stage",
+      "temporary": "Temporaire"
+    },
+    "tri": {
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "per": {
+      "hour": "par heure",
+      "day": "par jour",
+      "month": "par mois",
+      "year": "par an"
+    },
+    "skills": {
+      "title": "Compétences",
+      "matched": "Compétences qui correspondent",
+      "missing": "Demandées, absentes de votre profil"
+    },
+    "why": {
+      "title": "Pourquoi elle vous correspond",
+      "byAi": "Écrit par l’IA"
+    },
+    "breakdown": {
+      "title": "Comment le score est calculé",
+      "parts": {
+        "title": "Intitulé",
+        "skills": "Compétences",
+        "location": "Lieu",
+        "seniority": "Niveau",
+        "recency": "Fraîcheur",
+        "similarity": "Proximité avec votre profil"
+      }
+    },
+    "description": {
+      "title": "Description",
+      "empty": "L’annonce n’a pas de description."
+    }
   }
 }
