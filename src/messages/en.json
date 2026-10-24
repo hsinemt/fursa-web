@@ -298,7 +298,8 @@
       "submit": "Create account",
       "haveAccount": "Already have an account?",
       "signInLink": "Sign in",
-      "passwordHelp": "At least 8 characters."
+      "passwordHelp": "At least 8 characters.",
+      "terms": "By creating an account you agree to the <terms>Terms</terms> and the <privacy>Privacy policy</privacy>."
     },
     "forgot": {
       "title": "Reset your password",
@@ -322,7 +323,9 @@
       "email": "Email",
       "password": "Password",
       "newPassword": "New password",
-      "confirmPassword": "Confirm the new password"
+      "confirmPassword": "Confirm the new password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
     },
     "validation": {
       "email_invalid": "Enter an email address like name@example.com.",
@@ -352,6 +355,15 @@
     "account": {
       "title": "Account",
       "help": "The email you sign in with."
+    },
+    "panel": {
+      "headline": "Find the jobs that fit you, and see why.",
+      "text": "Fursa scores each job against your profile and tells you the reason, so you decide where to apply.",
+      "points": {
+        "apply": "Fursa never applies for you.",
+        "data": "Export your data or delete your account at any time.",
+        "languages": "In Arabic, French and English."
+      }
     }
   }
 }

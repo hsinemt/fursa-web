@@ -298,7 +298,8 @@
       "submit": "Créer un compte",
       "haveAccount": "Vous avez déjà un compte ?",
       "signInLink": "Se connecter",
-      "passwordHelp": "Au moins 8 caractères."
+      "passwordHelp": "Au moins 8 caractères.",
+      "terms": "En créant un compte, vous acceptez les <terms>Conditions</terms> et la <privacy>Politique de confidentialité</privacy>."
     },
     "forgot": {
       "title": "Réinitialiser votre mot de passe",
@@ -322,7 +323,9 @@
       "email": "E-mail",
       "password": "Mot de passe",
       "newPassword": "Nouveau mot de passe",
-      "confirmPassword": "Confirmez le nouveau mot de passe"
+      "confirmPassword": "Confirmez le nouveau mot de passe",
+      "showPassword": "Afficher le mot de passe",
+      "hidePassword": "Masquer le mot de passe"
     },
     "validation": {
       "email_invalid": "Saisissez une adresse e-mail comme nom@exemple.com.",
@@ -352,6 +355,15 @@
     "account": {
       "title": "Compte",
       "help": "L’e-mail avec lequel vous vous connectez."
+    },
+    "panel": {
+      "headline": "Trouvez les offres qui vous correspondent, et voyez pourquoi.",
+      "text": "Fursa note chaque offre selon votre profil et vous donne la raison, pour que vous décidiez où postuler.",
+      "points": {
+        "apply": "Fursa ne postule jamais à votre place.",
+        "data": "Exportez vos données ou supprimez votre compte à tout moment.",
+        "languages": "En arabe, en français et en anglais."
+      }
     }
   }
 }
