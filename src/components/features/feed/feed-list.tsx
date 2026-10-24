@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { JobRow } from "@/components/features/job-row";
 import { FeedNudge } from "@/components/features/profile/feed-nudge";
 import { Button } from "@/components/ui/button";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Status } from "@/components/ui/status";
@@ -15,8 +16,12 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { ApiError } from "@/lib/api/errors";
 import { feedKeys, useFeed } from "@/lib/feed/hooks";
 import {
+  feedQuery,
   flattenPages,
   parseFilter,
+  parseSort,
+  sortJobs,
+  type Sort,
   STATUSES,
   timeAgo,
   type JobSummary,
@@ -33,28 +38,29 @@ export function jobIdFromPath(pathname: string): string | null {
   return match?.[1] ? decodeURIComponent(match[1]) : null;
 }
 
-/** The address of a job, keeping the status filter. */
-export function jobHref(id: string, status: UserJobStatus | null): string {
-  return status ? `/jobs/${id}?status=${status}` : `/jobs/${id}`;
+/** The address of a job, keeping the status filter and the sort. */
+export function jobHref(id: string, status: UserJobStatus | null, sort: Sort): string {
+  return `/jobs/${id}${feedQuery(status, sort)}`;
 }
 
-/** "Company · place · 3 days ago · Closed" */
-function metaLine(job: JobSummary, now: Date, locale: string, closed: string): string {
-  return [
-    job.company,
+/** The quiet lines of a row: the company, then "place · 3 days ago · Closed". */
+function metaLines(job: JobSummary, now: Date, locale: string, closed: string): string[] {
+  const second = [
     job.location ?? job.country,
     timeAgo(job.posted_at, now, locale),
     job.is_active ? null : closed,
   ]
     .filter((part): part is string => Boolean(part))
     .join(" · ");
+  return [job.company, second].filter(Boolean);
 }
 
 function SkeletonRows({ count }: { count: number }) {
   return (
     <div className="divide-y divide-line" aria-hidden="true">
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className="flex items-center gap-4 px-4 py-3">
+        <div key={i} className="flex items-start gap-3 px-4 py-3">
+          <Skeleton className="size-10 shrink-0 rounded-panel" />
           <div className="min-w-0 flex-1 space-y-2">
             <Skeleton className="h-5 w-2/3" />
             <Skeleton className="h-4 w-1/2" />
@@ -81,7 +87,11 @@ function StatusFilter({
     ...STATUSES.map((s) => ({ key: s, label: statusT(s) })),
   ];
   return (
-    <div role="group" aria-label={t("filterLabel")} className="mt-3 flex flex-wrap gap-1">
+    <div
+      role="group"
+      aria-label={t("filterLabel")}
+      className="-mx-1 mt-3 flex gap-0.5 overflow-x-auto px-1 pb-1"
+    >
       {options.map(({ key, label }) => (
         <button
           key={key ?? "all"}
@@ -89,7 +99,7 @@ function StatusFilter({
           aria-pressed={value === key}
           onClick={() => onChange(key)}
           className={cn(
-            "inline-flex h-9 items-center rounded-control px-3 text-sm pointer-coarse:h-11",
+            "inline-flex h-9 shrink-0 items-center rounded-control px-2.5 text-sm whitespace-nowrap pointer-coarse:h-11",
             value === key
               ? "bg-tint font-medium text-accent"
               : "text-slate hover:bg-tint hover:text-ink",
@@ -99,6 +109,22 @@ function StatusFilter({
         </button>
       ))}
     </div>
+  );
+}
+
+/** Best match (the API order) or newest posting first. */
+function SortSelect({ value, onChange }: { value: Sort; onChange: (sort: Sort) => void }) {
+  const t = useTranslations("feed");
+  return (
+    <select
+      aria-label={t("sortLabel")}
+      value={value}
+      onChange={(event) => onChange(parseSort(event.target.value))}
+      className="h-9 rounded-control border border-control bg-panel px-2 text-sm text-ink pointer-coarse:h-11"
+    >
+      <option value="best">{t("sort.best")}</option>
+      <option value="newest">{t("sort.newest")}</option>
+    </select>
   );
 }
 
@@ -117,9 +143,10 @@ export function FeedList({ onJob }: { onJob: boolean }) {
   const profile = useProfile();
 
   const filter = parseFilter(search.get("status"));
+  const sort = parseSort(search.get("sort"));
   const selectedId = jobIdFromPath(pathname);
   const query = useFeed(filter);
-  const items = flattenPages(query.data);
+  const items = sortJobs(flattenPages(query.data), sort);
   const error = query.error;
 
   // A cursor the API no longer accepts: start the list again from the first page.
@@ -131,7 +158,10 @@ export function FeedList({ onJob }: { onJob: boolean }) {
   }, [error, client, filter, toast, errors]);
 
   const changeFilter = (next: UserJobStatus | null) => {
-    router.replace(next ? `${pathname}?status=${next}` : pathname);
+    router.replace(`${pathname}${feedQuery(next, sort)}`);
+  };
+  const changeSort = (next: Sort) => {
+    router.replace(`${pathname}${feedQuery(filter, next)}`);
   };
 
   const Heading = onJob ? "h2" : "h1";
@@ -142,10 +172,12 @@ export function FeedList({ onJob }: { onJob: boolean }) {
   return (
     <section aria-labelledby="feed-title">
       <div className="sticky top-0 z-10 border-b border-line bg-page px-4 pt-4 pb-3 lg:rounded-t-panel">
-        <Heading id="feed-title" className="text-xl">
-          {t("title")}
-        </Heading>
-        <p className="mt-1 text-slate">{t("bestFirst")}</p>
+        <div className="flex items-center justify-between gap-3">
+          <Heading id="feed-title" className="text-xl">
+            {t("title")}
+          </Heading>
+          <SortSelect value={sort} onChange={changeSort} />
+        </div>
         <StatusFilter value={filter} onChange={changeFilter} />
       </div>
 
@@ -185,7 +217,7 @@ export function FeedList({ onJob }: { onJob: boolean }) {
                   key={job.job_id}
                   link={(content, className) => (
                     <Link
-                      href={jobHref(job.job_id, filter)}
+                      href={jobHref(job.job_id, filter, sort)}
                       aria-current={job.job_id === selectedId ? "true" : undefined}
                       className={className}
                     >
@@ -194,7 +226,8 @@ export function FeedList({ onJob }: { onJob: boolean }) {
                   )}
                   selected={job.job_id === selectedId}
                   title={job.title}
-                  meta={metaLine(job, now, locale, t("closed"))}
+                  leading={<CompanyLogo name={job.company} />}
+                  meta={metaLines(job, now, locale, t("closed"))}
                   reason={job.explanation ?? undefined}
                   score={job.score}
                   scoreLabel={scoreT(scoreBand(job.score))}

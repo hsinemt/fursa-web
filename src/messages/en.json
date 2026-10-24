@@ -483,7 +483,6 @@
   },
   "feed": {
     "title": "Feed",
-    "bestFirst": "Best first",
     "jobList": "Jobs",
     "filterLabel": "Show jobs by status",
     "filterAll": "All",
@@ -501,7 +500,12 @@
       "title": "No jobs with this status.",
       "text": "When you change a job to this status, it appears here."
     },
-    "pickOne": "Choose a job in the list to read it here."
+    "pickOne": "Choose a job in the list to read it here.",
+    "sortLabel": "Sort jobs",
+    "sort": {
+      "best": "Best match",
+      "newest": "Newest"
+    }
   },
   "job": {
     "back": "Back to the feed",

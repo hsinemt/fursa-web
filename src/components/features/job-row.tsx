@@ -4,14 +4,16 @@ import { cn } from "@/lib/utils/cn";
 
 type JobRowProps = Omit<React.ComponentProps<"li">, "title" | "children"> & {
   title: string;
-  /** Company, place and how long ago, on one quieter line. */
-  meta: string;
+  /** Company, place and how long ago, on one quieter line (or several: pass an array). */
+  meta: string | string[];
   /** One line saying why the job matches (shown under the meta line). */
   reason?: string;
   /** The score, or null while it is not known yet. */
   score: number | null;
   /** The translated score word (Strong, Good, Partial). */
   scoreLabel?: string;
+  /** Shown before the text (a company logo tile). */
+  leading?: React.ReactNode;
   /** Shown under the score, at the end of the row (for example the job's status). */
   aside?: React.ReactNode;
   /** Makes the whole row a link: wraps the content in the link the caller builds. */
@@ -30,34 +32,39 @@ export function JobRow({
   reason,
   score,
   scoreLabel,
+  leading,
   aside,
   link,
   selected = false,
   className,
   ...props
 }: JobRowProps) {
+  const lines = Array.isArray(meta) ? meta : [meta];
   const content = (
     <>
+      {leading}
       <div className="min-w-0 flex-1">
         <p dir="auto" className="truncate font-medium text-ink">
           {title}
         </p>
-        <p dir="auto" className="truncate text-sm text-slate">
-          {meta}
-        </p>
+        {lines.map((line, i) => (
+          <p key={i} dir="auto" className={cn("truncate text-sm text-slate", i > 0 && "text-xs")}>
+            {line}
+          </p>
+        ))}
         {reason ? (
           <p dir="auto" className="mt-1 line-clamp-2 text-sm text-ink">
             {reason}
           </p>
         ) : null}
       </div>
-      <div className="flex shrink-0 flex-col items-end gap-1">
+      <div className="flex shrink-0 flex-col items-end gap-1 self-start">
         <Score value={score} label={scoreLabel} />
         {aside}
       </div>
     </>
   );
-  const layout = "flex items-center gap-4 px-4 py-3";
+  const layout = "flex items-start gap-3 px-4 py-3";
 
   return (
     <li
@@ -71,7 +78,7 @@ export function JobRow({
       )}
       {...props}
     >
-      {link ? link(content, cn(layout, "rounded-control hover:bg-tint")) : content}
+      {link ? link(content, cn(layout, "hover:bg-tint")) : content}
     </li>
   );
 }

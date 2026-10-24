@@ -483,7 +483,6 @@
   },
   "feed": {
     "title": "Offres",
-    "bestFirst": "Les meilleures d’abord",
     "jobList": "Offres",
     "filterLabel": "Afficher les offres par statut",
     "filterAll": "Toutes",
@@ -501,7 +500,12 @@
       "title": "Aucune offre avec ce statut.",
       "text": "Quand vous donnez ce statut à une offre, elle apparaît ici."
     },
-    "pickOne": "Choisissez une offre dans la liste pour la lire ici."
+    "pickOne": "Choisissez une offre dans la liste pour la lire ici.",
+    "sortLabel": "Trier les offres",
+    "sort": {
+      "best": "Meilleure correspondance",
+      "newest": "Plus récentes"
+    }
   },
   "job": {
     "back": "Retour aux offres",

@@ -13,6 +13,9 @@ Status: accepted. Date: 2026-10-24.
 7. **`extracted` and `breakdown` are untyped in the contract.** `readFacts` and `readBreakdown` read only the keys the API writes today (`remote_type`, `employment_type`, `seniority`, `salary`, `languages`, `tech_stack`, `visa_sponsorship`, `relocation_support`; `components`, `matched_skills`, `job_level`) and check each value. Anything unknown or missing is left out, never shown as "unknown". Skills the posting names that the profile did not match are the posting's `tech_stack` minus `matched_skills`. For the API project: type these two objects in the contract.
 8. **No match count.** The API returns no total, so the header says "Best first" and nothing more.
 9. **Row link without an i18n import.** `JobRow` takes a `link` function instead of importing the router link, so the welcome page's static example (which has no router context) keeps using the same row.
+10. **Sort is client-side.** The API has no sort parameter, so "Newest" orders the jobs already loaded by posting date (`?sort=newest`); "Best match" is the API order. Needs an API `sort` parameter to be exact across pages.
+11. **Logo tile, not a logo.** The API sends no company logo. `CompanyLogo` shows the initial and takes a `src` when a logo field exists.
+12. **Repaired text.** Some scraped text arrives double-encoded (UTF-8 read as Windows-1252). `repairText` turns each such run back into the right characters, and C1 control characters are dropped.
 
 ## Not done here
 

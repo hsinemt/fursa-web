@@ -13,6 +13,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
+import { CompanyLogo } from "@/components/ui/company-logo";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ICON_SM, iconProps } from "@/components/ui/icon";
 import { Score } from "@/components/ui/score";
@@ -30,7 +31,9 @@ import {
   htmlToText,
   missingSkills,
   paragraphs,
+  feedQuery,
   parseFilter,
+  parseSort,
   readBreakdown,
   readFacts,
   safeHttpUrl,
@@ -119,13 +122,18 @@ function Detail({ job }: { job: JobDetail }) {
     <article className="flex flex-col gap-6">
       <header className="grid gap-6 min-[1180px]:grid-cols-[minmax(0,1fr)_17rem]">
         <div className="min-w-0">
-          <h1 dir="auto" className="text-xl">
-            {job.title}
-          </h1>
-          <p dir="auto" className="mt-2 text-md text-ink">
-            {[job.company, ago].filter(Boolean).join(" · ")}
-            {job.is_active ? null : <span className="text-slate"> · {t("closed")}</span>}
-          </p>
+          <div className="flex items-start gap-4">
+            <CompanyLogo name={job.company} size="lg" />
+            <div className="min-w-0">
+              <h1 dir="auto" className="text-xl">
+                {job.title}
+              </h1>
+              <p dir="auto" className="mt-1 text-md text-ink">
+                {[job.company, ago].filter(Boolean).join(" · ")}
+                {job.is_active ? null : <span className="text-slate"> · {t("closed")}</span>}
+              </p>
+            </div>
+          </div>
           {keyFacts.length > 0 ? (
             <ul className="mt-4 flex flex-col gap-2">
               {keyFacts.map(({ icon: Icon, text }) => (
@@ -244,8 +252,8 @@ function Detail({ job }: { job: JobDetail }) {
 export function JobDetailScreen({ id }: { id: string }) {
   const t = useTranslations("job");
   const errors = useTranslations("errors");
-  const status = parseFilter(useSearchParams().get("status"));
-  const suffix = status ? `?status=${status}` : "";
+  const search = useSearchParams();
+  const suffix = feedQuery(parseFilter(search.get("status")), parseSort(search.get("sort")));
   const query = useJob(id);
 
   return (

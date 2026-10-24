@@ -6,7 +6,11 @@ import {
   formatSalary,
   htmlToText,
   missingSkills,
+  feedQuery,
   paragraphs,
+  parseSort,
+  repairText,
+  sortJobs,
   parseFilter,
   readBreakdown,
   readFacts,
@@ -227,5 +231,43 @@ describe("navigation", () => {
     expect(isCurrentNav("/feed", "/jobs/abc")).toBe(true);
     expect(isCurrentNav("/profile", "/jobs/abc")).toBe(false);
     expect(isCurrentNav("/feed", "/feedback")).toBe(false);
+  });
+});
+
+describe("sort and address", () => {
+  it("reads the sort and builds the query that keeps both choices", () => {
+    expect(parseSort("newest")).toBe("newest");
+    expect(parseSort("whatever")).toBe("best");
+    expect(parseSort(null)).toBe("best");
+    expect(feedQuery(null, "best")).toBe("");
+    expect(feedQuery("saved", "best")).toBe("?status=saved");
+    expect(feedQuery(null, "newest")).toBe("?sort=newest");
+    expect(feedQuery("applied", "newest")).toBe("?status=applied&sort=newest");
+  });
+
+  it("puts the newest posting first, jobs without a date last, and keeps ties in API order", () => {
+    const list = [
+      job("old", { posted_at: "2026-10-01T00:00:00Z" }),
+      job("none", { posted_at: null }),
+      job("new", { posted_at: "2026-10-20T00:00:00Z" }),
+      job("new2", { posted_at: "2026-10-20T00:00:00Z" }),
+    ];
+    expect(sortJobs(list, "newest").map((j) => j.job_id)).toEqual(["new", "new2", "old", "none"]);
+    expect(sortJobs(list, "best")).toBe(list);
+  });
+});
+
+describe("repairText", () => {
+  it("repairs UTF-8 text that was read as Latin-1 or Windows-1252", () => {
+    expect(repairText("Itâs")).toBe("It’s");
+    expect(repairText("Itâ€™s a marketplace â€“ good")).toBe("It’s a marketplace – good");
+    expect(repairText("Ã©quipe et dÃ©veloppeur")).toBe("équipe et développeur");
+  });
+  it("leaves correct text and unrelated accents alone", () => {
+    expect(repairText("Société Générale, Ångström")).toBe("Société Générale, Ångström");
+    expect(repairText("plain")).toBe("plain");
+  });
+  it("drops leftover control characters in the description", () => {
+    expect(htmlToText("ab")).toBe("ab");
   });
 });

@@ -192,6 +192,51 @@ describe("feed list", () => {
     expect(nav.replace).toHaveBeenLastCalledWith("/feed");
   });
 
+  it("shows a logo tile with the company initial, the company and the place on their own lines", async () => {
+    feed();
+    const row = (await screen.findByText("Job 1")).closest("li")!;
+    expect(row.querySelector("[data-slot=company-logo]")).toHaveTextContent("C");
+    expect(within(row).getByText("Company 1")).toBeInTheDocument();
+    expect(within(row).getByText(/^Tunis · 3 days ago$/)).toBeInTheDocument();
+  });
+
+  it("keeps the status filter on one row (it scrolls instead of wrapping)", async () => {
+    feed();
+    const group = await screen.findByRole("group", { name: "Show jobs by status" });
+    expect(group.className).toContain("overflow-x-auto");
+    expect(group.className).not.toContain("flex-wrap");
+  });
+
+  it("sorts the loaded jobs by posting date when Newest is chosen, and keeps it in the address", async () => {
+    answers["GET /v1/feed"] = () =>
+      json({
+        items: [
+          summary(1, { posted_at: "2026-09-01T00:00:00Z" }),
+          summary(2, { posted_at: "2026-10-20T00:00:00Z" }),
+        ],
+        next_cursor: null,
+      });
+    const first = feed();
+    await screen.findByText("Job 1");
+    fireEvent.change(screen.getByRole("combobox", { name: "Sort jobs" }), {
+      target: { value: "newest" },
+    });
+    expect(nav.replace).toHaveBeenCalledWith("/feed?sort=newest");
+    first.unmount();
+
+    nav.search = new URLSearchParams("sort=newest&status=saved");
+    feed();
+    await screen.findByText("Job 1");
+    const titles = screen.getAllByRole("listitem").map((li) => li.textContent ?? "");
+    expect(titles[0]).toContain("Job 2");
+    expect(titles[1]).toContain("Job 1");
+    expect(screen.getByRole("link", { name: /Job 1/ })).toHaveAttribute(
+      "href",
+      `/jobs/${ID1}?status=saved&sort=newest`,
+    );
+    expect(feedCalls().at(-1)!.query.has("sort")).toBe(false);
+  });
+
   it("shows the status of a job that is not new, and Closed for a closed posting", async () => {
     answers["GET /v1/feed"] = () =>
       json({

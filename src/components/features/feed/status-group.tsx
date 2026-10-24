@@ -16,7 +16,7 @@ export function StatusGroup({
   const t = useTranslations("status");
   const label = useTranslations("job");
   return (
-    <div role="group" aria-label={label("statusLabel")} className="flex flex-wrap gap-2">
+    <div role="group" aria-label={label("statusLabel")} className="flex flex-wrap gap-1.5">
       {STATUSES.map((status) => (
         <button
           key={status}
@@ -24,13 +24,13 @@ export function StatusGroup({
           aria-pressed={value === status}
           onClick={() => onChange(status)}
           className={cn(
-            "inline-flex h-10 items-center rounded-control border px-3 pointer-coarse:h-11",
+            "inline-flex h-9 items-center rounded-control border px-2.5 pointer-coarse:h-11",
             value === status
               ? "border-accent bg-tint font-medium text-accent"
               : "border-control text-ink hover:bg-tint",
           )}
         >
-          <Status status={status} className="text-base text-current">
+          <Status status={status} className="text-sm text-current">
             {t(status)}
           </Status>
         </button>

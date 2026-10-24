@@ -19,6 +19,31 @@ export function parseFilter(raw: string | null | undefined): UserJobStatus | nul
   return STATUSES.find((status) => status === raw) ?? null;
 }
 
+export type Sort = "best" | "newest";
+
+/** The `?sort=` value of the address. */
+export function parseSort(raw: string | null | undefined): Sort {
+  return raw === "newest" ? "newest" : "best";
+}
+
+/** The query part of a feed or job address that keeps the filter and the sort. */
+export function feedQuery(status: UserJobStatus | null, sort: Sort): string {
+  const parts = [status ? `status=${status}` : "", sort === "newest" ? "sort=newest" : ""].filter(
+    Boolean,
+  );
+  return parts.length > 0 ? `?${parts.join("&")}` : "";
+}
+
+/** Newest posting first (jobs without a date last). "best" keeps the API order. */
+export function sortJobs(items: JobSummary[], sort: Sort): JobSummary[] {
+  if (sort === "best") return items;
+  const time = (job: JobSummary) => (job.posted_at ? Date.parse(job.posted_at) || 0 : 0);
+  return items
+    .map((job, index) => ({ job, index }))
+    .sort((a, b) => time(b.job) - time(a.job) || a.index - b.index)
+    .map(({ job }) => job);
+}
+
 // ---------------------------------------------------------------------------
 // Scraped text is untrusted: it becomes plain text here and React escapes it.
 // ---------------------------------------------------------------------------
@@ -54,8 +79,55 @@ function decodeEntities(value: string): string {
   );
 }
 
-// Control characters and the bidi overrides that can make text read in a different order.
-const UNSAFE_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F‪-‮⁦-⁩]/g;
+// Text that was UTF-8 but read as Windows-1252 or Latin-1 somewhere upstream ("â€™" for an
+// apostrophe, "Ã©" for é). Each run is turned back into bytes and decoded again; a run that
+// is not valid UTF-8 stays as it is.
+const CP1252: Record<string, number> = {
+  "€": 0x80,
+  "‚": 0x82,
+  ƒ: 0x83,
+  "„": 0x84,
+  "…": 0x85,
+  "†": 0x86,
+  "‡": 0x87,
+  ˆ: 0x88,
+  "‰": 0x89,
+  Š: 0x8a,
+  "‹": 0x8b,
+  Œ: 0x8c,
+  Ž: 0x8e,
+  "‘": 0x91,
+  "’": 0x92,
+  "“": 0x93,
+  "”": 0x94,
+  "•": 0x95,
+  "–": 0x96,
+  "—": 0x97,
+  "˜": 0x98,
+  "™": 0x99,
+  š: 0x9a,
+  "›": 0x9b,
+  œ: 0x9c,
+  ž: 0x9e,
+  Ÿ: 0x9f,
+};
+const MOJIBAKE = /[Â-ô][-¿€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ]{1,3}/g;
+
+export function repairText(value: string): string {
+  if (!/[Â-ô]/.test(value)) return value;
+  return value.replace(MOJIBAKE, (run) => {
+    const bytes = Uint8Array.from(Array.from(run), (ch) => CP1252[ch] ?? ch.charCodeAt(0));
+    try {
+      return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    } catch {
+      return run;
+    }
+  });
+}
+
+// Control characters (including the C1 range) and the bidi overrides that can make text read in a different order.
+const UNSAFE_CHARS =
+  /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u202A-\u202E\u2066-\u2069]/g;
 
 /**
  * A posting's description as plain text. Tags (and the content of script and style tags) are
@@ -64,7 +136,7 @@ const UNSAFE_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F‪-‮⁦-�
  */
 export function htmlToText(raw: string | null | undefined): string {
   if (!raw) return "";
-  let out = raw.replace(/\r\n?/g, "\n");
+  let out = repairText(raw).replace(/\r\n?/g, "\n");
   out = out.replace(/<!--[\s\S]*?-->/g, "");
   out = out.replace(/<(script|style|iframe|object|embed)\b[\s\S]*?<\/\1\s*>/gi, "");
   out = out.replace(/<br\s*\/?>/gi, "\n");
