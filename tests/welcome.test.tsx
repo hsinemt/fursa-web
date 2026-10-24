@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it, vi } from "vitest";
 import { WelcomeContent } from "@/components/features/welcome/welcome-content";
@@ -26,51 +26,103 @@ function renderWelcome(locale: keyof typeof locales) {
 }
 
 describe.each(["en", "fr", "ar"] as const)("welcome page (%s)", (locale) => {
-  const m = locales[locale];
+  const m = locales[locale].welcome;
+  const actions = locales[locale].actions;
 
-  it("has one h1 and the content in the order set by fursa web.md", () => {
+  it("has one h1 and the sections in order", () => {
     renderWelcome(locale);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     const h2 = screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent);
     expect(h2).toEqual([
-      m.welcome.how.title,
-      m.welcome.example.title,
-      m.welcome.doesNot.title,
-      m.welcome.data.title,
+      m.how.title,
+      m.example.title,
+      m.services.title,
+      m.promise.title,
+      m.data.title,
+      m.faq.title,
+      m.closing.title,
     ]);
   });
 
-  it("has exactly one primary button (Create account) and a secondary Sign in", () => {
+  it("has one primary button in the hero (Create account) and a secondary Sign in", () => {
     renderWelcome(locale);
-    const create = screen.getByRole("link", { name: m.actions.createAccount });
-    const signIn = screen.getByRole("link", { name: m.actions.signIn });
+    const hero = screen.getByRole("heading", { level: 1 }).closest("section") as HTMLElement;
+    const create = within(hero).getByRole("link", { name: actions.createAccount });
+    const signIn = within(hero).getByRole("link", { name: actions.signIn });
     expect(create).toHaveClass("bg-accent");
     expect(create).toHaveAttribute("href", "/signup");
     expect(signIn).not.toHaveClass("bg-accent");
     expect(signIn).toHaveAttribute("href", "/login");
-    expect(document.querySelectorAll("a.bg-accent")).toHaveLength(1);
+    expect(hero.querySelectorAll("a.bg-accent")).toHaveLength(1);
   });
 
-  it("shows three numbered steps", () => {
+  it("shows the hero example slip with a score and its reason", () => {
     renderWelcome(locale);
-    const steps = screen.getAllByRole("listitem").filter((li) => li.closest("ol"));
-    expect(steps).toHaveLength(3);
-    expect(steps.map((li) => within(li).getByText(/^[123]$/).textContent)).toEqual(["1", "2", "3"]);
+    const slip = screen.getByRole("complementary", { name: m.hero.tag });
+    expect(within(slip).getByText("82")).toBeInTheDocument();
+    expect(within(slip).getByText(m.hero.why)).toBeInTheDocument();
   });
 
-  it("labels the feed example as an example, with three rows and one selected", () => {
-    renderWelcome(locale);
-    const example = screen.getByRole("region", { name: m.welcome.example.label });
-    expect(within(example).getAllByRole("listitem")).toHaveLength(3);
-    expect(example.querySelectorAll('[aria-current="true"]')).toHaveLength(1);
-    expect(within(example).getByText(m.welcome.example.detail.byAi)).toBeInTheDocument();
-  });
-
-  it("makes no API call and has no raw HTML injection", () => {
-    const fetchSpy = vi.spyOn(globalThis, "fetch");
+  it("shows how it works as three numbered steps", () => {
     const { container } = renderWelcome(locale);
+    const steps = container.querySelectorAll("ol > li");
+    expect(steps).toHaveLength(3);
+    expect(Array.from(steps).map((li) => li.querySelector("span")?.textContent)).toEqual([
+      "1",
+      "2",
+      "3",
+    ]);
+  });
+
+  it("shows the example list best first, labeled as an example, with a reason on each row", () => {
+    renderWelcome(locale);
+    const list = screen.getByRole("region", { name: m.example.label });
+    const rows = within(list).getAllByRole("listitem");
+    expect(rows).toHaveLength(3);
+    expect(rows.map((row) => row.textContent)).toEqual([
+      expect.stringContaining("82"),
+      expect.stringContaining("68"),
+      expect.stringContaining("51"),
+    ]);
+    expect(rows[0]).toHaveAttribute("aria-current", "true");
+    expect(within(list).getByText(m.example.jobs.one.reason)).toBeInTheDocument();
+    expect(screen.getAllByText(m.example.tag).length).toBeGreaterThan(0);
+  });
+
+  it("lists the four services and switches the sample when one is chosen", () => {
+    renderWelcome(locale);
+    const tabs = screen.getAllByRole("tab");
+    expect(tabs).toHaveLength(4);
+    expect(tabs[0]).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByText(m.services.feed.text)).toBeInTheDocument();
+
+    fireEvent.mouseDown(tabs[2] as HTMLElement, { button: 0 });
+    expect(screen.getByText(m.services.alerts.text)).toBeInTheDocument();
+    expect(screen.queryByText(m.services.feed.text)).toBeNull();
+    expect(screen.getByText(m.services.later)).toBeInTheDocument();
+  });
+
+  it("says plainly that Fursa never applies for the user, and shows the data promise", () => {
+    renderWelcome(locale);
+    expect(screen.getByText(m.promise.quote)).toBeInTheDocument();
+    expect(screen.getByText(m.data.text)).toBeInTheDocument();
+  });
+
+  it("has six questions and no pricing question", () => {
+    const { container } = renderWelcome(locale);
+    expect(container.querySelectorAll("details")).toHaveLength(6);
+    const text = container.querySelector("#faq")?.textContent ?? "";
+    expect(text).not.toMatch(/free|price|pricing|gratuit|prix|مجاني|سعر/i);
+  });
+
+  it("ends with a second Create account link and makes no API call", () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    renderWelcome(locale);
+    const closing = screen.getByRole("heading", { name: m.closing.title }).closest("section");
+    expect(
+      within(closing as HTMLElement).getByRole("link", { name: actions.createAccount }),
+    ).toHaveAttribute("href", "/signup");
     expect(fetchSpy).not.toHaveBeenCalled();
-    expect(container.querySelector("script")).toBeNull();
     fetchSpy.mockRestore();
   });
 });
