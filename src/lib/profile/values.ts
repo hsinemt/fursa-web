@@ -149,3 +149,29 @@ export function problemsFromApi(error: unknown): ProfileProblems {
   }
   return problems;
 }
+
+/** The parts of a profile that help scoring, and how much each counts (they add up to 100). */
+export const STRENGTH_PARTS = [
+  { key: "roles", weight: 30 },
+  { key: "skills", weight: 25 },
+  { key: "locations", weight: 15 },
+  { key: "seniority", weight: 15 },
+  { key: "salary", weight: 15 },
+] as const;
+export type StrengthKey = (typeof STRENGTH_PARTS)[number]["key"];
+
+/** How complete the form is, from what is typed in it (so it grows as the person adds things). */
+export function profileStrength(values: ProfileValues): {
+  percent: number;
+  parts: { key: StrengthKey; weight: number; done: boolean }[];
+} {
+  const done: Record<StrengthKey, boolean> = {
+    roles: values.roles.length > 0,
+    skills: values.skills.length > 0,
+    locations: values.locations.length > 0,
+    seniority: values.seniority !== "",
+    salary: values.salaryMin.trim() !== "" || values.salaryMax.trim() !== "",
+  };
+  const parts = STRENGTH_PARTS.map(({ key, weight }) => ({ key, weight, done: done[key] }));
+  return { percent: parts.reduce((sum, p) => sum + (p.done ? p.weight : 0), 0), parts };
+}
