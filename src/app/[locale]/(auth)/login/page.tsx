@@ -1,6 +1,45 @@
-import { LaterPage } from "@/components/layout/later-page";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { AuthShell } from "@/components/features/auth/auth-shell";
+import { LoginForm } from "@/components/features/auth/login-form";
+import { Link } from "@/i18n/navigation";
+import { safeNext } from "@/lib/auth/paths";
 
-// Placeholder: the sign-in form is built in the auth step (feat/auth).
-export default function LoginPage() {
-  return <LaterPage page="login" />;
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ next?: string; notice?: string }>;
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth.login");
+  return { title: t("title") };
+}
+
+export default async function LoginPage({ searchParams }: Props) {
+  const { next, notice } = await searchParams;
+  const t = await getTranslations("auth");
+
+  return (
+    <AuthShell
+      title={t("login.title")}
+      intro={t("login.intro")}
+      notice={
+        notice === "link_invalid"
+          ? { kind: "error", text: t("notices.link_invalid") }
+          : notice === "signed_out"
+            ? { kind: "info", text: t("notices.signed_out") }
+            : undefined
+      }
+      footer={
+        <p>
+          {t("login.noAccount")}{" "}
+          <Link href="/signup" className="inline-link text-accent hover:underline">
+            {t("login.createOne")}
+          </Link>
+        </p>
+      }
+    >
+      <LoginForm next={safeNext(next)} />
+    </AuthShell>
+  );
 }
