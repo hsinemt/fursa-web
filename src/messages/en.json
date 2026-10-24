@@ -574,7 +574,17 @@
     },
     "description": {
       "title": "Description",
-      "empty": "The posting has no description."
+      "empty": "The posting has no description.",
+      "modeLabel": "Description view",
+      "summary": "Summary",
+      "full": "Full posting",
+      "byAi": "Written by AI",
+      "cutFromPosting": "Cut from the posting, under its own headings.",
+      "sections": {
+        "responsibilities": "Responsibilities",
+        "qualifications": "Qualifications",
+        "benefits": "Benefits"
+      }
     }
   }
 }

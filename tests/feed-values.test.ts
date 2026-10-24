@@ -15,6 +15,7 @@ import {
   readBreakdown,
   readFacts,
   safeHttpUrl,
+  splitSections,
   setStatusInPages,
   timeAgo,
   type FeedPage,
@@ -135,6 +136,7 @@ describe("readFacts", () => {
       salary: { min: 50000, max: 70000, currency: "EUR", period: "year" },
       techStack: ["Python", "SQL"],
       languages: ["en", "fr"],
+      summary: null,
       visa: true,
       relocation: null,
     });
@@ -269,5 +271,61 @@ describe("repairText", () => {
   });
   it("drops leftover control characters in the description", () => {
     expect(htmlToText("ab")).toBe("ab");
+  });
+});
+
+describe("splitSections", () => {
+  it("finds the three parts by their headings and cuts bullets", () => {
+    const text = htmlToText(
+      "<h2>About us</h2><p>We are great.</p><h2>Key Responsibilities</h2><ul><li>Build</li><li>Ship</li></ul><b>Qualifications:</b><br>- Python<br>- SQL<h2>Benefits</h2><p>Paid vacation</p>",
+    );
+    expect(splitSections(text)).toEqual([
+      { kind: "responsibilities", items: ["Build", "Ship"] },
+      { kind: "qualifications", items: ["Python", "SQL"] },
+      { kind: "benefits", items: ["Paid vacation"] },
+    ]);
+  });
+
+  it("recognizes French and Arabic headings", () => {
+    const fr = splitSections(
+      [
+        "Vos missions :",
+        "- Concevoir",
+        "Profil recherché",
+        "- Rigueur",
+        "Avantages",
+        "- Mutuelle",
+      ].join("\n"),
+    );
+    expect(fr.map((s) => s.kind)).toEqual(["responsibilities", "qualifications", "benefits"]);
+    const ar = splitSections(
+      ["المهام", "- تطوير", "المؤهلات", "- خبرة", "المزايا", "- تأمين"].join("\n"),
+    );
+    expect(ar.map((s) => s.kind)).toEqual(["responsibilities", "qualifications", "benefits"]);
+  });
+
+  it("does not take a bullet or a sentence for a heading", () => {
+    expect(
+      splitSections(
+        ["- Strong requirements gathering", "We have great benefits for everyone here."].join("\n"),
+      ),
+    ).toEqual([]);
+    expect(
+      splitSections(["Responsibilities", "- Write requirements documents"].join("\n")),
+    ).toEqual([{ kind: "responsibilities", items: ["Write requirements documents"] }]);
+  });
+
+  it("keeps at most 8 points and shortens a very long one", () => {
+    const lines = Array.from({ length: 12 }, (_, i) => `- Point ${i}`);
+    expect(splitSections(["Responsibilities", ...lines].join("\n"))[0]!.items).toHaveLength(8);
+    const long = splitSections(["Benefits", "word ".repeat(100)].join("\n"))[0]!.items[0]!;
+    expect(long.length).toBeLessThanOrEqual(280);
+    expect(long.endsWith("…")).toBe(true);
+  });
+
+  it("ignores text before the first heading, and parts with nothing in them", () => {
+    expect(
+      splitSections(["Intro text", "Responsibilities", "Benefits", "- Gym"].join("\n")),
+    ).toEqual([{ kind: "benefits", items: ["Gym"] }]);
   });
 });

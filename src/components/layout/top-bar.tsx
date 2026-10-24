@@ -25,7 +25,7 @@ export function TopBar({
 
   return (
     <header className="hidden border-b border-line bg-panel sm:block">
-      <div className="mx-auto flex h-14 w-full max-w-7xl items-stretch gap-6 px-6">
+      <div className="flex h-14 w-full items-stretch gap-6 px-6">
         <Wordmark className="flex items-center" />
         <nav aria-label={a11y("mainNavigation")} className="flex items-stretch gap-1">
           {NAV_ITEMS.map(({ key, href }) => {

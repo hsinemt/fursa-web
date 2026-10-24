@@ -574,7 +574,17 @@
     },
     "description": {
       "title": "Description",
-      "empty": "L’annonce n’a pas de description."
+      "empty": "L’annonce n’a pas de description.",
+      "modeLabel": "Affichage de la description",
+      "summary": "Résumé",
+      "full": "Annonce complète",
+      "byAi": "Écrit par l’IA",
+      "cutFromPosting": "Extrait de l’annonce, sous ses propres titres.",
+      "sections": {
+        "responsibilities": "Missions",
+        "qualifications": "Profil et qualifications",
+        "benefits": "Avantages"
+      }
     }
   }
 }

@@ -141,6 +141,7 @@ export function htmlToText(raw: string | null | undefined): string {
   out = out.replace(/<(script|style|iframe|object|embed)\b[\s\S]*?<\/\1\s*>/gi, "");
   out = out.replace(/<br\s*\/?>/gi, "\n");
   out = out.replace(/<li\b[^>]*>/gi, "\n- ");
+  out = out.replace(/<(?:p|div|h[1-6]|ul|ol|table|tr|section|article)\b[^>]*>/gi, "\n");
   out = out.replace(/<\/(?:p|div|li|ul|ol|h[1-6]|tr|table|section|article)\s*>/gi, "\n\n");
   out = out.replace(/<\/?[a-z][^>]*>/gi, "");
   out = decodeEntities(out);
@@ -252,6 +253,7 @@ export type Facts = {
   salary: Salary | null;
   techStack: string[];
   languages: string[];
+  summary: string | null;
   visa: boolean | null;
   relocation: boolean | null;
 };
@@ -294,6 +296,7 @@ export function readFacts(job: Pick<JobDetail, "extracted" | "breakdown" | "remo
     salary,
     techStack: strList(extracted.tech_stack),
     languages: strList(extracted.languages),
+    summary: str(extracted.summary),
     visa: tri(extracted.visa_sponsorship),
     relocation: tri(extracted.relocation_support),
   };
@@ -381,4 +384,78 @@ export function flattenPages(data: Pages | undefined): JobSummary[] {
     }
   }
   return items;
+}
+
+// ---------------------------------------------------------------------------
+// Summary mode: the parts of a posting found under its own headings
+// ---------------------------------------------------------------------------
+
+export type SectionKind = "responsibilities" | "qualifications" | "benefits";
+export type PostingSection = { kind: SectionKind; items: string[] };
+
+/** Heading words (English, French, Arabic). A line is a heading only if it is short and matches. */
+const HEADING_WORDS: Record<SectionKind | "other", RegExp> = {
+  responsibilities:
+    /responsibilit|duties|what you(?:'|’)?ll do|what you will do|your role|the role|your mission|missions?\b|responsabilit|vos missions|tes missions|ce que vous ferez|ce que tu feras|tâches|le poste|المهام|المسؤوليات|مهامك/i,
+  qualifications:
+    /requirements|qualifications|what you bring|looking for|who you are|your profile|you have|must have|nice to have|required|preferred|desired|minimum|profil|vous (?:êtes|avez)|tu es|prérequis|compétences requises|expérience requise|المؤهلات|المتطلبات|الشروط/i,
+  benefits:
+    /benefits|perks|what we offer|we offer|what(?:'|’)?s in it|why join|avantages|nous offrons|ce que nous offrons|on vous offre|petits plus|rémunération|المزايا|ما نقدمه|نقدم لك/i,
+  other:
+    /^(?:about|à propos|qui sommes|who we are|our (?:company|story|mission)|notre|l(?:'|’)entreprise|process|recrutement|processus|عن الشركة|من نحن)/i,
+};
+
+const BULLET = /^\s*(?:[-*•·▪‣–]|\d+[.)])\s+/;
+
+function headingKind(line: string): SectionKind | "other" | null {
+  if (BULLET.test(line)) return null;
+  const hadColon = /[:：]\s*$/.test(line);
+  const clean = line
+    .replace(/^[#*_\s]+|[#*_\s]+$/g, "")
+    .replace(/[:：]\s*$/, "")
+    .trim();
+  const words = clean.split(/\s+/).filter(Boolean).length;
+  if (clean.length === 0 || clean.length > 60 || words > 6 || /[.!?]$/.test(clean)) return null;
+  if (!hadColon && words > 5) return null;
+  for (const kind of ["responsibilities", "qualifications", "benefits", "other"] as const) {
+    if (HEADING_WORDS[kind].test(clean)) return kind;
+  }
+  return null;
+}
+
+export const SUMMARY_MAX_ITEMS = 8;
+const ITEM_MAX_CHARS = 280;
+
+/**
+ * Finds Responsibilities, Qualifications and Benefits in a plain-text posting (the output of
+ * `htmlToText`) by their headings. The text is cut, never rewritten: each point is a line or
+ * bullet of the posting (long ones are shortened). A kind found twice is merged. Parts with no
+ * points are dropped.
+ */
+export function splitSections(text: string): PostingSection[] {
+  const found = new Map<SectionKind, string[]>();
+  let current: SectionKind | "other" | null = null;
+  for (const raw of text.split("\n")) {
+    const line = raw.trim();
+    if (line.length === 0) continue;
+    const kind = headingKind(line);
+    if (kind) {
+      current = kind;
+      continue;
+    }
+    if (current === null || current === "other") continue;
+    const item = line.replace(BULLET, "").trim();
+    if (item.length === 0) continue;
+    const list = found.get(current) ?? [];
+    if (list.length < SUMMARY_MAX_ITEMS) {
+      list.push(
+        item.length > ITEM_MAX_CHARS ? `${item.slice(0, ITEM_MAX_CHARS - 1).trimEnd()}…` : item,
+      );
+    }
+    found.set(current, list);
+  }
+  return (["responsibilities", "qualifications", "benefits"] as const).flatMap((kind) => {
+    const items = found.get(kind);
+    return items && items.length > 0 ? [{ kind, items }] : [];
+  });
 }

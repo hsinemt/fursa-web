@@ -364,7 +364,7 @@ describe("job detail", () => {
 
     const breakdown = screen
       .getByRole("heading", { name: "How the score is made" })
-      .closest("aside")!;
+      .closest("section")!;
     expect(within(breakdown).getAllByRole("listitem")).toHaveLength(5);
     expect(within(breakdown).queryByText("Level")).not.toBeInTheDocument();
     expect(within(breakdown).getByText("Freshness")).toBeInTheDocument();
@@ -377,6 +377,44 @@ describe("job detail", () => {
     expect(container.querySelector("script, b")).toBeNull();
     expect((window as unknown as { hacked?: number }).hacked).toBeUndefined();
     expect(container.innerHTML).not.toContain("window.hacked");
+  });
+
+  it("shows a summary of responsibilities, qualifications and benefits, and the full posting on demand", async () => {
+    answers[`GET /v1/jobs/${ID1}`] = () =>
+      json(
+        detail({
+          description:
+            "<p>About us</p><p>We make things.</p><h3>Responsibilities</h3><ul><li>Build pipelines</li><li>Review code</li></ul><h3>Requirements:</h3><ul><li>5 years of Python</li></ul><h3>What we offer</h3><ul><li>Remote work</li></ul><p>Apply today.</p>",
+          extracted: { summary: "A data engineering role." },
+        }),
+      );
+    open();
+    expect(await screen.findByText("A data engineering role.")).toBeInTheDocument();
+    const description = screen.getByRole("heading", { name: "Description" }).closest("section")!;
+    for (const heading of ["Responsibilities", "Qualifications", "Benefits"]) {
+      expect(within(description).getByRole("heading", { name: heading })).toBeInTheDocument();
+    }
+    expect(within(description).getByText("Build pipelines")).toBeInTheDocument();
+    expect(within(description).getByText("5 years of Python")).toBeInTheDocument();
+    expect(within(description).getByText("Remote work")).toBeInTheDocument();
+    expect(within(description).queryByText("We make things.")).not.toBeInTheDocument();
+    expect(within(description).getByRole("button", { name: "Summary" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+
+    fireEvent.click(within(description).getByRole("button", { name: "Full posting" }));
+    expect(within(description).getByText("We make things.")).toBeInTheDocument();
+    expect(within(description).getByText(/Apply today./)).toBeInTheDocument();
+    expect(
+      within(description).queryByRole("heading", { name: "Benefits" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows the full posting without a switch when no part can be found", async () => {
+    open();
+    await screen.findByText(/Build pipelines/);
+    expect(screen.queryByRole("button", { name: "Summary" })).not.toBeInTheDocument();
   });
 
   it("leaves the AI note and absent facts out when the API has none", async () => {

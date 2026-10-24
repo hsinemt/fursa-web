@@ -16,6 +16,8 @@ Status: accepted. Date: 2026-10-24.
 10. **Sort is client-side.** The API has no sort parameter, so "Newest" orders the jobs already loaded by posting date (`?sort=newest`); "Best match" is the API order. Needs an API `sort` parameter to be exact across pages.
 11. **Logo tile, not a logo.** The API sends no company logo. `CompanyLogo` shows the initial and takes a `src` when a logo field exists.
 12. **Repaired text.** Some scraped text arrives double-encoded (UTF-8 read as Windows-1252). `repairText` turns each such run back into the right characters, and C1 control characters are dropped.
+13. **Description in two modes.** Summary (default when it can be made) shows `extracted.summary` when the API has one, then Responsibilities, Qualifications and Benefits cut from the posting under its own headings (`splitSections`, English, French and Arabic heading words, 8 points at most). It never rewrites the text. Full posting is the whole plain text. A real AI summary of each posting would come from the API.
+14. **Full width, two columns.** The feed uses the whole screen; the job has a main column and a 20 rem side panel (score and breakdown, skills, facts).
 
 ## Not done here
 

@@ -574,7 +574,17 @@
     },
     "description": {
       "title": "الوصف",
-      "empty": "لا يحتوي الإعلان على وصف."
+      "empty": "لا يحتوي الإعلان على وصف.",
+      "modeLabel": "عرض الوصف",
+      "summary": "ملخص",
+      "full": "الإعلان كاملاً",
+      "byAi": "كتبه الذكاء الاصطناعي",
+      "cutFromPosting": "مقتطع من الإعلان تحت عناوينه نفسها.",
+      "sections": {
+        "responsibilities": "المهام",
+        "qualifications": "المؤهلات",
+        "benefits": "المزايا"
+      }
     }
   }
 }
