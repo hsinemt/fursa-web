@@ -1,4 +1,7 @@
 import { PickAJob } from "@/components/features/feed/feed-shell";
+import { pageTitle } from "@/lib/page-title";
+
+export const generateMetadata = pageTitle("pages.feed");
 
 /** The list is in the layout; this is the open-job side while no job is chosen (laptop only). */
 export default function FeedPage() {
