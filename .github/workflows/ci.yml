@@ -56,6 +56,38 @@ jobs:
       - name: Audit dependencies
         run: pnpm audit --audit-level high
 
+  e2e:
+    name: End-to-end tests (left to right and right to left)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: check
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install the browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      # Starts the app against the fake sign-in service and the fake API in e2e/
+      - name: Run the tests
+        run: pnpm test:e2e
+
+      - name: Keep the traces of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7
+
   docker:
     name: Docker image
     runs-on: ubuntu-latest
