@@ -17,7 +17,7 @@ import { Chip } from "@/components/ui/chip";
 import { CompanyLogo } from "@/components/ui/company-logo";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ICON_SM, iconProps } from "@/components/ui/icon";
-import { Score } from "@/components/ui/score";
+import { ScoreRing } from "@/components/ui/score";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast";
 import { Link } from "@/i18n/navigation";
@@ -247,11 +247,7 @@ function Detail({ job }: { job: JobDetail }) {
       </header>
 
       <aside className="flex flex-col gap-4 self-start rounded-panel bg-panel p-4 min-[1180px]:sticky min-[1180px]:top-0 min-[1180px]:col-start-2 min-[1180px]:row-span-3 min-[1180px]:row-start-1">
-        <Score
-          value={job.score}
-          label={scoreT(scoreBand(job.score))}
-          className="[&>span:first-child]:text-2xl"
-        />
+        <ScoreRing size="lg" value={job.score} label={scoreT(scoreBand(job.score))} />
         {breakdown.parts.length > 0 ? (
           <PanelPart title={t("breakdown.title")}>
             <ScoreBreakdown parts={breakdown.parts} />

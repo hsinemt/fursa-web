@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Score } from "@/components/ui/score";
+import { Score, ScoreRing } from "@/components/ui/score";
 import { cn } from "@/lib/utils/cn";
 
 type JobRowProps = Omit<React.ComponentProps<"li">, "title" | "children"> & {
@@ -18,6 +18,8 @@ type JobRowProps = Omit<React.ComponentProps<"li">, "title" | "children"> & {
   aside?: React.ReactNode;
   /** Makes the whole row a link: wraps the content in the link the caller builds. */
   link?: (content: React.ReactNode, className: string) => React.ReactNode;
+  /** Show the score in a ring (the feed) instead of the plain number and word. */
+  ring?: boolean;
   selected?: boolean;
 };
 
@@ -35,6 +37,7 @@ export function JobRow({
   leading,
   aside,
   link,
+  ring = false,
   selected = false,
   className,
   ...props
@@ -59,7 +62,11 @@ export function JobRow({
         ) : null}
       </div>
       <div className="flex shrink-0 flex-col items-end gap-1 self-start">
-        <Score value={score} label={scoreLabel} />
+        {ring ? (
+          <ScoreRing value={score} label={scoreLabel} />
+        ) : (
+          <Score value={score} label={scoreLabel} />
+        )}
         {aside}
       </div>
     </>

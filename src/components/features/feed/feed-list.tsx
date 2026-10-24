@@ -229,6 +229,7 @@ export function FeedList({ onJob }: { onJob: boolean }) {
                   leading={<CompanyLogo name={job.company} />}
                   meta={metaLines(job, now, locale, t("closed"))}
                   reason={job.explanation ?? undefined}
+                  ring
                   score={job.score}
                   scoreLabel={scoreT(scoreBand(job.score))}
                   aside={

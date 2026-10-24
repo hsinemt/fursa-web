@@ -52,7 +52,7 @@ Rules:
 | --- | --- | --- |
 | Interface text | **IBM Plex Sans** (400, 500) | Latin (English, French) |
 | Interface text, Arabic | **IBM Plex Sans Arabic** (400, 500) | Same family feel as the Latin |
-| Headings, scores, wordmark | **DM Serif Display** (400) | Latin only. It has one weight. Arabic headings use Plex Sans Arabic 500 |
+| Headings, wordmark | **DM Serif Display** (400) | Latin only. It has one weight. Arabic headings use Plex Sans Arabic 500 |
 
 - Load with `next/font` (`display: swap`), with sensible fallbacks.
 - **Two weights only** for text: 400 and 500. No bold, no italics for emphasis. DM Serif Display is used at its single weight (400) and never made bold.
@@ -100,9 +100,10 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 
 ## Components
 
-**Score.** The number in DM Serif Display (tabular), followed by a word band in `--slate`:
+**Score.** The number in **IBM Plex Sans 500, tabular** (not the serif: its old-style digits look uneven in a column), followed by a word band in `--slate`:
 - **Strong** from 75, **Good** 60 to 74, **Partial** 45 to 59 (matches under 45 are not stored).
-- The number uses `--accent`. In the detail, a plain **breakdown** lists the parts (title, skills, location, level, freshness) each with a thin bar and its number, so people see *why*. No circular gauges, no gradients.
+- The number uses `--accent`. **In the feed** the score is shown in a **score ring**: a thin flat ring (3 px, `--accent` arc on a `--line` track, filled in proportion to the score, starting at the top) with the number inside, and the word under it (36 px in a row, 72 px in the job's side panel). No gradients, no glow, no green or red. The number is always written, so the ring is only a picture of it. Elsewhere (welcome page examples) the plain number and word are used.
+- In the detail, a plain **breakdown** lists the parts (title, skills, location, level, freshness) each with a thin bar and its number, so people see *why*.
 
 **Status.** A 8 px dot plus the word. Never a loud filled badge.
 
@@ -156,7 +157,7 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **Full width:** the feed uses the whole width of the screen (small gutters, no centered column), like a desktop tool; the top bar spans the same width. Other pages keep their own narrow columns.
 - **Detail layout:** on a wide pane the job has **two columns**: the main column (header, actions, **Why it matches**, **Description**) and a **side panel** (about 20 rem, `--panel`, one panel with hairlines between its parts: the score with its breakdown, the skills, the facts). On a narrow pane the side panel sits under the header and the rest follows. Back link on small screens.
 - **Header:** the logo tile, the title, company and how long ago, then one row of **key facts** with a small icon each (place, work mode and type, salary, level; a fact the API does not have is left out, never shown as "unknown"), then the actions and **Your status**.
-- **Side panel:** the **score** numeral in DM Serif Display with its word and the **breakdown** (a row per part: title, skills, location, level, freshness, similarity to the profile; a number 0 to 100 and a thin bar; a part the score did not use is left out); **Skills** (matched as chips with a check, then the ones the posting asks for that the profile lacks); **Facts** (posted date, source, languages, visa and relocation when known).
+- **Side panel:** the **score ring** with its word and the **breakdown** (a row per part: title, skills, location, level, freshness, similarity to the profile; a number 0 to 100 and a thin bar; a part the score did not use is left out); **Skills** (matched as chips with a check, then the ones the posting asks for that the profile lacks); **Facts** (posted date, source, languages, visa and relocation when known).
 - **Description has two modes**, chosen with a small two-button switch at the end of its heading (**Summary** and **Full posting**, `aria-pressed`). **Summary** (the default when it can be made) shows the AI summary when the API has one (with "Written by AI"), then the parts of the posting found under its own headings, as short lists: **Responsibilities**, **Qualifications** and **Benefits** (English, French and Arabic heading words are recognized; at most 8 points each). It is cut from the posting, never rewritten, and says so in one quiet line. When no such heading is found and there is no summary, the switch is not shown and the full posting appears. **Full posting** is the whole text as plain paragraphs.
 - **Actions:** **Open posting** is the one primary button (external link, `rel="noopener noreferrer"`, new tab, only for an `http` or `https` address). **Save** (secondary) toggles between new and saved and is shown only while the job is new or saved. **Your status** is a group of five buttons (New, Saved, Applied, Interview, Rejected) with `aria-pressed`; the change shows at once and is undone with a toast if the API refuses.
 - **Scraped text is untrusted.** The description is turned into plain text (tags dropped, line breaks kept, entities decoded) and shown as paragraphs by React, which escapes it. Never `dangerouslySetInnerHTML`. Title, company, place and every extracted fact are text too, and carry `dir="auto"`.
