@@ -316,3 +316,32 @@
 .scene-bar {
   width: var(--w, 0);
 }
+
+/* Pipeline card: the thin bar on the running step fills in the time of the step */
+@keyframes bar-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.bar-run {
+  animation: bar-fill 900ms linear forwards;
+}
+
+/* The "working" dots pulse only while a pipeline sequence is running */
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dot-pulse {
+  animation: dot-pulse 900ms ease-in-out infinite;
+}
