@@ -1,7 +1,5 @@
-import { useTranslations } from "next-intl";
-import { PlaceholderPage } from "@/components/layout/placeholder-page";
+import { ProfileScreen } from "@/components/features/profile/profile-screen";
 
 export default function ProfilePage() {
-  const t = useTranslations("pages.profile");
-  return <PlaceholderPage title={t("title")} description={t("placeholder")} />;
+  return <ProfileScreen />;
 }

@@ -218,7 +218,7 @@ It is a testing tool: plain styling, English only, no translations required.
      - Basic SEO: title, description, language alternates.
    - Until the auth step exists, **Create account** and **Sign in** point to simple placeholder pages.
 2. **Auth**: signup, login, forgot password, reset password, email verification notice. A split screen (see "Auth pages" in `fursa design.md`): accent panel with the promise and an example, form on the other side.
-3. **Onboarding**: target roles, skills, locations, seniority, alert preferences. (CV upload comes later: the API has no endpoint for it yet.)
+3. **Onboarding**: target roles, skills, locations, seniority, alert preferences. (CV upload comes later: the API has no endpoint for it yet.) Built in step 6: five steps saved one by one, shown after sign up (see `docs/adr/0005-profile-and-onboarding.md` and "Profile and onboarding" in `fursa design.md`).
 4. **Job feed**: score, a short "why it matches you" explanation when there is one, status filter, "load more". (Search and richer filters need an API change first.)
 5. **Job detail**: sanitized description, score breakdown, save and apply actions, link to the original posting
 6. **Pipeline board**: saved, applied, interview, rejected (drag and drop). One feed query per status; moving a card is `PUT /jobs/{id}/status`
@@ -272,6 +272,33 @@ Each step is built on **its own branch**, named `feat/<step-name>` as in the tab
 | 11 | `feat/polish` | Privacy and terms pages, polish, accessibility pass, e2e tests in LTR and RTL |
 
 Later features follow the same rule: `feat/<what-it-does>`, and a bug fix is `fix/<what-it-fixes>`.
+
+## Progress and handover
+
+Where the build stands (update this when a step is merged).
+
+- **Done and merged:** steps 1 to 5 (skeleton, welcome, api-client, auth, dev-console), plus the CI smoke-test fix.
+- **Done, on `feat/profile`, waiting for push, pull request and merge:** step 6 (profile, onboarding, language sync). Tested by the user by hand.
+- **Next:** step 7, `feat/job-feed`, cut from an up-to-date `main` after step 6 is merged.
+- **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
+
+How to work (kept from the start):
+
+- One step at a time, on its own branch; small focused commits; never commit to `main`. After a step: report what the app does now, how to test it, what the user must add, then stop and wait. The user opens the pull request (give the compare link, title and description) and says when it is merged.
+- `fursa-api` is read only. If the API needs a change, write down what and why, and tell the user.
+- Design rules go into `fursa design.md` first, then code. Our own identity: no copying other sites, no side lines on cards, rows, quotes or tabs, DM Serif Display for headings.
+- Windows and PowerShell. If `pnpm` is not found in a shell: `$env:Path = "$env:USERPROFILE.corepack-bin;" + $env:Path`. Checks: `pnpm exec tsc --noEmit`, `pnpm exec eslint .`, `pnpm exec prettier --check .`, `pnpm exec vitest run`, `pnpm build`.
+- Never ask for secrets in chat. `.env.local` is filled by the user and not read.
+
+Known notes and deferred items:
+
+- The API does not read first and last name yet (sign up sends them in the account metadata).
+- Terms and Privacy pages are placeholders until step 11.
+- The account menu is only a Sign out button; the `account_deleted` message is not shown yet (step 9).
+- Telegram linking is step 8; CV upload waits for an API endpoint; profile `weights` are not exposed.
+- The contract documents a bearer scheme and has no 403 responses (note for the API project).
+- **API bug found:** the API `app` container exits at start when `DOCS_ENABLED` is empty (`docker-compose.yml` passes `${DOCS_ENABLED:-}`, and the settings reject an empty boolean). Workaround: set `DOCS_ENABLED=true` or `false` in the API `.env`. Proper fix belongs to the API project.
+- Changing language during onboarding returns to step 1 (saved data is prefilled).
 
 ## Definition of done for v1
 

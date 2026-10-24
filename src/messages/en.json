@@ -369,5 +369,116 @@
         "languages": "In Arabic, French and English."
       }
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "intro": "What you look for. Fursa uses it to find jobs and to score each one.",
+    "roles": {
+      "label": "Target roles",
+      "help": "The job titles you want, for example Data engineer.",
+      "placeholder": "Add a role, then press Enter"
+    },
+    "skills": {
+      "label": "Skills",
+      "help": "Tools and skills you have.",
+      "placeholder": "Add a skill, then press Enter"
+    },
+    "locations": {
+      "label": "Places",
+      "help": "Cities, countries, or Remote.",
+      "placeholder": "Add a place, then press Enter"
+    },
+    "seniority": {
+      "label": "Level",
+      "help": "The level you are looking for.",
+      "none": "No preference",
+      "options": {
+        "intern": "Intern",
+        "junior": "Junior",
+        "mid": "Mid-level",
+        "senior": "Senior",
+        "lead": "Lead",
+        "principal": "Principal"
+      }
+    },
+    "salary": {
+      "title": "Salary",
+      "help": "Optional.",
+      "min": "Minimum",
+      "max": "Maximum",
+      "currency": "Currency",
+      "currencyHelp": "3 letters, for example TND, EUR or USD."
+    },
+    "tags": {
+      "remove": "Remove {name}",
+      "count": "{count} of {max}",
+      "full": "You reached the limit of {max}."
+    },
+    "save": "Save profile",
+    "saving": "Saving…",
+    "noChanges": "No changes to save.",
+    "saved": "Profile saved.",
+    "loadFailed": "Your profile could not be loaded.",
+    "retry": "Try again",
+    "validation": {
+      "currency_invalid": "Use 3 letters, for example TND.",
+      "salary_negative": "Enter 0 or more.",
+      "salary_integer": "Use a whole number.",
+      "salary_range": "The minimum is higher than the maximum.",
+      "currency_needed": "Add a currency for the salary.",
+      "score_range": "Enter a number from 0 to 100."
+    }
+  },
+  "onboarding": {
+    "title": "Set up your profile",
+    "step": "Step {current} of {total}",
+    "progress": "Progress",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip for now",
+    "finish": "Finish",
+    "saving": "Saving…",
+    "done": "Your profile is ready.",
+    "steps": {
+      "roles": {
+        "title": "Which roles are you looking for?",
+        "text": "Add the job titles you want. You can add more later."
+      },
+      "skills": {
+        "title": "Which skills do you have?",
+        "text": "Fursa compares them with what each job asks for."
+      },
+      "locations": {
+        "title": "Where do you want to work?",
+        "text": "Cities, countries, or Remote."
+      },
+      "level": {
+        "title": "Which level are you looking for?",
+        "text": "Optional. Fursa uses it to score each job."
+      },
+      "alerts": {
+        "title": "How should Fursa tell you about good jobs?",
+        "text": "You can change this at any time."
+      }
+    },
+    "alerts": {
+      "email": "Email me about good matches",
+      "frequency": "How often",
+      "daily": "Once a day",
+      "instant": "As soon as a job matches",
+      "minScore": "Only jobs scoring at least",
+      "digestHour": "Hour of the daily email (UTC)",
+      "hourOption": "{hour}:00 UTC"
+    },
+    "retryLoad": "Try again"
+  },
+  "toast": {
+    "close": "Close",
+    "languageNotSaved": "The language changed here, but could not be saved to your account. Try again."
+  },
+  "emptyFeed": {
+    "title": "No matches yet.",
+    "text": "Add your target roles so Fursa can find jobs.",
+    "action": "Add your target roles"
   }
 }

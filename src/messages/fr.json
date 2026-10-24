@@ -369,5 +369,116 @@
         "languages": "En arabe, en français et en anglais."
       }
     }
+  },
+  "profile": {
+    "title": "Profil",
+    "intro": "Ce que vous cherchez. Fursa s’en sert pour trouver des offres et noter chacune.",
+    "roles": {
+      "label": "Postes visés",
+      "help": "Les intitulés de poste que vous voulez, par exemple Ingénieur données.",
+      "placeholder": "Ajoutez un poste, puis appuyez sur Entrée"
+    },
+    "skills": {
+      "label": "Compétences",
+      "help": "Les outils et compétences que vous maîtrisez.",
+      "placeholder": "Ajoutez une compétence, puis appuyez sur Entrée"
+    },
+    "locations": {
+      "label": "Lieux",
+      "help": "Villes, pays, ou À distance.",
+      "placeholder": "Ajoutez un lieu, puis appuyez sur Entrée"
+    },
+    "seniority": {
+      "label": "Niveau",
+      "help": "Le niveau que vous cherchez.",
+      "none": "Pas de préférence",
+      "options": {
+        "intern": "Stagiaire",
+        "junior": "Junior",
+        "mid": "Confirmé",
+        "senior": "Senior",
+        "lead": "Lead",
+        "principal": "Principal"
+      }
+    },
+    "salary": {
+      "title": "Salaire",
+      "help": "Facultatif.",
+      "min": "Minimum",
+      "max": "Maximum",
+      "currency": "Devise",
+      "currencyHelp": "3 lettres, par exemple TND, EUR ou USD."
+    },
+    "tags": {
+      "remove": "Retirer {name}",
+      "count": "{count} sur {max}",
+      "full": "Vous avez atteint la limite de {max}."
+    },
+    "save": "Enregistrer le profil",
+    "saving": "Enregistrement…",
+    "noChanges": "Aucun changement à enregistrer.",
+    "saved": "Profil enregistré.",
+    "loadFailed": "Votre profil n’a pas pu être chargé.",
+    "retry": "Réessayer",
+    "validation": {
+      "currency_invalid": "Utilisez 3 lettres, par exemple TND.",
+      "salary_negative": "Saisissez 0 ou plus.",
+      "salary_integer": "Utilisez un nombre entier.",
+      "salary_range": "Le minimum est supérieur au maximum.",
+      "currency_needed": "Ajoutez une devise pour le salaire.",
+      "score_range": "Saisissez un nombre de 0 à 100."
+    }
+  },
+  "onboarding": {
+    "title": "Configurez votre profil",
+    "step": "Étape {current} sur {total}",
+    "progress": "Progression",
+    "back": "Retour",
+    "next": "Suivant",
+    "skip": "Passer pour l’instant",
+    "finish": "Terminer",
+    "saving": "Enregistrement…",
+    "done": "Votre profil est prêt.",
+    "steps": {
+      "roles": {
+        "title": "Quels postes cherchez-vous ?",
+        "text": "Ajoutez les intitulés de poste que vous voulez. Vous pourrez en ajouter d’autres plus tard."
+      },
+      "skills": {
+        "title": "Quelles compétences avez-vous ?",
+        "text": "Fursa les compare à ce que demande chaque offre."
+      },
+      "locations": {
+        "title": "Où voulez-vous travailler ?",
+        "text": "Villes, pays, ou À distance."
+      },
+      "level": {
+        "title": "Quel niveau cherchez-vous ?",
+        "text": "Facultatif. Fursa s’en sert pour noter chaque offre."
+      },
+      "alerts": {
+        "title": "Comment Fursa doit-il vous prévenir des bonnes offres ?",
+        "text": "Vous pouvez le modifier à tout moment."
+      }
+    },
+    "alerts": {
+      "email": "M’écrire pour les bonnes correspondances",
+      "frequency": "À quelle fréquence",
+      "daily": "Une fois par jour",
+      "instant": "Dès qu’une offre correspond",
+      "minScore": "Seulement les offres notées au moins",
+      "digestHour": "Heure de l’e-mail quotidien (UTC)",
+      "hourOption": "{hour} h UTC"
+    },
+    "retryLoad": "Réessayer"
+  },
+  "toast": {
+    "close": "Fermer",
+    "languageNotSaved": "La langue a changé ici, mais n’a pas pu être enregistrée sur votre compte. Réessayez."
+  },
+  "emptyFeed": {
+    "title": "Aucune offre pour l’instant.",
+    "text": "Ajoutez vos postes visés pour que Fursa trouve des offres.",
+    "action": "Ajouter mes postes visés"
   }
 }

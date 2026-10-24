@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { AppProviders } from "@/components/providers/app-providers";
 import { TabBar } from "@/components/layout/tab-bar";
 import { ThemeCycle } from "@/components/layout/theme-switcher";
 import { SignOutButton } from "@/components/features/auth/sign-out-button";
@@ -12,7 +13,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const theme = parseTheme((await cookies()).get(THEME_COOKIE)?.value);
 
   return (
-    <>
+    <AppProviders>
       <TopBar
         themeControl={<ThemeCycle current={theme} />}
         accountControl={
@@ -31,6 +32,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {children}
       </main>
       <TabBar />
-    </>
+    </AppProviders>
   );
 }

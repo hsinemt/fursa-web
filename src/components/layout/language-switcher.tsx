@@ -3,6 +3,8 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useTransition } from "react";
+import { useOptionalToast } from "@/components/ui/toast";
+import { api, call } from "@/lib/api";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, type Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils/cn";
@@ -11,17 +13,35 @@ import { cn } from "@/lib/utils/cn";
  * Switches the interface language, keeping the current page.
  * - "select": compact, for the top bar
  * - "list": all three languages visible, for Settings
+ * With `syncAccount` (signed-in screens) the choice is also saved to the account, so emails
+ * and the next sign-in use it. If that fails the page still changes; a toast says so.
  */
-export function LanguageSwitcher({ variant = "select" }: { variant?: "select" | "list" }) {
+export function LanguageSwitcher({
+  variant = "select",
+  syncAccount = false,
+}: {
+  variant?: "select" | "list";
+  syncAccount?: boolean;
+}) {
   const t = useTranslations("language");
+  const messages = useTranslations("toast");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
   const [pending, startTransition] = useTransition();
+  const toast = useOptionalToast();
 
   function change(next: Locale) {
-    startTransition(() => {
+    if (next === locale) return;
+    startTransition(async () => {
+      if (syncAccount) {
+        try {
+          await call(api.PATCH("/v1/settings", { body: { locale: next } }));
+        } catch {
+          toast?.show(messages("languageNotSaved"));
+        }
+      }
       // `params` is passed for dynamic routes such as /jobs/[id].
       router.replace({ pathname, params } as Parameters<typeof router.replace>[0], {
         locale: next,

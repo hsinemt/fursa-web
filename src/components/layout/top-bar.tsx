@@ -48,7 +48,7 @@ export function TopBar({
           })}
         </nav>
         <div className="ms-auto flex items-center gap-2">
-          <LanguageSwitcher />
+          <LanguageSwitcher syncAccount />
           {themeControl}
           {accountControl}
         </div>
