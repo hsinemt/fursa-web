@@ -40,6 +40,18 @@ Sign-in uses your Supabase project. Until it is set up, the app pages send you t
 
 The confirmation and reset links must be opened in the same browser that asked for them. Cookies are `HttpOnly`: you will not see them in `document.cookie`. To check them, open the browser's developer tools, **Application > Cookies**: `fursa_access_token` and the `sb-...` cookies should show HttpOnly and SameSite Lax (and Secure over https).
 
+## Dev console
+
+A plain page to try the API by hand, in development only (it is not in a production build). Run the API (`docker compose up -d --build app worker` in fursa-api, port 8000), run `pnpm dev`, sign in, then open **Dev** in the top bar or `http://localhost:3000/en/dev`.
+
+- **Session:** who is signed in, a countdown to the end of the access token, and a button that refreshes it (both cookies change together).
+- **Does everything work?** API health and "who am I", sent for you when the page opens.
+- **A card for every endpoint** (profile, feed and jobs, settings, notifications, data export, account deletion): fill the inputs, press Send, read the JSON as returned. Deleting the account needs the word DELETE typed first.
+- **Errors in full:** code, message, details. After a 429 the Send button counts down the seconds the API asked for.
+- **Last calls:** method, route, status and time only. Never a token, an email, an id, a query value or a body.
+
+To run a second dev server (for example against other settings), give it its own build folder: `NEXT_DIST_DIR=.next-other pnpm dev --port 3001`.
+
 ## Commands
 
 | Command                   | What it does                                                                                  |
@@ -63,6 +75,7 @@ CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build
 - `src/messages/`: `ar.json`, `fr.json`, `en.json`. Every text is a key; a test checks the three have the same keys.
 - `src/proxy.ts`: locale routing and the Content-Security-Policy (nonce).
 - `src/lib/api/`: the API client. `schema.d.ts` is generated from `contract/openapi.json` (never edit it); `client.ts` is the fetch wrapper; `errors.ts` maps API error codes to translated messages. Use it as `const me = await call(api.GET("/v1/me"))`.
+- `src/lib/dev/` and `src/components/dev/`: the dev console (endpoint table checked against the contract, the runner, the cards). Development only.
 - `src/lib/auth/`: sign-in, sessions and cookies. **The only place that knows about Supabase**, and it runs on the server only. `actions.ts` has the Server Actions, `proxy.ts` refreshes the session, `cookies.ts` has the cookie rules.
 - `contract/openapi.json` and `api-contract.version`: the API contract this app is built against, and its pinned version.
 - `docs/adr/`: decisions.

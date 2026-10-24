@@ -26,6 +26,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A second dev server needs its own build folder (NEXT_DIST_DIR=.next-other). Unset: .next.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   output: "standalone", // smallest runtime for the Docker image
   pageExtensions,
   poweredByHeader: false,
