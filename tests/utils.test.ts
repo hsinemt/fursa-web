@@ -84,3 +84,12 @@ describe("csp", () => {
     expect(buildCsp({ nonce: "x", isDev: true })).toContain("'unsafe-eval'");
   });
 });
+
+describe("csp upgrade-insecure-requests", () => {
+  it("is added only for an https site in production", () => {
+    const base = { nonce: "x", isDev: false };
+    expect(buildCsp({ ...base, https: true })).toContain("upgrade-insecure-requests");
+    expect(buildCsp({ ...base, https: false })).not.toContain("upgrade-insecure-requests");
+    expect(buildCsp({ ...base })).not.toContain("upgrade-insecure-requests");
+  });
+});

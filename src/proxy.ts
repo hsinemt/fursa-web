@@ -13,6 +13,7 @@ export default function proxy(request: NextRequest) {
     nonce,
     apiUrl: process.env.NEXT_PUBLIC_API_URL,
     isDev: process.env.NODE_ENV !== "production",
+    https: process.env.NEXT_PUBLIC_SITE_URL?.startsWith("https://") ?? false,
   });
 
   // Next.js reads the nonce from the request's CSP header and applies it to its own scripts.

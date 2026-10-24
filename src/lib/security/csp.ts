@@ -15,7 +15,13 @@ export function apiOrigin(raw: string | undefined): string {
   }
 }
 
-export function buildCsp(opts: { nonce: string; apiUrl?: string; isDev: boolean }): string {
+export function buildCsp(opts: {
+  nonce: string;
+  apiUrl?: string;
+  isDev: boolean;
+  /** Add upgrade-insecure-requests: only when the site itself is served over https. */
+  https?: boolean;
+}): string {
   const { nonce, isDev } = opts;
   const api = apiOrigin(opts.apiUrl);
 
@@ -41,7 +47,7 @@ export function buildCsp(opts: { nonce: string; apiUrl?: string; isDev: boolean 
     "base-uri": ["'self'"],
     "form-action": ["'self'"],
     "frame-ancestors": ["'none'"],
-    ...(isDev ? {} : { "upgrade-insecure-requests": [] }),
+    ...(opts.https && !isDev ? { "upgrade-insecure-requests": [] } : {}),
   };
 
   return Object.entries(directives)
