@@ -28,11 +28,6 @@
     "dark": "Sombre",
     "system": "Système"
   },
-  "home": {
-    "title": "Fursa",
-    "placeholder": "La page d’accueil arrive à la prochaine étape.",
-    "openApp": "Ouvrir l’application"
-  },
   "pages": {
     "feed": {
       "title": "Offres",
@@ -49,6 +44,93 @@
     "settings": {
       "title": "Paramètres",
       "placeholder": "Les notifications et vos données apparaîtront ici."
+    }
+  },
+  "actions": {
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter"
+  },
+  "footer": {
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "language": "Langue"
+  },
+  "later": {
+    "placeholder": "Cette page est construite à une étape ultérieure.",
+    "login": "Se connecter",
+    "signup": "Créer un compte",
+    "privacy": "Confidentialité",
+    "terms": "Conditions"
+  },
+  "welcome": {
+    "metaTitle": "Fursa · Trouvez les offres qui vous correspondent",
+    "metaDescription": "Fursa rassemble des offres de plusieurs sources, note chacune selon votre profil et vous signale les meilleures. Il ne postule jamais à votre place.",
+    "nav": {
+      "how": "Comment ça marche",
+      "example": "Exemple",
+      "data": "Vos données"
+    },
+    "headline": "Trouvez les offres qui vous correspondent.",
+    "intro": "Fursa rassemble des offres de plusieurs sources, note chacune selon votre profil et vous signale les meilleures.",
+    "how": {
+      "title": "Comment ça marche",
+      "steps": {
+        "one": {
+          "title": "Dites à Fursa ce que vous cherchez",
+          "text": "Indiquez les postes, compétences, lieux et niveau qui vous intéressent."
+        },
+        "two": {
+          "title": "Fursa note chaque offre",
+          "text": "Il rassemble des offres de plusieurs sources et note chacune selon votre profil."
+        },
+        "three": {
+          "title": "Vous recevez une courte liste, avec les raisons",
+          "text": "Chaque offre explique pourquoi elle vous correspond. Si vous le souhaitez, vous recevez aussi des alertes sur Telegram ou par e-mail."
+        }
+      }
+    },
+    "example": {
+      "title": "Exemple",
+      "help": "Données fictives, pour montrer à quoi ressemblera votre liste d’offres.",
+      "label": "Exemple de liste d’offres",
+      "count": "3 offres",
+      "order": "Les meilleures d’abord",
+      "jobs": {
+        "one": {
+          "title": "Ingénieur données",
+          "meta": "Entreprise exemple · Tunis · il y a 2 jours"
+        },
+        "two": {
+          "title": "Développeur backend",
+          "meta": "Entreprise fictive · À distance · il y a 5 jours"
+        },
+        "three": {
+          "title": "Ingénieur plateforme",
+          "meta": "Société démo · Sfax · il y a 1 semaine"
+        }
+      },
+      "detail": {
+        "line": "Entreprise exemple · Hybride · Temps plein",
+        "level": "Niveau",
+        "levelValue": "Senior",
+        "mode": "Mode de travail",
+        "modeValue": "Hybride",
+        "posted": "Publiée",
+        "postedValue": "il y a 2 jours",
+        "matched": "Compétences que vous avez",
+        "missing": "Compétences absentes de votre profil",
+        "whyTitle": "Pourquoi cette offre vous correspond",
+        "byAi": "Rédigé par l’IA",
+        "why": "Votre profil indique Python, SQL et Docker, que cette offre demande. Le poste est à Tunis, un des lieux que vous avez choisis. Elle demande aussi Kubernetes, que votre profil ne mentionne pas."
+      }
+    },
+    "doesNot": {
+      "title": "Ce que Fursa ne fait pas",
+      "text": "Fursa ne postule jamais à votre place. Vous lisez pourquoi une offre vous correspond, vous ouvrez l’annonce et vous postulez vous-même."
+    },
+    "data": {
+      "title": "Vos données",
+      "text": "Vous pouvez exporter vos données ou supprimer votre compte à tout moment."
     }
   },
   "notFound": {

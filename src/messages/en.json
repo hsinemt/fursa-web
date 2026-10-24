@@ -28,11 +28,6 @@
     "dark": "Dark",
     "system": "System"
   },
-  "home": {
-    "title": "Fursa",
-    "placeholder": "The welcome page comes in the next step.",
-    "openApp": "Open the app"
-  },
   "pages": {
     "feed": {
       "title": "Feed",
@@ -49,6 +44,93 @@
     "settings": {
       "title": "Settings",
       "placeholder": "Notifications and your data will appear here."
+    }
+  },
+  "actions": {
+    "createAccount": "Create account",
+    "signIn": "Sign in"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "language": "Language"
+  },
+  "later": {
+    "placeholder": "This page is built in a later step.",
+    "login": "Sign in",
+    "signup": "Create account",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "welcome": {
+    "metaTitle": "Fursa · Find the jobs that fit you",
+    "metaDescription": "Fursa collects jobs from several sources, scores each one against your profile and tells you about the good ones. It never applies for you.",
+    "nav": {
+      "how": "How it works",
+      "example": "Example",
+      "data": "Your data"
+    },
+    "headline": "Find the jobs that fit you.",
+    "intro": "Fursa collects jobs from several sources, scores each one against your profile, and tells you about the good ones.",
+    "how": {
+      "title": "How it works",
+      "steps": {
+        "one": {
+          "title": "Tell Fursa what you look for",
+          "text": "Add the roles, skills, places and level you want."
+        },
+        "two": {
+          "title": "Fursa scores each job",
+          "text": "It collects jobs from several sources and scores each one against you."
+        },
+        "three": {
+          "title": "You get a short list, with reasons",
+          "text": "Each job says why it fits you. If you want, you also get alerts on Telegram or by email."
+        }
+      }
+    },
+    "example": {
+      "title": "Example",
+      "help": "Sample data, to show how your feed will look.",
+      "label": "Example feed",
+      "count": "3 matches",
+      "order": "Best first",
+      "jobs": {
+        "one": {
+          "title": "Data engineer",
+          "meta": "Example company · Tunis · 2 days ago"
+        },
+        "two": {
+          "title": "Backend developer",
+          "meta": "Sample company · Remote · 5 days ago"
+        },
+        "three": {
+          "title": "Platform engineer",
+          "meta": "Demo company · Sfax · 1 week ago"
+        }
+      },
+      "detail": {
+        "line": "Example company · Hybrid · Full time",
+        "level": "Level",
+        "levelValue": "Senior",
+        "mode": "Work mode",
+        "modeValue": "Hybrid",
+        "posted": "Posted",
+        "postedValue": "2 days ago",
+        "matched": "Skills you have",
+        "missing": "Skills not in your profile",
+        "whyTitle": "Why it matches",
+        "byAi": "Written by AI",
+        "why": "Your profile lists Python, SQL and Docker, which this job asks for. The role is in Tunis, one of the places you chose. It also asks for Kubernetes, which your profile does not mention."
+      }
+    },
+    "doesNot": {
+      "title": "What Fursa does not do",
+      "text": "Fursa never applies for you. You read why a job matches, open the posting, and apply yourself."
+    },
+    "data": {
+      "title": "Your data",
+      "text": "You can export your data or delete your account at any time."
     }
   },
   "notFound": {

@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { fontVariables } from "@/app/fonts";
 import { getDirection, routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/site";
 import { parseTheme, THEME_COOKIE } from "@/lib/theme";
 import "@/styles/globals.css";
 
@@ -18,6 +19,7 @@ export async function generateMetadata({ params }: Pick<Props, "params">): Promi
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
+    metadataBase: siteUrl(),
     title: { default: t("title"), template: `%s · ${t("title")}` },
     description: t("description"),
   };
