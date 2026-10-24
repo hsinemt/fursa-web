@@ -1,6 +1,7 @@
 import { fireEvent, render, renderHook, screen, waitFor } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { BrandPanel } from "@/components/features/auth/brand-panel";
 import { ForgotForm } from "@/components/features/auth/forgot-form";
 import { LoginForm } from "@/components/features/auth/login-form";
 import { ResetForm } from "@/components/features/auth/reset-form";
@@ -239,5 +240,100 @@ describe("useApiErrorHandler", () => {
     expect(await result.current(new Error("boom"))).toBe(false);
     expect(router.replace).not.toHaveBeenCalled();
     expect(actions.signOutAction).not.toHaveBeenCalled();
+  });
+});
+
+describe("password field", () => {
+  it("shows and hides the password with a button that has a name and a state", () => {
+    renderIn(<LoginForm next={null} />);
+    const input = screen.getByLabelText("Password");
+    expect(input).toHaveAttribute("type", "password");
+
+    const show = screen.getByRole("button", { name: "Show password" });
+    expect(show).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(show);
+
+    expect(input).toHaveAttribute("type", "text");
+    const hide = screen.getByRole("button", { name: "Hide password" });
+    expect(hide).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(hide);
+    expect(input).toHaveAttribute("type", "password");
+  });
+
+  it("the toggle never submits the form", () => {
+    renderIn(<LoginForm next={null} />);
+    fireEvent.click(screen.getByRole("button", { name: "Show password" }));
+    expect(actions.signInAction).not.toHaveBeenCalled();
+  });
+
+  it("is named in the page language", () => {
+    renderIn(<LoginForm next={null} />, "ar");
+    expect(screen.getByRole("button", { name: ar.auth.fields.showPassword })).toBeInTheDocument();
+  });
+
+  it("the reset form has a toggle on both password fields", () => {
+    renderIn(<ResetForm />);
+    expect(screen.getAllByRole("button", { name: "Show password" })).toHaveLength(2);
+  });
+
+  it("a form with only an email has no toggle", () => {
+    renderIn(<ForgotForm />);
+    expect(screen.queryByRole("button", { name: "Show password" })).toBeNull();
+  });
+});
+
+describe("sign up: password rule and terms", () => {
+  const rule = () => screen.getByText("At least 8 characters.").closest("p") as HTMLElement;
+
+  it("shows the rule as waiting, then met with a check, as the person types", () => {
+    renderIn(<SignupForm />);
+    expect(rule().querySelector("svg")).toBeNull();
+
+    type("Password", "1234567");
+    expect(rule().querySelector("svg")).toBeNull();
+
+    type("Password", "12345678");
+    expect(rule().querySelector("svg")).not.toBeNull(); // a check, not only a color
+  });
+
+  it("links to the Terms and the Privacy policy", () => {
+    renderIn(<SignupForm />);
+    expect(screen.getByRole("link", { name: "Terms" })).toHaveAttribute("href", "/terms");
+    expect(screen.getByRole("link", { name: "Privacy policy" })).toHaveAttribute(
+      "href",
+      "/privacy",
+    );
+  });
+
+  it("has the terms links in Arabic too", () => {
+    renderIn(<SignupForm />, "ar");
+    expect(screen.getByRole("link", { name: "الشروط" })).toHaveAttribute("href", "/terms");
+    expect(screen.getByRole("link", { name: "سياسة الخصوصية" })).toHaveAttribute(
+      "href",
+      "/privacy",
+    );
+  });
+});
+
+describe("brand panel", () => {
+  it("says what Fursa does, with a real example, and nothing invented", () => {
+    const { container } = renderIn(<BrandPanel />);
+    const panel = screen.getByRole("complementary");
+
+    expect(panel).toHaveTextContent("Find the jobs that fit you, and see why.");
+    expect(panel).toHaveTextContent("Example");
+    expect(panel).toHaveTextContent(en.welcome.hero.why);
+    expect(panel).toHaveTextContent("Fursa never applies for you.");
+    expect(panel).toHaveTextContent("Export your data or delete your account at any time.");
+    expect(panel).toHaveTextContent("In Arabic, French and English.");
+
+    // No logos, photos or social buttons: only text.
+    expect(container.querySelector("img")).toBeNull();
+    expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("is only for laptops: hidden below the large breakpoint", () => {
+    renderIn(<BrandPanel />);
+    expect(screen.getByRole("complementary")).toHaveClass("hidden", "lg:flex");
   });
 });
