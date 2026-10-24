@@ -299,13 +299,14 @@ describe("job detail", () => {
   it("shows the title, facts, skills, the AI note, the breakdown and the description", async () => {
     open();
     expect(await screen.findByRole("heading", { level: 1, name: "Job 1" })).toBeInTheDocument();
-    expect(
-      screen.getByText(/Company 1 · Hybrid · Full time · 50,000 – 70,000 EUR per year/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/^Company 1 · 3 days ago$/)).toBeInTheDocument();
+    // The key facts, one row each.
+    expect(screen.getByText("Tunis, Tunisia")).toBeInTheDocument();
+    expect(screen.getByText("Hybrid · Full time")).toBeInTheDocument();
+    expect(screen.getByText("50,000 – 70,000 EUR per year")).toBeInTheDocument();
+    expect(screen.getByText("Senior")).toBeInTheDocument();
 
     const facts = screen.getByRole("heading", { name: "Facts" }).closest("section")!;
-    expect(within(facts).getByText("Senior")).toBeInTheDocument();
-    expect(within(facts).getByText("Tunis, Tunisia")).toBeInTheDocument();
     expect(within(facts).getByText("Relocation support")).toBeInTheDocument();
     expect(within(facts).queryByText("Visa sponsorship")).not.toBeInTheDocument();
 
@@ -318,7 +319,7 @@ describe("job detail", () => {
 
     const breakdown = screen
       .getByRole("heading", { name: "How the score is made" })
-      .closest("section")!;
+      .closest("aside")!;
     expect(within(breakdown).getAllByRole("listitem")).toHaveLength(5);
     expect(within(breakdown).queryByText("Level")).not.toBeInTheDocument();
     expect(within(breakdown).getByText("Freshness")).toBeInTheDocument();

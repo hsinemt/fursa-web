@@ -1,6 +1,14 @@
 "use client";
 
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import {
+  ArrowLeft,
+  Briefcase,
+  ExternalLink,
+  MapPin,
+  TrendingUp,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -26,6 +34,7 @@ import {
   readBreakdown,
   readFacts,
   safeHttpUrl,
+  timeAgo,
   type JobDetail,
   type UserJobStatus,
 } from "@/lib/feed/values";
@@ -82,12 +91,11 @@ function Detail({ job }: { job: JobDetail }) {
   const salary = facts.salary
     ? `${formatSalary(facts.salary, locale)}${facts.salary.period ? ` ${t(`per.${facts.salary.period}`)}` : ""}`
     : null;
-  const topLine = [
-    job.company,
+  const modeAndType = [
     facts.workMode ? t(`workMode.${facts.workMode}`) : null,
     facts.employmentType ? t(`employment.${facts.employmentType}`) : null,
-    salary,
   ].filter((part): part is string => Boolean(part));
+  const ago = timeAgo(job.posted_at, new Date(), locale);
 
   function change(status: UserJobStatus) {
     if (status === job.status) return;
@@ -100,62 +108,83 @@ function Detail({ job }: { job: JobDetail }) {
     );
   }
 
+  const keyFacts: { icon: LucideIcon; text: string }[] = [
+    place ? { icon: MapPin, text: place } : null,
+    modeAndType.length > 0 ? { icon: Briefcase, text: modeAndType.join(" · ") } : null,
+    salary ? { icon: Wallet, text: salary } : null,
+    facts.level ? { icon: TrendingUp, text: levelT(facts.level) } : null,
+  ].filter((fact): fact is { icon: LucideIcon; text: string } => fact !== null);
+
   return (
     <article className="flex flex-col gap-6">
-      <header>
-        <h1 dir="auto" className="text-xl">
-          {job.title}
-        </h1>
-        <p dir="auto" className="mt-2 text-base text-slate">
-          {topLine.join(" · ")}
-        </p>
-        <div className="mt-3 flex items-center gap-3">
-          <Score value={job.score} label={scoreT(scoreBand(job.score))} />
-          {job.is_active ? null : <span className="text-sm text-slate">{t("closed")}</span>}
+      <header className="grid gap-6 min-[1180px]:grid-cols-[minmax(0,1fr)_17rem]">
+        <div className="min-w-0">
+          <h1 dir="auto" className="text-xl">
+            {job.title}
+          </h1>
+          <p dir="auto" className="mt-2 text-md text-ink">
+            {[job.company, ago].filter(Boolean).join(" · ")}
+            {job.is_active ? null : <span className="text-slate"> · {t("closed")}</span>}
+          </p>
+          {keyFacts.length > 0 ? (
+            <ul className="mt-4 flex flex-col gap-2">
+              {keyFacts.map(({ icon: Icon, text }) => (
+                <li key={text} dir="auto" className="flex items-center gap-2 text-base text-ink">
+                  <Icon
+                    className="shrink-0 text-slate"
+                    width={ICON_SM}
+                    height={ICON_SM}
+                    {...iconProps}
+                  />
+                  {text}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            {posting ? (
+              <Button asChild variant="primary">
+                <a href={posting} target="_blank" rel="noopener noreferrer">
+                  {t("openPosting")}
+                  <ExternalLink width={ICON_SM} height={ICON_SM} {...iconProps} />
+                </a>
+              </Button>
+            ) : null}
+            {job.status === "new" || job.status === "saved" ? (
+              <Button onClick={() => change(job.status === "new" ? "saved" : "new")}>
+                {job.status === "new" ? t("save") : t("unsave")}
+              </Button>
+            ) : null}
+          </div>
+          <div className="mt-4">
+            <p className="mb-2 text-sm text-slate">{t("statusLabel")}</p>
+            <StatusGroup value={job.status} onChange={change} />
+          </div>
         </div>
+
+        <aside className="self-start rounded-panel bg-panel p-4">
+          <Score
+            value={job.score}
+            label={scoreT(scoreBand(job.score))}
+            className="[&>span:first-child]:text-2xl"
+          />
+          {breakdown.parts.length > 0 ? (
+            <>
+              <h2 className="mt-4 mb-3 text-sm text-slate">{t("breakdown.title")}</h2>
+              <ScoreBreakdown parts={breakdown.parts} />
+            </>
+          ) : null}
+        </aside>
       </header>
 
-      <div className="flex flex-wrap items-center gap-3">
-        {posting ? (
-          <Button asChild variant="primary">
-            <a href={posting} target="_blank" rel="noopener noreferrer">
-              {t("openPosting")}
-              <ExternalLink width={ICON_SM} height={ICON_SM} {...iconProps} />
-            </a>
-          </Button>
-        ) : null}
-        {job.status === "new" || job.status === "saved" ? (
-          <Button onClick={() => change(job.status === "new" ? "saved" : "new")}>
-            {job.status === "new" ? t("save") : t("unsave")}
-          </Button>
-        ) : null}
-      </div>
-
-      <Section title={t("facts.title")}>
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
-          {facts.level ? <Fact label={t("facts.level")}>{levelT(facts.level)}</Fact> : null}
-          {facts.workMode ? (
-            <Fact label={t("facts.workMode")}>{t(`workMode.${facts.workMode}`)}</Fact>
-          ) : null}
-          {facts.employmentType ? (
-            <Fact label={t("facts.type")}>{t(`employment.${facts.employmentType}`)}</Fact>
-          ) : null}
-          {place ? <Fact label={t("facts.place")}>{place}</Fact> : null}
-          {job.posted_at ? (
-            <Fact label={t("facts.posted")}>{formatDate(job.posted_at, locale)}</Fact>
-          ) : null}
-          <Fact label={t("facts.source")}>{job.source}</Fact>
-          {facts.languages.length > 0 ? (
-            <Fact label={t("facts.languages")}>{facts.languages.join(", ")}</Fact>
-          ) : null}
-          {facts.visa !== null ? (
-            <Fact label={t("facts.visa")}>{t(facts.visa ? "tri.yes" : "tri.no")}</Fact>
-          ) : null}
-          {facts.relocation !== null ? (
-            <Fact label={t("facts.relocation")}>{t(facts.relocation ? "tri.yes" : "tri.no")}</Fact>
-          ) : null}
-        </dl>
-      </Section>
+      {job.explanation ? (
+        <Section title={t("why.title")}>
+          <p dir="auto" className="max-w-[72ch] text-base">
+            {job.explanation}
+          </p>
+          <p className="mt-2 text-xs text-slate">{t("why.byAi")}</p>
+        </Section>
+      ) : null}
 
       {breakdown.matchedSkills.length > 0 || missing.length > 0 ? (
         <Section title={t("skills.title")}>
@@ -186,27 +215,26 @@ function Detail({ job }: { job: JobDetail }) {
         </Section>
       ) : null}
 
-      {job.explanation ? (
-        <Section title={t("why.title")}>
-          <p dir="auto" className="max-w-[72ch] text-base">
-            {job.explanation}
-          </p>
-          <p className="mt-2 text-xs text-slate">{t("why.byAi")}</p>
-        </Section>
-      ) : null}
-
-      {breakdown.parts.length > 0 ? (
-        <Section title={t("breakdown.title")}>
-          <ScoreBreakdown parts={breakdown.parts} />
-        </Section>
-      ) : null}
+      <Section title={t("facts.title")}>
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
+          {job.posted_at ? (
+            <Fact label={t("facts.posted")}>{formatDate(job.posted_at, locale)}</Fact>
+          ) : null}
+          <Fact label={t("facts.source")}>{job.source}</Fact>
+          {facts.languages.length > 0 ? (
+            <Fact label={t("facts.languages")}>{facts.languages.join(", ")}</Fact>
+          ) : null}
+          {facts.visa !== null ? (
+            <Fact label={t("facts.visa")}>{t(facts.visa ? "tri.yes" : "tri.no")}</Fact>
+          ) : null}
+          {facts.relocation !== null ? (
+            <Fact label={t("facts.relocation")}>{t(facts.relocation ? "tri.yes" : "tri.no")}</Fact>
+          ) : null}
+        </dl>
+      </Section>
 
       <Section title={t("description.title")}>
         <Description raw={job.description} />
-      </Section>
-
-      <Section title={t("statusLabel")}>
-        <StatusGroup value={job.status} onChange={change} />
       </Section>
     </article>
   );

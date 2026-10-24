@@ -81,7 +81,7 @@ function StatusFilter({
     ...STATUSES.map((s) => ({ key: s, label: statusT(s) })),
   ];
   return (
-    <div role="group" aria-label={t("filterLabel")} className="mt-4 flex flex-wrap gap-1">
+    <div role="group" aria-label={t("filterLabel")} className="mt-3 flex flex-wrap gap-1">
       {options.map(({ key, label }) => (
         <button
           key={key ?? "all"}
@@ -141,13 +141,15 @@ export function FeedList({ onJob }: { onJob: boolean }) {
 
   return (
     <section aria-labelledby="feed-title">
-      <Heading id="feed-title" className="text-xl">
-        {t("title")}
-      </Heading>
-      <p className="mt-1 text-slate">{t("bestFirst")}</p>
-      <StatusFilter value={filter} onChange={changeFilter} />
+      <div className="sticky top-0 z-10 border-b border-line bg-page px-4 pt-4 pb-3 lg:rounded-t-panel">
+        <Heading id="feed-title" className="text-xl">
+          {t("title")}
+        </Heading>
+        <p className="mt-1 text-slate">{t("bestFirst")}</p>
+        <StatusFilter value={filter} onChange={changeFilter} />
+      </div>
 
-      <div className="mt-4 border-t border-line">
+      <div>
         {query.isPending ? (
           <div aria-busy="true">
             <SkeletonRows count={6} />
@@ -156,20 +158,26 @@ export function FeedList({ onJob }: { onJob: boolean }) {
           cursorProblem ? (
             <SkeletonRows count={6} />
           ) : (
-            <LoadError className="mt-4" error={error} onRetry={() => void query.refetch()} />
+            <LoadError className="m-4" error={error} onRetry={() => void query.refetch()} />
           )
         ) : items.length === 0 ? (
           filter ? (
-            <EmptyState title={t("emptyFilter.title")} description={t("emptyFilter.text")} />
+            <EmptyState
+              className="px-4"
+              title={t("emptyFilter.title")}
+              description={t("emptyFilter.text")}
+            />
           ) : noRoles ? (
-            <FeedNudge />
+            <div className="px-4">
+              <FeedNudge />
+            </div>
           ) : (
-            <EmptyState title={t("empty.title")} description={t("empty.text")} />
+            <EmptyState className="px-4" title={t("empty.title")} description={t("empty.text")} />
           )
         ) : (
           <>
             {error && !cursorProblem && !query.isFetchNextPageError ? (
-              <LoadError className="my-4" error={error} onRetry={() => void query.refetch()} />
+              <LoadError className="m-4" error={error} onRetry={() => void query.refetch()} />
             ) : null}
             <ul aria-label={t("jobList")} className="divide-y divide-line">
               {items.map((job) => (
@@ -209,13 +217,9 @@ export function FeedList({ onJob }: { onJob: boolean }) {
               </div>
             ) : null}
             {query.isFetchNextPageError ? (
-              <LoadError
-                className="my-4"
-                error={error}
-                onRetry={() => void query.fetchNextPage()}
-              />
+              <LoadError className="m-4" error={error} onRetry={() => void query.fetchNextPage()} />
             ) : query.hasNextPage && !query.isFetchingNextPage ? (
-              <div className="border-t border-line pt-4">
+              <div className="border-t border-line p-4">
                 <Button onClick={() => void query.fetchNextPage()}>{t("loadMore")}</Button>
               </div>
             ) : null}
