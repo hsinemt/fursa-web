@@ -189,6 +189,12 @@
     outline-offset: 2px;
   }
 
+  /* A link inside a sentence is underlined, so color is not the only thing that sets it apart. */
+  .inline-link {
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
   /* Touch targets */
   @media (pointer: coarse) {
     :where(a, button, [role="tab"]):not(.inline-link) {
