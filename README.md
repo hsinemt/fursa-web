@@ -64,8 +64,18 @@ To run a second dev server (for example against other settings), give it its own
 | `pnpm typecheck`          | TypeScript                                                                                    |
 | `pnpm test`               | Unit tests, including the contrast test that fails on weak color                              |
 | `pnpm format`             | Prettier (`format:check` only checks)                                                         |
+| `pnpm test:e2e`           | End-to-end tests in a real browser, in English and Arabic (see "End-to-end tests")            |
 
 CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build and `pnpm audit` on every push and pull request.
+
+## End-to-end tests
+
+`pnpm test:e2e` starts the real app on port 3100 together with two small fakes in `e2e/` (a fake Supabase and a fake Fursa API), so nothing outside this repo is needed. Every test runs twice: in English (left to right) and in Arabic (right to left). They sign in, open a job, save it, move it on the pipeline (menu and a real mouse drag), change settings, use the account menu, and scan every screen with axe (WCAG 2 A and AA, including color contrast) in light and dark.
+
+- First time: `pnpm exec playwright install chromium`. Or use the Chrome you already have: `E2E_CHANNEL=chrome pnpm test:e2e` (PowerShell: `$env:E2E_CHANNEL="chrome"; pnpm test:e2e`).
+- One test: `pnpm exec playwright test -g "pipeline"`; one language: `--project=rtl`.
+- A failed run keeps a trace in `test-results/`: `pnpm exec playwright show-trace <file>`.
+- `NEXT_PUBLIC_CONTACT_EMAIL` (optional) adds a contact line at the end of the Privacy and Terms pages.
 
 ## Where things are
 

@@ -459,3 +459,46 @@ export function splitSections(text: string): PostingSection[] {
     return items && items.length > 0 ? [{ kind, items }] : [];
   });
 }
+
+// ---------------------------------------------------------------------------
+// Moving a job between lists (the pipeline board)
+// ---------------------------------------------------------------------------
+
+/** The pages without one job, and the job that was removed (null if it was not there). */
+export function removeFromPages(
+  data: Pages | undefined,
+  jobId: string,
+): { data: Pages | undefined; removed: JobSummary | null } {
+  if (!data) return { data, removed: null };
+  let removed: JobSummary | null = null;
+  const pages = data.pages.map((page) => {
+    const found = page.items.find((item) => item.job_id === jobId);
+    if (!found) return page;
+    removed = found;
+    return { ...page, items: page.items.filter((item) => item.job_id !== jobId) };
+  });
+  return removed ? { data: { ...data, pages }, removed } : { data, removed: null };
+}
+
+/**
+ * The pages with a job added in score order (best first, like the API). A job already in the
+ * pages is not added twice. A job that scores lower than everything loaded goes to the end of
+ * the last loaded page. With no pages loaded yet nothing changes (the list fetches it later).
+ */
+export function insertByScore(data: Pages | undefined, job: JobSummary): Pages | undefined {
+  if (!data || data.pages.length === 0) return data;
+  if (data.pages.some((page) => page.items.some((item) => item.job_id === job.job_id))) {
+    return data;
+  }
+  let placed = false;
+  const pages = data.pages.map((page, index) => {
+    if (placed) return page;
+    const at = page.items.findIndex((item) => item.score < job.score);
+    if (at === -1 && index < data.pages.length - 1) return page;
+    placed = true;
+    const items = [...page.items];
+    items.splice(at === -1 ? items.length : at, 0, job);
+    return { ...page, items };
+  });
+  return { ...data, pages };
+}

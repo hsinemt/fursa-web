@@ -16,5 +16,7 @@ Things we agreed to improve later. Rule: when you say "we will improve it", the 
 
 ## Frontend only
 
+- **Legal review and contact address.** The Privacy and Terms texts are drafts written from how the app works. Have a lawyer review them, then set `NEXT_PUBLIC_CONTACT_EMAIL` so the contact line appears. Native-speaker review of the French and Arabic copy of the whole app is also still to do.
+- **Rename "Pipeline" to "Job tracker"** (decide: labels only, or the address `/pipeline` too).
 - **Profile page design.** The first redesign (summary rail with profile strength, section cards, save bar) is good but not finished: look again at the details, the empty state, dark mode, phone and tablet, and the spacing and weight of the cards.
 - Look at the feed in dark mode, on tablet and on phone after the full-width redesign (only laptop width was checked in a browser).

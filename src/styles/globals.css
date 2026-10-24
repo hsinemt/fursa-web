@@ -189,6 +189,12 @@
     outline-offset: 2px;
   }
 
+  /* A link inside a sentence is underlined, so color is not the only thing that sets it apart. */
+  .inline-link {
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+
   /* Touch targets */
   @media (pointer: coarse) {
     :where(a, button, [role="tab"]):not(.inline-link) {
@@ -361,4 +367,16 @@
 
 .dot-pulse {
   animation: dot-pulse 900ms ease-in-out infinite;
+}
+
+/* A card that arrives in a column fades in and rises a little (see "Pipeline board"). */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

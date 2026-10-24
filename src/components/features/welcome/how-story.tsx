@@ -64,8 +64,10 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
             >
               {index + 1}
             </span>
-            <div className="transition-opacity duration-300 ease-out lg:group-data-[active=false]:opacity-40">
-              <h3 className="mt-4 font-heading text-title text-ink">{step.title}</h3>
+            <div>
+              <h3 className="mt-4 font-heading text-title text-ink transition-colors duration-300 ease-out lg:group-data-[active=false]:text-slate">
+                {step.title}
+              </h3>
               <p className="mt-3 max-w-md text-md text-slate">{step.text}</p>
             </div>
             <div className="mt-8 lg:hidden">{scenes[index]}</div>

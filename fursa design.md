@@ -90,11 +90,7 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **A row** shows: title, then company, place and how long ago on a quieter line, and the score on the end. The selected row has `--tint` as its background (and `aria-current`); the detail beside it shows what is selected. No side bar.
 - **The detail** has this order: title; company, work mode, type and salary on one line; the **facts grid** (level, work mode, posted, and more); the matched and missing skills; the **"Why it matches"** note; the score breakdown; the description (plain text); actions.
 
-**Pipeline:**
-- **Laptop:** a board with a column per status.
-- **Tablet:** the board scrolls sideways with snapping.
-- **Phone:** one list with tabs for the statuses.
-- A list view is available too. Moving a job is a drag on laptop and a menu on touch (drag is never the only way).
+**Pipeline:** the four tracked statuses (Saved, Applied, Interview, Rejected). See "Pipeline board" below.
 
 **Settings:** a **section list** and **cards** (see "Settings page"), up to 64 rem wide.
 
@@ -200,6 +196,28 @@ In the top bar (tablet and laptop), the **sign out button is replaced by an avat
 4. A hairline, then **Sign out** (with its icon).
 
 The separate light/dark button leaves the top bar: appearance lives in this menu (and in Settings). Keyboard: Enter or Space opens it, arrows move, Escape closes and returns the focus to the avatar. It works the same in Arabic (the menu opens toward the other side). On phones the top bar is hidden; the same things are in Settings.
+
+## Pipeline board
+
+The full-width screen for jobs the person is following. New jobs are not here (they are in the feed).
+
+- **Title row:** the title and one line of help at the start; at the end the **Board / List** switch.
+- **Search row:** a full-width search field (magnifier icon, label "Search roles or companies"; it filters the cards already loaded, in every column, by title or company, ignoring case and accents are not folded). A column with nothing that matches says "No job matches in this column."
+- **Columns:** Saved, Applied, Interview, Rejected, left to right (right to left in Arabic). Each column is a drop area at least 24 rem tall (so an empty column can be dropped on) with a hairline border that is transparent until a card is dragged over it. The **header**: the status dot and word, and at the end a count in a small `--panel` pill ("+" when there is another page).
+- **Cards** (`--panel`, 1 px `--line` border, 8 px corners, 12 px padding; the border turns `--control` on hover; no shadow at rest): **top line** the logo tile (32 px), the company name (quiet) and at the end the Move menu button and the grip; then the **title** (medium weight, up to two lines, a link to the job); then the **place** with a small pin icon; a hairline; the **footer**: the score (number and word) at the start and how long ago it was posted at the end.
+- **Empty column:** a dashed hairline box (8 px corners) with one line that names the column ("Nothing here yet.") and one line of help ("Move a job here from the feed or another column."), centered.
+- **Moving a job:** by **drag and drop** (grab the card anywhere; a short press still opens the job), **by keyboard** (focus a card, Space, arrows to another column, Space to drop, Escape to cancel; the instructions and announcements are translated) and by the **Move to** menu on every card (a small button with an accessible name: Saved, Applied, Interview, Rejected, and "Back to new"), which is how touch screens move a job. Drag is never the only way.
+- **At once, and undone on failure:** the card moves before the answer. If the API refuses, it goes back and a toast says so. Moving is `PUT /v1/jobs/{id}/status`. A drop on the same column does nothing.
+- **Drag states:** the card being dragged is lifted: copied under the pointer with a `--accent` border and the menu shadow; the card it came from stays in place as a **ghost** (40% opacity, dashed border); the column under the pointer takes `--tint` and an `--accent` border. On drop the copy settles into place (about 250 ms, ease-out). A card that arrives in a column (after a move or when a column loads) fades in and rises 6 px (200 ms). With "reduce motion" on, none of this moves: states change instantly.
+- **Loading:** one feed query per status (20 jobs each), "Load more" at the bottom of a column, skeleton cards while it loads, the error panel with a retry inside a column that failed (the others keep working).
+- **Empty column:** one quiet line that names the column and says how a job gets there ("Move a job here from the feed or another column.").
+- **Screen sizes:** **laptop** four columns share the width; **tablet** the columns are 18 rem wide and the board scrolls sideways with snapping; **phone**: the four statuses as tabs and one column at a time, full width, whichever view is chosen.
+- **View switch:** **Board** and **List** (two toggle buttons with `aria-pressed`) at the end of the title row, on tablet and laptop. Phones always use the tabs.
+- **List view** (tablet and laptop): one full-width row per job, all four statuses together (Saved first, then by score), each row a bordered `--panel` row like a card: the logo tile (40 px), the title (a link) with the company and the place under it, then in the middle a **progress stepper**, then at the end a **Status** menu button (the same Move to menu as the board's cards). The stepper is a line with four stops: **Saved, Applied, Interview, Rejected**. The stop of the current status is filled (`--accent`, or the rejected color for Rejected) and has the date the status last changed under it (quiet, tabular); the stops before it on the way (Saved, Applied, Interview) are filled lighter and carry a check; the others are hollow. Each stop is a button with an accessible name ("Move to Applied") that moves the job there, so the stepper is a direct way to change the status; the current stop is not a button. The search field filters the rows. One "Load more" under the list while any status has another page.
+
+## Privacy and terms pages
+
+Public pages inside the public layout (floating header and footer). One column up to 48 rem; the text is set for reading (about 72 characters a line). In order: the title (heading font, 32 px), the date ("Last updated: ..."), a quiet **draft note** in a `--panel` box with an info icon (the text is a draft until it has been reviewed), the one-sentence intro, then **sections** separated by hairlines: a 16 px heading and plain paragraphs or bulleted lists. No tables, no accordions, no colors beyond the tokens. A last section **Contact** appears only when an address is set (`NEXT_PUBLIC_CONTACT_EMAIL`). The text says only what the app does today, in all three languages; the Arabic and French versions are reviewed by a native speaker and a lawyer before launch.
 
 ## Right-to-left (Arabic)
 

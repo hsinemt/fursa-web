@@ -34,8 +34,7 @@
       "title": "Offres"
     },
     "pipeline": {
-      "title": "Suivi",
-      "placeholder": "Vos offres enregistrées, envoyées et en entretien apparaîtront ici."
+      "title": "Suivi"
     },
     "profile": {
       "title": "Profil",
@@ -54,11 +53,6 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "language": "Langue"
-  },
-  "later": {
-    "placeholder": "Cette page est construite à une étape ultérieure.",
-    "privacy": "Confidentialité",
-    "terms": "Conditions"
   },
   "welcome": {
     "metaTitle": "Fursa · Trouvez les offres qui vous correspondent",
@@ -596,7 +590,8 @@
         "qualifications": "Profil et qualifications",
         "benefits": "Avantages"
       }
-    }
+    },
+    "pageTitle": "Offre"
   },
   "settings": {
     "alerts": {
@@ -645,5 +640,159 @@
       "close": "Fermer"
     },
     "sections": "Sections des réglages"
+  },
+  "pipeline": {
+    "intro": "Suivez les offres que vous avez enregistrées, postulées, passées en entretien ou refusées.",
+    "view": {
+      "label": "Affichage",
+      "board": "Tableau",
+      "list": "Liste"
+    },
+    "tabs": "Statuts du suivi",
+    "moveTo": "Déplacer vers",
+    "backToNew": "Remettre en nouvelle",
+    "moveMenu": "Déplacer {title}",
+    "dragHandle": "Faire glisser {title}",
+    "loadMore": "Afficher plus",
+    "empty": {
+      "title": "Rien ici pour l’instant.",
+      "text": "Déplacez ici une offre depuis les offres ou une autre colonne."
+    },
+    "moved": "Déplacée vers « {status} ».",
+    "moveFailed": "L’offre n’a pas pu être déplacée. Elle a été remise.",
+    "dnd": {
+      "instructions": "Pour saisir une offre, appuyez sur Espace. Utilisez les flèches pour la déplacer vers une autre colonne, appuyez sur Espace pour la déposer, ou sur Échap pour annuler.",
+      "pickedUp": "{title} saisie.",
+      "over": "{title} est au-dessus de « {status} ».",
+      "dropped": "{title} a été déposée dans « {status} ».",
+      "cancelled": "Déplacement annulé. {title} a été remise."
+    },
+    "search": {
+      "label": "Rechercher un poste ou une entreprise",
+      "placeholder": "Rechercher un poste ou une entreprise"
+    },
+    "noMatch": "Aucune offre ne correspond dans cette colonne.",
+    "statusMenu": "Statut",
+    "noMatchList": "Aucune offre ne correspond à votre recherche.",
+    "stepper": {
+      "label": "Avancement de {title}",
+      "moveTo": "Déplacer vers « {status} »"
+    }
+  },
+  "legal": {
+    "updated": "Dernière mise à jour : 25 octobre 2026",
+    "draft": "Ce texte est un brouillon écrit d’après le fonctionnement actuel de Fursa. Il doit être relu avant le lancement.",
+    "contactLabel": "Contact",
+    "contactLine": "Questions sur cette page : ",
+    "privacy": {
+      "title": "Confidentialité",
+      "intro": "Cette page dit ce que Fursa conserve sur vous, pourquoi, qui d’autre le traite et ce que vous pouvez faire.",
+      "sections": [
+        {
+          "heading": "Ce que Fursa conserve",
+          "items": [
+            "Vos informations de connexion : votre adresse e-mail et, si vous les avez données, votre prénom et votre nom.",
+            "Votre profil : postes visés, compétences, lieux, niveau et fourchette de salaire.",
+            "Les offres que Fursa a trouvées pour vous, votre score pour chacune, la courte note écrite sur chacune et le statut que vous lui avez donné.",
+            "Vos réglages d’alertes et, si vous le liez, votre conversation Telegram.",
+            "La langue et l’apparence que vous avez choisies."
+          ]
+        },
+        {
+          "heading": "D’où viennent les offres",
+          "text": [
+            "Les annonces viennent de sources publiques. Elles parlent des offres, pas de vous."
+          ]
+        },
+        {
+          "heading": "Ce que Fursa en fait",
+          "text": [
+            "Fursa note chaque offre par rapport à votre profil, écrit une courte note sur ce qui correspond, envoie les alertes que vous avez activées et affiche vos offres suivies.",
+            "Fursa ne postule jamais à votre place et ne donne jamais votre profil à un employeur."
+          ]
+        },
+        {
+          "heading": "Qui d’autre le traite",
+          "items": [
+            "Le service de connexion conserve votre adresse e-mail et votre mot de passe.",
+            "Les serveurs de Fursa conservent votre profil et vos offres.",
+            "Un service d’IA lit votre profil et le texte des offres pour écrire les notes.",
+            "Telegram et un service d’e-mail livrent les alertes que vous avez activées."
+          ]
+        },
+        {
+          "heading": "Cookies",
+          "text": [
+            "Fursa n’utilise que les cookies nécessaires : votre session connectée et votre choix d’apparence. Il n’y a aucun cookie publicitaire ni de suivi."
+          ]
+        },
+        {
+          "heading": "Vos choix",
+          "text": [
+            "Dans les réglages, vous pouvez à tout moment télécharger tout ce que Fursa détient sur vous et supprimer votre compte.",
+            "Supprimer votre compte efface votre profil et vos offres. Votre identifiant chez le service de connexion est fermé séparément.",
+            "Fursa conserve vos données jusqu’à ce que vous les supprimiez."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Conditions",
+      "intro": "Voici les règles d’utilisation de Fursa.",
+      "sections": [
+        {
+          "heading": "Ce qu’est Fursa",
+          "text": [
+            "Fursa rassemble des offres, note chacune par rapport à votre profil et vous signale les bonnes.",
+            "Fursa ne postule jamais à votre place. Vous lisez l’offre, ouvrez l’annonce et postulez vous-même."
+          ]
+        },
+        {
+          "heading": "Votre compte",
+          "text": [
+            "Donnez des informations exactes, gardez votre mot de passe en sécurité et utilisez un seul compte, pour vous.",
+            "Vous pouvez supprimer votre compte à tout moment dans les réglages."
+          ]
+        },
+        {
+          "heading": "Scores et notes",
+          "text": [
+            "Les scores et les notes sont des estimations faites par un logiciel. Elles peuvent être fausses : vérifiez l’annonce.",
+            "Fursa ne promet aucun emploi, entretien ou résultat."
+          ]
+        },
+        {
+          "heading": "Annonces et liens",
+          "text": [
+            "Les annonces viennent d’autres sites que Fursa ne contrôle pas. Les liens ouvrent ces sites, qui ont leurs propres règles."
+          ]
+        },
+        {
+          "heading": "Utiliser Fursa loyalement",
+          "text": [
+            "N’essayez pas de casser Fursa, de collecter ses données avec des outils automatiques ni de l’utiliser pour quoi que ce soit d’illégal."
+          ]
+        },
+        {
+          "heading": "Changements et fin",
+          "text": [
+            "Fursa et ces conditions peuvent changer. La date en haut indique la dernière modification.",
+            "Fursa peut fermer un compte qui ne respecte pas ces conditions."
+          ]
+        },
+        {
+          "heading": "Responsabilité",
+          "text": [
+            "Fursa est proposé tel quel. Dans la mesure permise par la loi, Fursa n’est pas responsable des décisions que vous prenez à partir de ses scores et de ses notes."
+          ]
+        }
+      ]
+    }
+  },
+  "errorPage": {
+    "title": "Un problème est survenu.",
+    "help": "Fursa n’a pas pu afficher cette page. Réessayez, ou retournez aux offres.",
+    "retry": "Réessayer",
+    "back": "Retour aux offres"
   }
 }

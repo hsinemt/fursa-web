@@ -13,3 +13,6 @@ playwright-report/
 
 .claude/
 .idea/
+
+# Written by `next dev` each time it starts
+AGENTS.md

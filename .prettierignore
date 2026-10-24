@@ -7,3 +7,6 @@ fursa web.md
 
 src/lib/api/schema.d.ts
 contract
+.next-*
+test-results
+playwright-report

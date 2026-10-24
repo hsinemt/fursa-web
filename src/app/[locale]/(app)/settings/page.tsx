@@ -10,6 +10,9 @@ import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { ThemeList } from "@/components/layout/theme-switcher";
 import { getCurrentUser } from "@/lib/auth/server";
 import { parseTheme, THEME_COOKIE } from "@/lib/theme";
+import { pageTitle } from "@/lib/page-title";
+
+export const generateMetadata = pageTitle("pages.settings");
 
 export default function SettingsPage() {
   const t = useTranslations("pages.settings");

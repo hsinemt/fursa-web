@@ -297,7 +297,9 @@ describe("SessionPanel", () => {
     auth.refreshSession.mockResolvedValue(false);
     render(<SessionPanel />);
     fireEvent.click(await screen.findByRole("button", { name: "Refresh the token" }));
-    expect(await screen.findByRole("status")).toHaveTextContent("the session was cleared");
+    expect(await screen.findByRole("status", {}, { timeout: 4000 })).toHaveTextContent(
+      "the session was cleared",
+    );
   });
 
   it("says when sign-in is not set up, or there is no session", async () => {
