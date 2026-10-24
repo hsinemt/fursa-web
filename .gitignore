@@ -16,3 +16,8 @@ playwright-report/
 
 # Written by `next dev` each time it starts
 AGENTS.md
+
+# Project notes (design rules, build plan, decisions, to-do list) stay on this computer.
+# Only README.md is published.
+*.md
+!README.md
