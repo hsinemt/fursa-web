@@ -10,6 +10,8 @@ Status: accepted. Date: 2026-10-25.
 4. **Drag is one of three ways.** Pointer drag (a 6 px distance first, so a click still opens the job), keyboard drag (dnd-kit's keyboard sensor, with translated instructions and announcements) and a **Move to** menu on each card for touch and anyone who cannot drag. The menu also offers "Back to new".
 5. **Responsive without a second implementation.** The four columns are rendered once. Phones (and the List view) show the tabs and one column at a time; wider screens show all of them in a snapping scroller (tablet) or a four-column grid (laptop). The List view and the phone view are the same layout.
 6. **Counts are loaded counts.** The API gives no total, so a column header shows how many are loaded and "+" while there is another page.
+7. **Search is client-side.** The API has no search, so the board's search field filters the cards already loaded (title or company, ignoring case and accents). A column header counts the matches.
+8. **Drag states and motion.** The dragged copy has an accent border and the menu shadow, the original stays as a faded dashed ghost, the target column takes a tint and an accent border, and a card that arrives fades in and rises 6 px. The fade is turned off by `prefers-reduced-motion` (`motion-safe`).
 
 ## Not done here
 
