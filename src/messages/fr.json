@@ -228,6 +228,24 @@
         "title": "Nouvelle offre",
         "text": "Ingénieur données, 82. Correspond à Python, SQL et Docker."
       }
+    },
+    "pipeline": {
+      "title": "Derrière chaque offre",
+      "help": "Chaque offre passe par les mêmes étapes avant que vous en entendiez parler.",
+      "tag": "Exemple",
+      "label": "Exemple des étapes pour une offre",
+      "job": "Ingénieur données",
+      "company": "Entreprise exemple",
+      "working": "Fursa travaille",
+      "done": "Terminé",
+      "result": "Alerte envoyée sur Telegram",
+      "steps": {
+        "collect": "Récupération de l’annonce",
+        "read": "Lecture des compétences, du lieu et du niveau",
+        "score": "Notation selon votre profil",
+        "reason": "Rédaction de la raison",
+        "alert": "Envoi de l’alerte"
+      }
     }
   },
   "notFound": {

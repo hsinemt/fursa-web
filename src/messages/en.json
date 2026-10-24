@@ -228,6 +228,24 @@
         "title": "New match",
         "text": "Data engineer, 82. Matches Python, SQL and Docker."
       }
+    },
+    "pipeline": {
+      "title": "Behind each match",
+      "help": "Every job goes through the same steps before you hear about it.",
+      "tag": "Example",
+      "label": "Example of the steps for one job",
+      "job": "Data engineer",
+      "company": "Example company",
+      "working": "Fursa is working",
+      "done": "Done",
+      "result": "Alert sent on Telegram",
+      "steps": {
+        "collect": "Collecting the posting",
+        "read": "Reading skills, place and level",
+        "score": "Scoring against your profile",
+        "reason": "Writing the reason",
+        "alert": "Sending the alert"
+      }
     }
   },
   "notFound": {
