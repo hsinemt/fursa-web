@@ -200,13 +200,16 @@ It is a testing tool: plain styling, English only, no translations required.
    - **Content, in this order:**
      - A headline and one plain sentence saying what Fursa does (collects jobs from several sources, scores each one against you, tells you about the good ones).
      - Two buttons: **Create account** (the one primary button) and **Sign in** (secondary).
-     - **How it works** in three numbered rows, no icon tiles: (1) tell Fursa what you look for (roles, skills, places, level); (2) Fursa collects jobs and scores each one against you; (3) you get a short list that says *why* each job fits, and alerts on Telegram or email if you want them.
-     - A real **example** of the feed, built from the same components as the app with sample data, clearly labeled "Example".
-     - **What Fursa does not do:** it never applies for you.
+     - A short **example slip** beside the headline: one job with its score and the sentence saying why it matches.
+     - **How it works** in three numbered rows (a ledger, no icon tiles): (1) tell Fursa what you look for (roles, skills, places, level); (2) Fursa collects jobs and scores each one against you; (3) you get a short list that says *why* each job fits, and alerts on Telegram or email if you want them.
+     - An **example** of the feed, built from the same components as the app, with sample data, clearly labeled "Example". It plays the "Sorted for you" sequence once (see `fursa design.md`).
+     - **What Fursa does** as an index of the services that work today (feed, why it matches, alerts, pipeline), each with a small labeled sample, and one line saying what is not available yet.
+     - **What Fursa does not do:** it never applies for you (pull quote).
      - **Your data:** you can export it or delete your account at any time.
-     - A language switcher (Arabic, French, English) and a footer with the privacy and terms links.
+     - A short **FAQ** with answers that only state what the app does today. No pricing answer until pricing is decided.
+     - A closing line with Create account, a language switcher (Arabic, French, English) and a footer with the privacy and terms links.
    - **Rules:**
-     - Follow `fursa design.md`.
+     - Follow `fursa design.md`, including "Welcome page identity". The page must be our own design: no layout, element or animation copied from another product.
      - No invented numbers, testimonials or company logos, and no stock illustrations.
      - Works in all three languages and right-to-left.
      - It is a static page with no API call, so it loads fast.

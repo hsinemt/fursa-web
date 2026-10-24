@@ -152,6 +152,25 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 
 Almost none. Changes take 120 to 200 ms with an ease-out, only opacity and small movement. No bouncing, no parallax, no animated backgrounds. When the user has "reduce motion" on, remove movement entirely.
 
+The public welcome page has three named, one-time sequences (see "Welcome page identity"). They are the only motion beyond the rule above, and each plays once per visit unless the user presses Replay:
+- **Sorted for you:** a thin accent rule passes down the example list, each score counts up to its number (about 600 ms), then the rows slide into best-first order (200 ms each, 60 ms apart). Whole sequence under 1.5 s.
+- **Ledger line:** the 2 px accent line beside "How it works" fills one step at a time (200 ms) as each step scrolls into view.
+- **Reveal:** a section below the fold fades in and rises 8 px (200 ms) when it scrolls into view.
+
+All three show their final state at once, with no movement, when "reduce motion" is on or scripts are off. Nothing loops, nothing is tied to scroll position, nothing runs in the app screens.
+
+## Welcome page identity
+
+The public page is our own: it is set like the front page of a newspaper, not like a product landing page. It reuses the app's tokens and components and adds only these pieces:
+- **Dual-script masthead:** "Fursa · فرصة" side by side (Plex Serif 500 and Plex Sans Arabic 500) above a double rule (a 2 px `--ink` line, then a 1 px `--line` line). It is the page's logo until a real one exists; the app screens keep the single wordmark.
+- **Margin headings:** on laptop, each section's heading sits in a left margin column (it moves to the right in Arabic) with the content beside it, under a hairline. On phone and tablet the heading sits above the content.
+- **Reason first:** a score is always shown with its reason. The hero shows one job as a ruled slip: score, title, and the sentence saying why.
+- **Index:** services are listed like a book's index, name, dotted leader, short description. Choosing one shows a small labeled sample beside it.
+- **Pull quote:** "Fursa never applies for you" is set large in the heading font with a 2 px accent rule on the start edge.
+- **FAQ:** ruled rows, no boxes.
+
+Rules: no invented numbers, claims, logos or testimonials; only things the app does today are shown as services, and what is missing is said plainly in one line; samples are labeled "Example".
+
 ## Voice and wording
 
 - Sentence case. Short. Specific. Verb first on buttons ("Save", "Open posting", "Link Telegram").
