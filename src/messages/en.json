@@ -54,11 +54,6 @@
     "terms": "Terms",
     "language": "Language"
   },
-  "later": {
-    "placeholder": "This page is built in a later step.",
-    "privacy": "Privacy",
-    "terms": "Terms"
-  },
   "welcome": {
     "metaTitle": "Fursa · Find the jobs that fit you",
     "metaDescription": "Fursa collects jobs from several sources, scores each one against your profile and tells you about the good ones. It never applies for you.",
@@ -595,7 +590,8 @@
         "qualifications": "Qualifications",
         "benefits": "Benefits"
       }
-    }
+    },
+    "pageTitle": "Job"
   },
   "settings": {
     "alerts": {
@@ -682,5 +678,119 @@
       "label": "Progress of {title}",
       "moveTo": "Move to {status}"
     }
+  },
+  "legal": {
+    "updated": "Last updated: 25 October 2026",
+    "draft": "This is a draft written from how Fursa works today. It must be reviewed before launch.",
+    "contactLabel": "Contact",
+    "contactLine": "Questions about this page: ",
+    "privacy": {
+      "title": "Privacy",
+      "intro": "This page says what Fursa keeps about you, why, who else handles it and what you can do about it.",
+      "sections": [
+        {
+          "heading": "What Fursa keeps",
+          "items": [
+            "Your sign-in details: your email address and, if you gave them, your first and last name.",
+            "Your profile: target roles, skills, places, level and salary range.",
+            "The jobs Fursa matched to you, your score for each, the short note written about each one and the status you gave it.",
+            "Your alert settings and, if you link it, your Telegram chat.",
+            "The language and appearance you chose."
+          ]
+        },
+        {
+          "heading": "Where jobs come from",
+          "text": ["Job postings come from public sources. They are about the jobs, not about you."]
+        },
+        {
+          "heading": "What Fursa does with it",
+          "text": [
+            "Fursa scores each job against your profile, writes a short note on why it matches, sends the alerts you switched on and shows your tracked jobs.",
+            "Fursa never applies for you and never gives your profile to an employer."
+          ]
+        },
+        {
+          "heading": "Who else handles it",
+          "items": [
+            "The sign-in service keeps your email address and password.",
+            "The Fursa servers keep your profile and matches.",
+            "An AI service reads your profile and the job text to write the notes.",
+            "Telegram and an email service deliver the alerts you turned on."
+          ]
+        },
+        {
+          "heading": "Cookies",
+          "text": [
+            "Fursa uses only the cookies it needs: your signed-in session and your appearance choice. There are no advertising or tracking cookies."
+          ]
+        },
+        {
+          "heading": "Your choices",
+          "text": [
+            "In Settings you can download everything Fursa holds about you, and delete your account, at any time.",
+            "Deleting your account erases your profile and matches. Your login at the sign-in service is closed separately.",
+            "Fursa keeps your data until you delete it."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms",
+      "intro": "These are the rules for using Fursa.",
+      "sections": [
+        {
+          "heading": "What Fursa is",
+          "text": [
+            "Fursa collects jobs, scores each one against your profile and tells you about the good ones.",
+            "Fursa never applies for you. You read the job, open the posting and apply yourself."
+          ]
+        },
+        {
+          "heading": "Your account",
+          "text": [
+            "Give true information, keep your password safe and use one account for yourself.",
+            "You can delete your account in Settings at any time."
+          ]
+        },
+        {
+          "heading": "Scores and notes",
+          "text": [
+            "Scores and notes are estimates made by software. They can be wrong, so check the posting.",
+            "Fursa does not promise any job, interview or result."
+          ]
+        },
+        {
+          "heading": "Job postings and links",
+          "text": [
+            "Postings come from other websites and Fursa does not control them. Links open those websites, which have their own rules."
+          ]
+        },
+        {
+          "heading": "Using Fursa fairly",
+          "text": [
+            "Do not try to break Fursa, collect its data with automated tools or use it for anything illegal."
+          ]
+        },
+        {
+          "heading": "Changes and ending",
+          "text": [
+            "Fursa and these terms can change. The date at the top shows the last change.",
+            "Fursa can close an account that breaks these terms."
+          ]
+        },
+        {
+          "heading": "Responsibility",
+          "text": [
+            "Fursa is offered as it is. As far as the law allows, Fursa is not responsible for decisions you make from its scores and notes."
+          ]
+        }
+      ]
+    }
+  },
+  "errorPage": {
+    "title": "Something went wrong.",
+    "help": "Fursa could not show this page. Try again, or go back to the feed.",
+    "retry": "Try again",
+    "back": "Back to the feed"
   }
 }
