@@ -5,13 +5,14 @@ import { cn } from "@/lib/utils/cn";
  * The match score: the number in the heading font (tabular, accent),
  * followed by its word band in slate. Never green or red.
  * `label` is the translated band word, so this component stays free of i18n.
+ * `value` is null while a score is not known yet (a dash is shown).
  */
 function Score({
   value,
   label,
   className,
   ...props
-}: React.ComponentProps<"span"> & { value: number; label: string }) {
+}: Omit<React.ComponentProps<"span">, "children"> & { value: number | null; label?: string }) {
   return (
     <span
       data-slot="score"
@@ -19,9 +20,9 @@ function Score({
       {...props}
     >
       <span className="tabular font-heading text-lg font-medium text-accent">
-        {Math.round(value)}
+        {value === null ? "—" : Math.round(value)}
       </span>
-      <span className="text-sm text-slate">{label}</span>
+      {label ? <span className="text-sm text-slate">{label}</span> : null}
     </span>
   );
 }
