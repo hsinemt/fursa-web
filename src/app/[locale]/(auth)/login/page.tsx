@@ -28,7 +28,9 @@ export default async function LoginPage({ searchParams }: Props) {
           ? { kind: "error", text: t("notices.link_invalid") }
           : notice === "signed_out"
             ? { kind: "info", text: t("notices.signed_out") }
-            : undefined
+            : notice === "account_deleted"
+              ? { kind: "info", text: t("notices.account_deleted") }
+              : undefined
       }
       footer={
         <p>

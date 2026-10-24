@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { ApiError } from "@/lib/api/errors";
-import { signOutAction } from "@/lib/auth/actions";
+import { accountDeletedAction } from "@/lib/auth/actions";
 
 /**
  * What a screen does when the API refuses because of the session. Returns a function to call
@@ -28,7 +28,7 @@ export function useApiErrorHandler() {
         return true;
       }
       if (error.action === "sign_out") {
-        await signOutAction(); // clears both cookies, then redirects to the login page
+        await accountDeletedAction(); // clears both cookies, then redirects to the login page
         return true;
       }
       return false;

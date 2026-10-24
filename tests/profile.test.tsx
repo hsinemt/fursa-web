@@ -16,6 +16,7 @@ import en from "@/messages/en.json";
 vi.mock("@/lib/auth/actions", () => ({
   refreshSession: vi.fn(),
   signOutAction: vi.fn(),
+  accountDeletedAction: vi.fn(),
 }));
 const router = vi.hoisted(() => ({ replace: vi.fn() }));
 vi.mock("@/i18n/navigation", () => ({

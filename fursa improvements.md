@@ -11,6 +11,7 @@ Things we agreed to improve later. Rule: when you say "we will improve it", the 
 - **Type `extracted` and `breakdown` in the contract.** They are free-form objects today; the frontend checks each key by hand.
 - **A total in the feed answer** (to show "N matches" in the list header).
 - **`DOCS_ENABLED` bug.** The API `app` container exits at start when `DOCS_ENABLED` is empty (`docker-compose.yml` passes `${DOCS_ENABLED:-}`). Workaround: set it to `true` or `false` in the API `.env`.
+- **Close the login on account deletion.** `DELETE /v1/account` erases the data but the identity provider (Supabase) login is closed separately. The API should close it, or say how the web app can.
 - **Contract notes.** It documents a bearer scheme and has no 403 responses.
 
 ## Frontend only

@@ -41,6 +41,7 @@ import {
   requestPasswordResetAction,
   signInAction,
   signOutAction,
+  accountDeletedAction,
   signUpAction,
 } from "@/lib/auth/actions";
 
@@ -382,6 +383,14 @@ describe("sign out", () => {
     const cleared = state.calls.filter((c) => c.options.maxAge === 0).map((c) => c.name);
     expect(cleared).toContain("fursa_access_token");
     expect(cleared.some((name) => name.startsWith("sb-"))).toBe(true);
+  });
+
+  it("after an account is deleted it does the same, with its own notice on the login page", async () => {
+    await login();
+    await expect(accountDeletedAction()).rejects.toThrow(
+      `NEXT_REDIRECT ${JSON.stringify({ href: { pathname: "/login", query: { notice: "account_deleted" } }, locale: "fr" })}`,
+    );
+    expect(state.cookies.size).toBe(0);
   });
 
   it("clears the cookies even when Supabase cannot be reached", async () => {

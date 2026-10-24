@@ -117,8 +117,8 @@ export async function updatePasswordAction(input: unknown): Promise<AuthResult> 
   return { ok: true, next: HOME_FOR_SIGNED_IN };
 }
 
-/** Logout: ends the Supabase session, clears both kinds of cookies, goes to the login page. */
-export async function signOutAction(): Promise<void> {
+/** Ends the Supabase session, clears both kinds of cookies, goes to the login page. */
+async function endSession(notice: "signed_out" | "account_deleted"): Promise<void> {
   const [jar, ctx] = await Promise.all([getCookieJar(), getCookieContext()]);
   const client = await createAuthClient();
   try {
@@ -128,9 +128,22 @@ export async function signOutAction(): Promise<void> {
   }
   clearAuthCookies(jar, ctx);
   redirect({
-    href: { pathname: "/login", query: { notice: "signed_out" } },
+    href: { pathname: "/login", query: { notice } },
     locale: await getLocale(),
   });
+}
+
+/** Logout: ends the session and goes to the login page ("You are signed out."). */
+export async function signOutAction(): Promise<void> {
+  await endSession("signed_out");
+}
+
+/**
+ * The account is gone (the person deleted it, or the API answered `account_deleted`): ends the
+ * session and goes to the login page ("Your account was deleted.").
+ */
+export async function accountDeletedAction(): Promise<void> {
+  await endSession("account_deleted");
 }
 
 /**

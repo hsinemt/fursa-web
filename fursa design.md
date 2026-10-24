@@ -172,6 +172,14 @@ On the settings page, in the groups **Language**, **Appearance**, **Alerts**, **
 - **Telegram:** when not linked, one sentence and a secondary **Link Telegram** button. After it is pressed: a secondary **Open Telegram** link (new tab), the line "Open the link, then press Start in the chat. It works once and expires in N min.", and "Waiting for you to press Start in Telegram" with a quiet status dot while the page checks. When the link expires the page says so and offers Link Telegram again. When linked: "Telegram is linked.", a checkbox "Send alerts to Telegram" that saves at once (toast), and a destructive-text **Unlink Telegram** button.
 - Errors are the error panel with the code underneath, and a retry. No new colors.
 
+## Your data (settings)
+
+A group **Your data** between Telegram and Account, in the same single column.
+
+- **Download my data:** a secondary button. It asks the API, saves a JSON file named `fursa-data-<date>.json` and says so in a toast. A quiet line under the button says the file holds personal data and should be kept somewhere safe. The data is never shown on the page.
+- **Delete my account:** a destructive-text button (danger-colored text on a secondary button). It opens a dialog: the title "Delete your account?", what is erased (profile, matches, alert settings), that it **cannot be undone**, and that the login at the sign-in provider is closed separately; then a field "Type DELETE to confirm" (Latin letters in every language, left to right) and two buttons: **Cancel** (secondary) and **Delete my account** (the filled danger button, which exists only inside this dialog; usable once the word matches). Errors appear in the dialog as the error panel with the code; the dialog stays open.
+- After deletion the person lands on the login page with the line "Your account was deleted."
+
 ## Right-to-left (Arabic)
 
 - Logical properties only (as in `fursa web.md`): `ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`, `text-start`.

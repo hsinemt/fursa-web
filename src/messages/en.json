@@ -353,7 +353,8 @@
     },
     "notices": {
       "link_invalid": "This link is invalid or has expired. Ask for a new one.",
-      "signed_out": "You are signed out."
+      "signed_out": "You are signed out.",
+      "account_deleted": "Your account was deleted."
     },
     "signOut": "Sign out",
     "account": {
@@ -613,6 +614,24 @@
       "saved": "Telegram setting saved",
       "unlink": "Unlink Telegram",
       "unlinkedToast": "Telegram was unlinked"
+    },
+    "data": {
+      "title": "Your data",
+      "help": "Download everything Fursa holds about you, or delete your account.",
+      "download": "Download my data",
+      "preparing": "Preparing the file",
+      "downloadNote": "A JSON file with your profile, matches and alert settings. It holds personal data: keep it somewhere safe.",
+      "downloaded": "Your data was downloaded",
+      "delete": "Delete my account",
+      "deleteNote": "This erases your profile and matches and cannot be undone.",
+      "deleteTitle": "Delete your account?",
+      "deleteWhat": "This erases your profile, your matches and your alert settings, and signs you out.",
+      "deleteIrreversible": "This cannot be undone.",
+      "deleteProvider": "Your login at the sign-in provider is closed separately.",
+      "typeToConfirm": "Type {word} to confirm",
+      "cancel": "Cancel",
+      "deleteConfirm": "Delete my account",
+      "close": "Close"
     }
   }
 }
