@@ -17,6 +17,7 @@ const actions = vi.hoisted(() => ({
   requestPasswordResetAction: vi.fn(),
   updatePasswordAction: vi.fn(),
   signOutAction: vi.fn(),
+  accountDeletedAction: vi.fn(),
 }));
 const router = vi.hoisted(() => ({ replace: vi.fn() }));
 
@@ -236,10 +237,11 @@ describe("useApiErrorHandler", () => {
     },
   );
 
-  it("account_deleted: signs out (the server clears both cookies and redirects)", async () => {
+  it("account_deleted: ends the session with the deleted notice (the server clears both cookies and redirects)", async () => {
     const { result } = renderHook(() => useApiErrorHandler());
     expect(await result.current(apiError("account_deleted", 403))).toBe(true);
-    expect(actions.signOutAction).toHaveBeenCalledTimes(1);
+    expect(actions.accountDeletedAction).toHaveBeenCalledTimes(1);
+    expect(actions.signOutAction).not.toHaveBeenCalled();
   });
 
   it("leaves every other error to the screen", async () => {
@@ -248,6 +250,7 @@ describe("useApiErrorHandler", () => {
     expect(await result.current(new Error("boom"))).toBe(false);
     expect(router.replace).not.toHaveBeenCalled();
     expect(actions.signOutAction).not.toHaveBeenCalled();
+    expect(actions.accountDeletedAction).not.toHaveBeenCalled();
   });
 });
 
