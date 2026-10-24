@@ -55,7 +55,7 @@ fursa-web/
 │   │   └── [locale]/
 │   │       ├── (public)/          # welcome page, privacy, terms
 │   │       ├── (auth)/            # login, signup, forgot password, reset password
-│   │       └── (app)/             # feed, jobs/[id], pipeline, onboarding, settings
+│   │       └── (app)/             # feed and jobs/[id] (one shared layout), pipeline, profile, settings
 │   │           └── dev/           # DEV CONSOLE: only when not in production (see below)
 │   ├── components/
 │   │   ├── ui/                    # shadcn components
@@ -278,8 +278,9 @@ Later features follow the same rule: `feat/<what-it-does>`, and a bug fix is `fi
 Where the build stands (update this when a step is merged).
 
 - **Done and merged:** steps 1 to 5 (skeleton, welcome, api-client, auth, dev-console), plus the CI smoke-test fix.
-- **Done, on `feat/profile`, waiting for push, pull request and merge:** step 6 (profile, onboarding, language sync). Tested by the user by hand.
-- **Next:** step 7, `feat/job-feed`, cut from an up-to-date `main` after step 6 is merged.
+- **Done and merged:** step 6 (profile, onboarding, language sync), tested by the user by hand.
+- **Done, on `feat/job-feed`, waiting for review, push, pull request and merge:** step 7 (job feed and job detail, see `docs/adr/0006-job-feed-and-detail.md`).
+- **Next:** step 8, `feat/notifications`, cut from an up-to-date `main` after step 7 is merged.
 - **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
 
 How to work (kept from the start):
@@ -299,6 +300,7 @@ Known notes and deferred items:
 - The contract documents a bearer scheme and has no 403 responses (note for the API project).
 - **API bug found:** the API `app` container exits at start when `DOCS_ENABLED` is empty (`docker-compose.yml` passes `${DOCS_ENABLED:-}`, and the settings reject an empty boolean). Workaround: set `DOCS_ENABLED=true` or `false` in the API `.env`. Proper fix belongs to the API project.
 - Changing language during onboarding returns to step 1 (saved data is prefilled).
+- The feed header shows no match count: the API returns no total. `extracted` and `breakdown` are free-form objects in the contract; the interface reads only the keys listed in `src/lib/feed/values.ts` and ignores the rest (note for the API project: type them in the contract).
 
 ## Definition of done for v1
 

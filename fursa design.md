@@ -142,6 +142,19 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 
 **Icons.** One outline icon set at one stroke width, 16 or 20 px, always with a text label except for the standard actions (close, back, search). No emoji. No pastel icon tiles.
 
+## Job feed and job detail
+
+- **Routes:** the list is `/feed`, a job is `/jobs/<id>`. Both share one layout, so the list stays loaded (its pages and scroll) while a job is open. On laptop the list and the open job sit side by side (list about 360 to 420 px); on phone and tablet only one of them shows, and the job has a **Back to the feed** link (its arrow mirrors in Arabic).
+- **List header:** the title "Feed" and "Best first". The API gives no total, so the header never shows a count. Below it, the **status filter**: All, New, Saved, Applied, Interview, Rejected, as a row of text buttons (the chosen one has `--tint` and `--accent` text and `aria-pressed`; no underline bar, no side line). The choice is in the address (`?status=`), so it survives reloads and Back.
+- **Rows:** `JobRow` with the title, company, place and age on the quiet line, the "Why it matches" sentence when there is one (two lines at most), the score at the end and under it the status (dot and word) unless the job is new. A closed posting says "Closed" on the quiet line.
+- **Load more:** a secondary **Load more** button under the last row, shown only while the API gave a `next_cursor`; 20 jobs per page. While the first page loads, skeleton rows of the row height show. A failed page shows the error panel with a retry and keeps what is already shown. `invalid_cursor` reloads the list from the start and says so in a toast.
+- **Empty:** with no target roles, the existing prompt (add your roles). With roles but no match, or an empty filter, a short line that names the space and says what happens next.
+- **Detail order:** back link (small screens); title; company, work mode, type and salary on one line; the **facts grid** (level, work mode, place, posted, source, languages, visa and relocation when known: a fact the API does not have is left out, never shown as "unknown"); matched and missing skills as chips; **Why it matches** (only when the note exists); the **score breakdown** (a row per part: title, skills, location, level, freshness, similarity to the profile; a thin bar and the number 0 to 100; a part the score did not use is left out); the description; the actions.
+- **Actions:** **Open posting** is the one primary button (external link, `rel="noopener noreferrer"`, new tab, only for an `http` or `https` address). **Save** (secondary) toggles between new and saved and is shown only while the job is new or saved. **Your status** is a group of five buttons (New, Saved, Applied, Interview, Rejected) with `aria-pressed`; the change shows at once and is undone with a toast if the API refuses.
+- **Scraped text is untrusted.** The description is turned into plain text (tags dropped, line breaks kept, entities decoded) and shown as paragraphs by React, which escapes it. Never `dangerouslySetInnerHTML`. Title, company, place and every extracted fact are text too, and carry `dir="auto"`.
+- **Dates:** "3 days ago" for the row, the full date for "Posted" in the grid, in the person's language with Western digits.
+- **Errors:** a load failure is the error panel with a retry; for a 429 the message counts down and the retry waits. `job_not_found` says "This job is not in your matches." with a link back to the feed.
+
 ## Right-to-left (Arabic)
 
 - Logical properties only (as in `fursa web.md`): `ms-`, `me-`, `ps-`, `pe-`, `start-`, `end-`, `text-start`.
