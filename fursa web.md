@@ -279,8 +279,9 @@ Where the build stands (update this when a step is merged).
 
 - **Done and merged:** steps 1 to 5 (skeleton, welcome, api-client, auth, dev-console), plus the CI smoke-test fix.
 - **Done and merged:** step 6 (profile, onboarding, language sync) and step 7 (job feed and job detail, see `docs/adr/0006-job-feed-and-detail.md`), both tested by the user by hand.
-- **Done, on `feat/notifications`, waiting for review, push, pull request and merge:** step 8 (alerts and Telegram linking on the settings page, see `docs/adr/0007-notifications-settings.md`).
-- **Next:** step 9, `feat/account-data` (data export and account deletion), cut from an up-to-date `main` after step 8 is merged.
+- **Done and merged:** step 8 (alerts and Telegram linking on the settings page, see `docs/adr/0007-notifications-settings.md`).
+- **Done, on `feat/account-data`, waiting for review, push, pull request and merge:** step 9 (data export and account deletion, see `docs/adr/0008-account-data.md`).
+- **Next:** step 10, `feat/pipeline` (pipeline board), cut from an up-to-date `main` after step 9 is merged.
 - **Open improvements** (mostly waiting for API changes) are listed in `fursa improvements.md`: add an item when the user says "we will improve it", delete it when done.
 - **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
 
@@ -296,8 +297,8 @@ Known notes and deferred items:
 
 - The API does not read first and last name yet (sign up sends them in the account metadata).
 - Terms and Privacy pages are placeholders until step 11.
-- The account menu is only a Sign out button; the `account_deleted` message is not shown yet (step 9).
-- Telegram linking is step 8; CV upload waits for an API endpoint; profile `weights` are not exposed.
+- The account menu is only a Sign out button. A deleted account (or a `403 account_deleted`) lands on the login page with "Your account was deleted.".
+- CV upload waits for an API endpoint; profile `weights` are not exposed.
 - The contract documents a bearer scheme and has no 403 responses (note for the API project).
 - **API bug found:** the API `app` container exits at start when `DOCS_ENABLED` is empty (`docker-compose.yml` passes `${DOCS_ENABLED:-}`, and the settings reject an empty boolean). Workaround: set `DOCS_ENABLED=true` or `false` in the API `.env`. Proper fix belongs to the API project.
 - Changing language during onboarding returns to step 1 (saved data is prefilled).
