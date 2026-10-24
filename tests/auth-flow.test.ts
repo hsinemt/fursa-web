@@ -288,7 +288,7 @@ describe("sign up", () => {
       last_name: "Ben Salah",
     });
     expect(request?.query.get("redirect_to")).toBe(
-      "http://localhost:3000/ar/auth/callback?next=%2Ffeed",
+      "http://localhost:3000/ar/auth/callback?next=%2Fonboarding",
     );
     expect(accessCookies()).toEqual([]); // not signed in until the email is confirmed
   });
@@ -300,7 +300,7 @@ describe("sign up", () => {
       password: "12345678",
       locale: "fr",
     });
-    expect(result).toEqual({ ok: true, next: "/feed" });
+    expect(result).toEqual({ ok: true, next: "/onboarding" });
     expect(accessCookies()).toHaveLength(1);
     expect(accessCookies()[0]?.options).toMatchObject({ httpOnly: true, sameSite: "lax" });
   });

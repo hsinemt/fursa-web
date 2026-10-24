@@ -6,7 +6,7 @@ import { redirect } from "@/i18n/navigation";
 import { siteUrl } from "@/lib/site";
 import { clearAuthCookies } from "./cookies";
 import { mapAuthError, type AuthErrorKey } from "./errors";
-import { HOME_FOR_SIGNED_IN, safeNext } from "./paths";
+import { HOME_FOR_SIGNED_IN, safeNext, START_FOR_NEW_ACCOUNT } from "./paths";
 import { forgotInput, loginInput, resetInput, signupInput } from "./schemas";
 import { mirrorAccessToken } from "./session";
 import { createAuthClient, getCookieContext, getCookieJar } from "./server";
@@ -71,7 +71,7 @@ export async function signUpAction(input: unknown): Promise<AuthResult> {
     options: {
       // The API reads user_metadata.locale the first time this person signs in.
       data: { locale, first_name: firstName, last_name: lastName },
-      emailRedirectTo: callbackUrl(locale, HOME_FOR_SIGNED_IN),
+      emailRedirectTo: callbackUrl(locale, START_FOR_NEW_ACCOUNT),
     },
   });
   if (error) return { ok: false, error: mapAuthError(error) };
@@ -79,7 +79,7 @@ export async function signUpAction(input: unknown): Promise<AuthResult> {
   // With "Confirm email" off, Supabase signs the new user in at once.
   if (data.session) {
     await mirrorAccessToken(client.supabase, client.jar, client.ctx);
-    return { ok: true, next: HOME_FOR_SIGNED_IN };
+    return { ok: true, next: START_FOR_NEW_ACCOUNT };
   }
   return { ok: true, next: "/check-email" };
 }

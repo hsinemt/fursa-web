@@ -19,6 +19,9 @@ const GUEST_ONLY = ["/", "/login", "/signup", "/forgot-password"];
 
 export const HOME_FOR_SIGNED_IN = "/feed";
 
+/** A new account starts here: the setup steps, then the feed. */
+export const START_FOR_NEW_ACCOUNT = "/onboarding";
+
 function matches(path: string, prefix: string) {
   return path === prefix || path.startsWith(`${prefix}/`);
 }

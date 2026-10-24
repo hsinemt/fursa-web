@@ -22,7 +22,7 @@ export default function SettingsPage() {
       <section className="mt-8 border-t border-line pt-6">
         <h2 className="text-md">{language("label")}</h2>
         <p className="mt-1 mb-4 text-slate">{language("help")}</p>
-        <LanguageSwitcher variant="list" />
+        <LanguageSwitcher variant="list" syncAccount />
       </section>
       <section className="mt-8 border-t border-line pt-6">
         <h2 className="text-md">{theme("label")}</h2>
