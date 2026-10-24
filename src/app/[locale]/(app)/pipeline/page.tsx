@@ -1,7 +1,5 @@
-import { useTranslations } from "next-intl";
-import { PlaceholderPage } from "@/components/layout/placeholder-page";
+import { PipelineBoard } from "@/components/features/pipeline/pipeline-board";
 
 export default function PipelinePage() {
-  const t = useTranslations("pages.pipeline");
-  return <PlaceholderPage title={t("title")} description={t("placeholder")} />;
+  return <PipelineBoard />;
 }

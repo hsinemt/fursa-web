@@ -33,8 +33,7 @@
       "title": "Offres"
     },
     "pipeline": {
-      "title": "Suivi",
-      "placeholder": "Vos offres enregistrées, envoyées et en entretien apparaîtront ici."
+      "title": "Suivi"
     },
     "profile": {
       "title": "Profil",
@@ -641,6 +640,33 @@
       "cancel": "Annuler",
       "deleteConfirm": "Supprimer mon compte",
       "close": "Fermer"
+    }
+  },
+  "pipeline": {
+    "intro": "Suivez les offres que vous avez enregistrées, postulées, passées en entretien ou refusées.",
+    "view": {
+      "label": "Affichage",
+      "board": "Tableau",
+      "list": "Liste"
+    },
+    "tabs": "Statuts du suivi",
+    "moveTo": "Déplacer vers",
+    "backToNew": "Remettre en nouvelle",
+    "moveMenu": "Déplacer {title}",
+    "dragHandle": "Faire glisser {title}",
+    "loadMore": "Afficher plus",
+    "empty": {
+      "title": "Rien ici pour l’instant.",
+      "text": "Déplacez ici une offre depuis les offres ou une autre colonne."
+    },
+    "moved": "Déplacée vers « {status} ».",
+    "moveFailed": "L’offre n’a pas pu être déplacée. Elle a été remise.",
+    "dnd": {
+      "instructions": "Pour saisir une offre, appuyez sur Espace. Utilisez les flèches pour la déplacer vers une autre colonne, appuyez sur Espace pour la déposer, ou sur Échap pour annuler.",
+      "pickedUp": "{title} saisie.",
+      "over": "{title} est au-dessus de « {status} ».",
+      "dropped": "{title} a été déposée dans « {status} ».",
+      "cancelled": "Déplacement annulé. {title} a été remise."
     }
   }
 }

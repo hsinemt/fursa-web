@@ -33,8 +33,7 @@
       "title": "Feed"
     },
     "pipeline": {
-      "title": "Pipeline",
-      "placeholder": "Your saved, applied and interview jobs will appear here."
+      "title": "Pipeline"
     },
     "profile": {
       "title": "Profile",
@@ -641,6 +640,33 @@
       "cancel": "Cancel",
       "deleteConfirm": "Delete my account",
       "close": "Close"
+    }
+  },
+  "pipeline": {
+    "intro": "Follow the jobs you saved, applied to, interviewed for or were turned down for.",
+    "view": {
+      "label": "View",
+      "board": "Board",
+      "list": "List"
+    },
+    "tabs": "Pipeline statuses",
+    "moveTo": "Move to",
+    "backToNew": "Back to new",
+    "moveMenu": "Move {title}",
+    "dragHandle": "Drag {title}",
+    "loadMore": "Load more",
+    "empty": {
+      "title": "Nothing here yet.",
+      "text": "Move a job here from the feed or another column."
+    },
+    "moved": "Moved to {status}.",
+    "moveFailed": "The job could not be moved. It was put back.",
+    "dnd": {
+      "instructions": "To pick up a job, press Space. Use the arrow keys to move it to another column, press Space to drop it, or Escape to cancel.",
+      "pickedUp": "Picked up {title}.",
+      "over": "{title} is over {status}.",
+      "dropped": "{title} was dropped in {status}.",
+      "cancelled": "Move cancelled. {title} was put back."
     }
   }
 }
