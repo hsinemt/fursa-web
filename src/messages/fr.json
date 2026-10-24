@@ -353,7 +353,8 @@
     },
     "notices": {
       "link_invalid": "Ce lien est invalide ou a expiré. Demandez-en un nouveau.",
-      "signed_out": "Vous êtes déconnecté."
+      "signed_out": "Vous êtes déconnecté.",
+      "account_deleted": "Votre compte a été supprimé."
     },
     "signOut": "Se déconnecter",
     "account": {
@@ -613,6 +614,24 @@
       "saved": "Réglage Telegram enregistré",
       "unlink": "Délier Telegram",
       "unlinkedToast": "Telegram a été délié"
+    },
+    "data": {
+      "title": "Vos données",
+      "help": "Téléchargez tout ce que Fursa détient sur vous, ou supprimez votre compte.",
+      "download": "Télécharger mes données",
+      "preparing": "Préparation du fichier",
+      "downloadNote": "Un fichier JSON avec votre profil, vos offres et vos alertes. Il contient des données personnelles : gardez-le en lieu sûr.",
+      "downloaded": "Vos données ont été téléchargées",
+      "delete": "Supprimer mon compte",
+      "deleteNote": "Cela efface votre profil et vos offres, et ne peut pas être annulé.",
+      "deleteTitle": "Supprimer votre compte ?",
+      "deleteWhat": "Cela efface votre profil, vos offres et vos réglages d’alertes, et vous déconnecte.",
+      "deleteIrreversible": "Cette action est irréversible.",
+      "deleteProvider": "Votre identifiant chez le fournisseur de connexion est fermé séparément.",
+      "typeToConfirm": "Saisissez {word} pour confirmer",
+      "cancel": "Annuler",
+      "deleteConfirm": "Supprimer mon compte",
+      "close": "Fermer"
     }
   }
 }

@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { cookies } from "next/headers";
 import { use } from "react";
 import { SignOutButton } from "@/components/features/auth/sign-out-button";
+import { DataSection } from "@/components/features/account/data-section";
 import { NotificationsSettings } from "@/components/features/notifications/notifications-settings";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { PlaceholderPage } from "@/components/layout/placeholder-page";
@@ -14,6 +15,7 @@ export default function SettingsPage() {
   const language = useTranslations("language");
   const theme = useTranslations("theme");
   const auth = useTranslations("auth");
+  const data = useTranslations("settings.data");
   const current = parseTheme(use(cookies()).get(THEME_COOKIE)?.value);
   const user = use(getCurrentUser());
 
@@ -31,6 +33,11 @@ export default function SettingsPage() {
         <ThemeList current={current} />
       </section>
       <NotificationsSettings />
+      <section className="mt-8 border-t border-line pt-6">
+        <h2 className="text-md">{data("title")}</h2>
+        <p className="mt-1 mb-4 text-slate">{data("help")}</p>
+        <DataSection />
+      </section>
       <section className="mt-8 border-t border-line pt-6">
         <h2 className="text-md">{auth("account.title")}</h2>
         <p className="mt-1 text-slate">{auth("account.help")}</p>
