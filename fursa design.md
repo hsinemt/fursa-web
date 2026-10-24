@@ -186,12 +186,12 @@ Rules: no side lines (see "Shape"); no invented numbers, claims, logos or testim
 ## Auth pages (sign in, sign up, password)
 
 A split screen, in our own identity:
-- **Laptop:** two halves. The start half is a solid `--accent` panel with `--on-accent` text: the masthead (inverse), the promise in the heading font, a real example slip (a `--panel` card with the score, the job and the reason, labeled "Example"), and three short facts (it never applies for you; export or delete your data at any time; Arabic, French and English). The other half is the page background with the form, vertically centered, up to 384 px wide. In Arabic the halves swap sides.
+- **Laptop:** two halves. The start half is a solid `--accent` panel with `--on-accent` text. The masthead (inverse) sits at its top; below it a text block is **centered in the panel** (both ways), up to 512 px wide, with the promise in the heading font at a large size (40 to 72 px, aligned to the start, because justified display type leaves wide gaps) and one sentence in 20 px that is **justified** (flush on both edges, like a text box), and three short facts (it never applies for you; export or delete your data at any time; Arabic, French and English). No cards, slips, images or logos in the panel. The other half is the page background with the form, vertically centered, up to 384 px wide. In Arabic the halves swap sides.
 - **Phone and tablet:** the accent panel is hidden. The masthead sits at the top, with language and appearance, and the form fills the width.
 - **The form has no card around it.** Title in the heading font, one sentence, the fields, one primary button (full width), then a line of links.
 - **Fields:** the label above; "Forgot your password?" sits at the end of the password label row; a **show password** button (eye icon, with an accessible name) sits inside the field at its end. A new password shows a live requirement line: a check icon and the text turn from waiting to done when the rule is met (never color alone).
-- **Sign up** adds one line under the button: agreeing to the Terms and the Privacy policy, both links.
-- **Not on these pages:** social-login buttons (until a provider is set up), company logos, "trusted by" numbers, testimonials, stock images, gradients, or any side line.
+- **Sign up** starts with **first name and last name** side by side (stacked on a phone), then email and password, and adds one line under the button: agreeing to the Terms and the Privacy policy, both links. The names are saved with the account (as `first_name` and `last_name` in the user's metadata).
+- **Not on these pages:** example cards, social-login buttons (until a provider is set up), company logos, "trusted by" numbers, testimonials, stock images, gradients, or any side line.
 
 ## Voice and wording
 
