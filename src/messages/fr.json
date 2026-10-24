@@ -1,0 +1,64 @@
+{
+  "brand": "Fursa",
+  "meta": {
+    "title": "Fursa",
+    "description": "Fursa rassemble des offres de plusieurs sources, note chacune selon votre profil et vous signale les meilleures."
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu",
+    "mainNavigation": "Navigation principale"
+  },
+  "nav": {
+    "feed": "Offres",
+    "pipeline": "Suivi",
+    "profile": "Profil",
+    "settings": "Paramètres"
+  },
+  "language": {
+    "label": "Langue",
+    "help": "La langue de l’interface.",
+    "ar": "العربية",
+    "fr": "Français",
+    "en": "English"
+  },
+  "theme": {
+    "label": "Apparence",
+    "help": "Clair, sombre, ou selon votre appareil.",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "home": {
+    "title": "Fursa",
+    "placeholder": "La page d’accueil arrive à la prochaine étape.",
+    "openApp": "Ouvrir l’application"
+  },
+  "pages": {
+    "feed": {
+      "title": "Offres",
+      "placeholder": "Vos offres correspondantes apparaîtront ici."
+    },
+    "pipeline": {
+      "title": "Suivi",
+      "placeholder": "Vos offres enregistrées, envoyées et en entretien apparaîtront ici."
+    },
+    "profile": {
+      "title": "Profil",
+      "placeholder": "Vos postes visés, compétences et lieux apparaîtront ici."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "placeholder": "Les notifications et vos données apparaîtront ici."
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "help": "Cette adresse ne mène nulle part.",
+    "back": "Aller à l’accueil"
+  },
+  "score": {
+    "strong": "Fort",
+    "good": "Bon",
+    "partial": "Partiel"
+  }
+}

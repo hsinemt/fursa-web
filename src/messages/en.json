@@ -1,0 +1,64 @@
+{
+  "brand": "Fursa",
+  "meta": {
+    "title": "Fursa",
+    "description": "Fursa collects jobs from several sources, scores each one against you and tells you about the good ones."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation"
+  },
+  "nav": {
+    "feed": "Feed",
+    "pipeline": "Pipeline",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "language": {
+    "label": "Language",
+    "help": "The language of the interface.",
+    "ar": "العربية",
+    "fr": "Français",
+    "en": "English"
+  },
+  "theme": {
+    "label": "Appearance",
+    "help": "Light, dark, or follow your device.",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "home": {
+    "title": "Fursa",
+    "placeholder": "The welcome page comes in the next step.",
+    "openApp": "Open the app"
+  },
+  "pages": {
+    "feed": {
+      "title": "Feed",
+      "placeholder": "Your matched jobs will appear here."
+    },
+    "pipeline": {
+      "title": "Pipeline",
+      "placeholder": "Your saved, applied and interview jobs will appear here."
+    },
+    "profile": {
+      "title": "Profile",
+      "placeholder": "Your target roles, skills and places will appear here."
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Notifications and your data will appear here."
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "help": "This address does not lead anywhere.",
+    "back": "Go to the home page"
+  },
+  "score": {
+    "strong": "Strong",
+    "good": "Good",
+    "partial": "Partial"
+  }
+}
