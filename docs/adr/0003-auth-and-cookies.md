@@ -1,0 +1,16 @@
+# 0003. Auth and cookies (step 4)
+
+Status: accepted. Date: 2026-10-24.
+
+## Decisions
+
+1. **Supabase is used on the server only, and only in `src/lib/auth/`.** The browser never gets a Supabase client, a token, or the Supabase URL and key: the forms call Server Actions, the actions talk to Supabase. Replacing the provider means changing that one folder.
+2. **Two kinds of cookies, written together.** Supabase's own session cookies (`sb-...`) are used only by our proxy to refresh the session. `fursa_access_token` holds the raw access token, which is the one cookie `fursa-api` reads. Both are HttpOnly and SameSite=Lax, Secure over https, with path `/`. `fursa_access_token` lives exactly as long as the token. In production it takes the domain in `AUTH_COOKIE_DOMAIN` (for example `.fursa.app`) so the API receives it; the Supabase cookies stay on this site only.
+3. **Login, refresh and logout are server code.** Login, sign-up and password changes are Server Actions. Refresh happens in the proxy on every page request (it does nothing for a visitor without a session), and in a Server Action called by the API client when the API answers `token_expired` (once, never in a loop). Logout ends the Supabase session and clears both kinds of cookies even if Supabase cannot be reached. After every change of session `mirrorAccessToken` copies the token to `fursa_access_token`, so the two never disagree.
+4. **Email links use the PKCE flow.** Confirmation and reset links open `/[locale]/auth/callback?code=...` on this site; the code is exchanged on the server, then the person goes to the feed or to the new-password page. The link must be opened in the browser that asked for it (that browser holds the code verifier). The callback response is `Cache-Control: private, no-store`.
+5. **Protected pages are decided in the proxy, by an explicit list** (`feed`, `pipeline`, `profile`, `settings`, `jobs`, `onboarding`, `dev` except `dev/style`). Visitors without a session go to the login page with `?next=`; signed-in visitors are sent from the welcome, sign-in, sign-up and forgot-password pages to the feed. `next` is only accepted when it is a path inside this site (no host, no `//`, no backslash). The proxy is a convenience: **the API remains the judge of every call.**
+6. **Sign-up passes the language.** `signUp({ options: { data: { locale } } })` with the interface language, which the API reads the first time the person signs in. The confirmation link comes back in the same language.
+7. **No account lookup.** The password reset answers the same whether or not an account exists; only a refusal to send (too many requests, service down) is reported.
+8. **A secret key is refused.** `getAuthConfig` returns "not set up" if the key looks like a secret or service role key, so it cannot be used by mistake.
+9. **Forms: React Hook Form and Zod.** The same Zod schema checks the form in the browser (quick feedback) and again in the Server Action (never trust the browser). Messages are keys translated in the three languages. Sign-up asks for 8 to 72 characters.
+10. **Not built yet:** onboarding after sign-up (step 6; for now sign-up goes to the feed), the account menu (Sign out is a button in the top bar and in Settings), and showing a message when the API reports `account_deleted` (the hook signs the person out and goes to the login page).

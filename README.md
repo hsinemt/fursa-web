@@ -28,6 +28,18 @@ docker compose down
 
 The image is a multi-stage build (standalone Next.js output, non-root user, read-only filesystem in compose). `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` are fixed at build time, so rebuild after changing them. The style page is not in the image. `fursa-api` runs from its own project.
 
+## Sign-in setup (Supabase)
+
+Sign-in uses your Supabase project. Until it is set up, the app pages send you to the sign-in page, which says sign-in is not set up.
+
+1. In the Supabase dashboard, **Authentication > URL Configuration**: set **Site URL** to `http://localhost:3000` and add `http://localhost:3000/**` to **Redirect URLs** (use your real domain later).
+2. **Authentication > Providers > Email** must be on. While testing you may turn off "Confirm email", so a new account works at once.
+3. Optional: set the minimum password length to 8 (the forms ask for 8 to 72 characters).
+4. **Project Settings > API**: copy the **Project URL** and the **publishable key** (the public one, never the secret or service role key) into `.env.local`: `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`.
+5. Restart `pnpm dev`.
+
+The confirmation and reset links must be opened in the same browser that asked for them. Cookies are `HttpOnly`: you will not see them in `document.cookie`. To check them, open the browser's developer tools, **Application > Cookies**: `fursa_access_token` and the `sb-...` cookies should show HttpOnly and SameSite Lax (and Secure over https).
+
 ## Commands
 
 | Command                   | What it does                                                                                  |
@@ -51,6 +63,7 @@ CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build
 - `src/messages/`: `ar.json`, `fr.json`, `en.json`. Every text is a key; a test checks the three have the same keys.
 - `src/proxy.ts`: locale routing and the Content-Security-Policy (nonce).
 - `src/lib/api/`: the API client. `schema.d.ts` is generated from `contract/openapi.json` (never edit it); `client.ts` is the fetch wrapper; `errors.ts` maps API error codes to translated messages. Use it as `const me = await call(api.GET("/v1/me"))`.
+- `src/lib/auth/`: sign-in, sessions and cookies. **The only place that knows about Supabase**, and it runs on the server only. `actions.ts` has the Server Actions, `proxy.ts` refreshes the session, `cookies.ts` has the cookie rules.
 - `contract/openapi.json` and `api-contract.version`: the API contract this app is built against, and its pinned version.
 - `docs/adr/`: decisions.
 
