@@ -1,4 +1,4 @@
-import { IBM_Plex_Sans, IBM_Plex_Sans_Arabic, IBM_Plex_Serif } from "next/font/google";
+import { DM_Serif_Display, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 
 // Interface text (English, French). Two weights only: 400 and 500.
 export const plexSans = IBM_Plex_Sans({
@@ -16,12 +16,12 @@ export const plexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-arabic",
 });
 
-// Headings, scores and the wordmark (Latin only).
-export const plexSerif = IBM_Plex_Serif({
+// Headings, scores and the wordmark (Latin only). One weight: 400.
+export const dmSerif = DM_Serif_Display({
   subsets: ["latin", "latin-ext"],
-  weight: ["500"],
+  weight: "400",
   display: "swap",
-  variable: "--font-plex-serif",
+  variable: "--font-dm-serif",
 });
 
-export const fontVariables = [plexSans.variable, plexArabic.variable, plexSerif.variable].join(" ");
+export const fontVariables = [plexSans.variable, plexArabic.variable, dmSerif.variable].join(" ");
