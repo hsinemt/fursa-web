@@ -1,10 +1,14 @@
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils/cn";
 import { scoreBand } from "@/lib/utils/score";
 import { Faq } from "./faq";
-import { Ledger } from "./ledger";
+import { HowStory } from "./how-story";
 import { Reveal } from "./reveal";
+import { RevealText } from "./reveal-text";
+import { AlertScene, ProfileScene, ScoringScene } from "./scenes";
+import { ScrollProgress } from "./scroll-progress";
 import { ServicesIndex } from "./services-index";
 import { SortedList, type SortedJob } from "./sorted-list";
 
@@ -21,24 +25,25 @@ function Section({
   help,
   children,
 }: {
-  id?: string;
+  id: string;
   title: string;
   help?: string;
   children: React.ReactNode;
 }) {
-  const headingId = `${id ?? title}-title`.replace(/\s+/g, "-");
   return (
-    <Reveal className="mt-12">
+    <Reveal className="mt-16">
       <section
         id={id}
-        aria-labelledby={headingId}
+        aria-labelledby={`${id}-title`}
         className="scroll-mt-6 border-t border-line pt-8 lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10"
       >
         <div className="lg:sticky lg:top-6 lg:self-start">
-          <h2 id={headingId} className="text-lg text-ink">
-            {title}
-          </h2>
-          {help ? <p className="mt-1 text-sm text-slate">{help}</p> : null}
+          <RevealText
+            id={`${id}-title`}
+            text={title}
+            className="font-heading text-title text-ink lg:text-xl"
+          />
+          {help ? <p className="mt-2 text-sm text-slate">{help}</p> : null}
         </div>
         <div className="mt-6 lg:mt-0">{children}</div>
       </section>
@@ -47,8 +52,9 @@ function Section({
 }
 
 /**
- * The welcome page, set like the front page of a newspaper (see "Welcome page identity" in
- * fursa design.md). Static content, no API call.
+ * The welcome page, set like the front page of a newspaper: large type, one bold accent
+ * band, a pinned scroll story. See "Welcome page identity" and "Motion" in fursa design.md.
+ * Static content, no API call.
  */
 export function WelcomeContent() {
   const t = useTranslations("welcome");
@@ -70,17 +76,36 @@ export function WelcomeContent() {
     scoreLabel: score(scoreBand(SAMPLE_SCORES[key])),
   }));
 
+  const twinIsArabic = t("twinLang") === "ar";
+
   return (
     <>
+      <ScrollProgress />
+
       <section
         aria-labelledby="welcome-title"
-        className="mx-auto w-full max-w-5xl px-4 pt-12 pb-4 sm:px-6 sm:pt-16 lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:gap-16"
+        className="mx-auto w-full max-w-5xl px-4 pt-12 pb-16 sm:px-6 sm:pt-20 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center lg:gap-16"
       >
         <div>
-          <h1 id="welcome-title" className="max-w-xl text-xl sm:text-2xl">
-            {t("headline")}
-          </h1>
-          <p className="mt-4 max-w-xl text-md text-slate">{t("intro")}</p>
+          <p className="text-sm text-slate">{t("hero.eyebrow")}</p>
+          <RevealText
+            as="h1"
+            mode="load"
+            id="welcome-title"
+            text={t("headline")}
+            className="mt-4 font-heading text-display text-balance text-ink"
+          />
+          <p
+            lang={t("twinLang")}
+            dir="auto"
+            className={cn(
+              "mt-4 text-title text-slate",
+              twinIsArabic ? "font-arabic font-medium" : "font-serif",
+            )}
+          >
+            {t("twin")}
+          </p>
+          <p className="mt-8 max-w-xl text-md text-ink">{t("intro")}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild variant="primary">
               <Link href="/signup">{actions("createAccount")}</Link>
@@ -91,28 +116,48 @@ export function WelcomeContent() {
           </div>
         </div>
 
-        <aside
-          aria-label={t("hero.tag")}
-          className="mt-10 rounded-panel border border-line border-s-[3px] border-s-accent bg-panel p-6 lg:mt-0"
-        >
+        <aside aria-label={t("hero.tag")} className="mt-14 lg:mt-0">
           <p className="text-xs text-slate">{t("hero.tag")}</p>
-          <p className="mt-3 flex items-baseline gap-2">
-            <span className="tabular font-heading text-2xl text-accent">{SAMPLE_SCORES.one}</span>
+          <p className="tabular font-heading text-numeral text-accent">
+            <span className="sr-only">{SAMPLE_SCORES.one}</span>
+            <span
+              aria-hidden="true"
+              className="count count-load"
+              style={{ "--to": SAMPLE_SCORES.one } as React.CSSProperties}
+            />
+          </p>
+          <p className="mt-2 flex items-baseline gap-2">
+            <span dir="auto" className="font-medium text-ink">
+              {t("hero.title")}
+            </span>
             <span className="text-sm text-slate">{score(scoreBand(SAMPLE_SCORES.one))}</span>
           </p>
-          <p dir="auto" className="mt-1 font-medium text-ink">
-            {t("hero.title")}
-          </p>
-          <p dir="auto" className="mt-2 text-slate">
+          <p dir="auto" className="mt-2 max-w-xs text-slate">
             {t("hero.why")}
           </p>
         </aside>
       </section>
 
       <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
-        <Section id="how" title={t("how.title")}>
-          <Ledger steps={steps} />
-        </Section>
+        <section
+          id="how"
+          aria-labelledby="how-title"
+          className="scroll-mt-6 border-t border-line pt-10"
+        >
+          <RevealText
+            id="how-title"
+            text={t("how.title")}
+            className="font-heading text-title text-ink"
+          />
+          <HowStory
+            steps={steps}
+            scenes={[
+              <ProfileScene key="profile" />,
+              <ScoringScene key="scoring" />,
+              <AlertScene key="alert" />,
+            ]}
+          />
+        </section>
 
         <Section id="example" title={t("example.title")} help={t("example.help")}>
           <div className="mb-3 flex items-baseline justify-between gap-4">
@@ -129,14 +174,23 @@ export function WelcomeContent() {
           <ServicesIndex />
           <p className="mt-8 max-w-prose text-sm text-slate">{t("services.later")}</p>
         </Section>
+      </div>
 
-        <Section title={t("promise.title")}>
-          <blockquote className="border-s-2 border-accent ps-6">
-            <p className="max-w-xl font-heading text-xl text-ink">{t("promise.quote")}</p>
-            <p className="mt-3 max-w-prose text-slate">{t("promise.text")}</p>
-          </blockquote>
-        </Section>
+      <section aria-labelledby="promise-title" className="mt-20 bg-accent text-on-accent">
+        <div className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+          <h2 id="promise-title" className="text-md font-medium text-on-accent">
+            {t("promise.title")}
+          </h2>
+          <RevealText
+            as="p"
+            text={t("promise.quote")}
+            className="mt-6 max-w-3xl font-heading text-statement text-balance text-on-accent"
+          />
+          <p className="mt-8 max-w-xl text-md text-on-accent">{t("promise.text")}</p>
+        </div>
+      </section>
 
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
         <Section id="data" title={t("data.title")}>
           <p className="max-w-prose text-md text-ink">{t("data.text")}</p>
           <p className="mt-2 max-w-prose text-slate">{t("data.note")}</p>
@@ -145,27 +199,23 @@ export function WelcomeContent() {
         <Section id="faq" title={t("faq.title")}>
           <Faq />
         </Section>
-
-        <Reveal className="mt-12">
-          <section
-            aria-labelledby="closing-title"
-            className="border-t-2 border-ink pt-8 lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10"
-          >
-            <div />
-            <div>
-              <h2 id="closing-title" className="text-xl text-ink">
-                {t("closing.title")}
-              </h2>
-              <p className="mt-2 max-w-prose text-slate">{t("closing.text")}</p>
-              <div className="mt-6">
-                <Button asChild variant="primary">
-                  <Link href="/signup">{actions("createAccount")}</Link>
-                </Button>
-              </div>
-            </div>
-          </section>
-        </Reveal>
       </div>
+
+      <section aria-labelledby="closing-title" className="mt-20 bg-tint">
+        <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+          <RevealText
+            id="closing-title"
+            text={t("closing.title")}
+            className="max-w-3xl font-heading text-statement text-balance text-ink"
+          />
+          <p className="mt-6 max-w-prose text-md text-slate">{t("closing.text")}</p>
+          <div className="mt-8">
+            <Button asChild variant="primary">
+              <Link href="/signup">{actions("createAccount")}</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

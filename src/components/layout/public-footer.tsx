@@ -8,7 +8,7 @@ export function PublicFooter() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="mt-16 border-t border-line">
+    <footer className="border-t border-line">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Masthead size="sm" />

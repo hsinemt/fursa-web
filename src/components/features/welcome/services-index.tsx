@@ -149,7 +149,7 @@ export function ServicesIndex() {
           <Tabs.Trigger
             key={key}
             value={key}
-            className="group flex w-full items-baseline gap-3 border-b border-s-[3px] border-b-line border-s-transparent px-3 py-3 text-start transition-colors duration-150 ease-out hover:bg-tint data-[state=active]:border-s-accent data-[state=active]:bg-tint"
+            className="group flex w-full items-baseline gap-3 border-b border-line px-3 py-3 text-start transition-colors duration-150 ease-out hover:bg-tint data-[state=active]:bg-tint"
           >
             <span className="font-heading text-md text-ink group-data-[state=active]:text-accent">
               {t(`${key}.name`)}
