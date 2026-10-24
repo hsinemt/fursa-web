@@ -78,6 +78,3 @@ export async function call<T>(request: Promise<Result<T>>): Promise<T> {
   if (!result.response.ok) throw toApiError(result.response, result.error);
   return result.data as T; // undefined for a 204, which has no body
 }
-
-/** The shared client for browser code. Server code that forwards cookies builds its own. */
-export const api = createApiClient();

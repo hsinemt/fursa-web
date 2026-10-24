@@ -1,4 +1,5 @@
-export { api, call, createApiClient } from "./client";
+export { api } from "./browser";
+export { call, createApiClient } from "./client";
 export type { ApiClient, ApiClientOptions } from "./client";
 export {
   ApiError,
