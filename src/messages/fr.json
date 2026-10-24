@@ -263,5 +263,26 @@
     "applied": "Envoyée",
     "interview": "Entretien",
     "rejected": "Refusée"
+  },
+  "errors": {
+    "missing_token": "Votre session a expiré. Reconnectez-vous.",
+    "invalid_token": "Votre session a expiré. Reconnectez-vous.",
+    "token_expired": "Votre session a expiré. Reconnectez-vous.",
+    "account_deleted": "Ce compte a été supprimé.",
+    "email_required": "Votre compte n’a pas d’adresse e-mail, Fursa ne peut donc pas continuer.",
+    "origin_not_allowed": "Fursa ne peut pas joindre son serveur depuis cette adresse. Réessayez plus tard.",
+    "validation_error": "Certains champs ne sont pas valides. Vérifiez-les et réessayez.",
+    "invalid_salary_range": "Le salaire minimum est supérieur au salaire maximum.",
+    "invalid_cursor": "La liste a changé. Fursa la recharge depuis le début.",
+    "job_not_found": "Cette offre ne fait pas partie de vos correspondances.",
+    "telegram_not_linked": "Liez d’abord Telegram, puis réessayez.",
+    "telegram_not_configured": "Telegram n’est pas configuré sur ce serveur.",
+    "rate_limited": "Trop de requêtes. Réessayez dans {seconds} secondes.",
+    "rate_limited_soon": "Trop de requêtes. Réessayez dans un instant.",
+    "auth_unavailable": "La connexion est temporairement indisponible. Réessayez plus tard.",
+    "auth_not_configured": "La connexion est temporairement indisponible. Réessayez plus tard.",
+    "network_error": "Fursa ne peut pas joindre son serveur. Vérifiez votre connexion et réessayez.",
+    "unknown": "Une erreur s’est produite. Réessayez.",
+    "internal_error": "Une erreur s’est produite de notre côté. Réessayez plus tard."
   }
 }

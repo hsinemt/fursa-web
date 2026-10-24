@@ -263,5 +263,26 @@
     "applied": "Applied",
     "interview": "Interview",
     "rejected": "Rejected"
+  },
+  "errors": {
+    "missing_token": "Your session expired. Sign in again.",
+    "invalid_token": "Your session expired. Sign in again.",
+    "token_expired": "Your session expired. Sign in again.",
+    "account_deleted": "This account has been deleted.",
+    "email_required": "Your account has no email address, so Fursa cannot continue.",
+    "origin_not_allowed": "Fursa cannot reach its server from this address. Try again later.",
+    "validation_error": "Some fields are not valid. Check them and try again.",
+    "invalid_salary_range": "The minimum salary is higher than the maximum.",
+    "invalid_cursor": "The list changed. Fursa is reloading it from the start.",
+    "job_not_found": "This job is not in your matches.",
+    "telegram_not_linked": "Link Telegram first, then try again.",
+    "telegram_not_configured": "Telegram is not set up on this server.",
+    "rate_limited": "Too many requests. Try again in {seconds} seconds.",
+    "rate_limited_soon": "Too many requests. Try again in a moment.",
+    "auth_unavailable": "Sign-in is temporarily unavailable. Try again later.",
+    "auth_not_configured": "Sign-in is temporarily unavailable. Try again later.",
+    "network_error": "Fursa cannot reach its server. Check your connection and try again.",
+    "unknown": "Something went wrong. Try again.",
+    "internal_error": "Something went wrong on our side. Try again later."
   }
 }
