@@ -28,7 +28,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </>
         }
       />
-      <main id="main" className="mx-auto w-full max-w-7xl px-4 py-6 pb-24 sm:px-6 sm:pb-8">
+      <main id="main" className="w-full px-4 py-6 pb-24 sm:px-6 sm:pb-8">
         {children}
       </main>
       <TabBar />

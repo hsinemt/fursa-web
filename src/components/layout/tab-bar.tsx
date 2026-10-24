@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { ICON_MD, iconProps } from "@/components/ui/icon";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
-import { NAV_ITEMS } from "./nav-items";
+import { isCurrentNav, NAV_ITEMS } from "./nav-items";
 
 /**
  * Phone: a bottom tab bar with the four items, easy to reach with a thumb.
@@ -23,7 +23,7 @@ export function TabBar() {
     >
       <ul className="grid grid-cols-4">
         {NAV_ITEMS.map(({ key, href, icon: Icon }) => {
-          const current = pathname === href || pathname.startsWith(`${href}/`);
+          const current = isCurrentNav(href, pathname);
           return (
             <li key={key}>
               <Link

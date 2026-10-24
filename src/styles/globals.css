@@ -138,6 +138,23 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Tailwind resets buttons to the arrow cursor: clickable things show the hand. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href],
+  summary,
+  select:not(:disabled),
+  label[for],
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   /* Arabic reads small next to Latin: nudge the base size up */
   body:lang(ar) {
     font-size: 15px;
