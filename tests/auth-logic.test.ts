@@ -291,13 +291,36 @@ describe("form schemas", () => {
     ]);
   });
 
+  const person = { firstName: "Sam", lastName: "Doe" };
+
   it("signup and reset: 8 to 72 characters", () => {
-    expect(signupSchema.safeParse({ email: "a@b.co", password: "12345678" }).success).toBe(true);
-    expect(messages(signupSchema.safeParse({ email: "a@b.co", password: "1234567" }))).toEqual([
-      "password_short",
+    expect(
+      signupSchema.safeParse({ ...person, email: "a@b.co", password: "12345678" }).success,
+    ).toBe(true);
+    expect(
+      messages(signupSchema.safeParse({ ...person, email: "a@b.co", password: "1234567" })),
+    ).toEqual(["password_short"]);
+    expect(
+      messages(signupSchema.safeParse({ ...person, email: "a@b.co", password: "x".repeat(73) })),
+    ).toEqual(["password_long"]);
+  });
+
+  it("signup: a first name and a last name, trimmed, up to 60 characters", () => {
+    const base = { email: "a@b.co", password: "12345678" };
+    const ok = signupSchema.safeParse({ ...base, firstName: "  Amel ", lastName: "Ben Salah" });
+    expect(ok.success).toBe(true);
+    expect(ok.data).toMatchObject({ firstName: "Amel", lastName: "Ben Salah" });
+
+    expect(messages(signupSchema.safeParse({ ...base, firstName: "", lastName: "   " }))).toEqual([
+      "name_required",
+      "name_required",
     ]);
-    expect(messages(signupSchema.safeParse({ email: "a@b.co", password: "x".repeat(73) }))).toEqual(
-      ["password_long"],
+    expect(
+      messages(signupSchema.safeParse({ ...base, firstName: "x".repeat(61), lastName: "Doe" })),
+    ).toEqual(["name_long"]);
+    // Names in any script are fine.
+    expect(signupSchema.safeParse({ ...base, firstName: "أمل", lastName: "بن صالح" }).success).toBe(
+      true,
     );
   });
 

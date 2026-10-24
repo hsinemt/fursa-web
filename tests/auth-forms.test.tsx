@@ -120,12 +120,16 @@ describe("signup form", () => {
   it("sends the current language so the API writes in it, and goes to the next page", async () => {
     actions.signUpAction.mockResolvedValue({ ok: true, next: "/check-email" });
     renderIn(<SignupForm />, "ar");
+    type(ar.auth.fields.firstName, "أمل");
+    type(ar.auth.fields.lastName, "بن صالح");
     type(ar.auth.fields.email, "a@b.co");
     type(ar.auth.fields.password, "12345678");
     fireEvent.click(screen.getByRole("button", { name: ar.auth.signup.submit }));
 
     await waitFor(() => expect(router.replace).toHaveBeenCalledWith("/check-email"));
     expect(actions.signUpAction).toHaveBeenCalledWith({
+      firstName: "أمل",
+      lastName: "بن صالح",
       email: "a@b.co",
       password: "12345678",
       locale: "ar",
@@ -134,6 +138,8 @@ describe("signup form", () => {
 
   it("asks for at least 8 characters, in the page language", async () => {
     renderIn(<SignupForm />, "ar");
+    type(ar.auth.fields.firstName, "أمل");
+    type(ar.auth.fields.lastName, "بن صالح");
     type(ar.auth.fields.email, "a@b.co");
     type(ar.auth.fields.password, "1234");
     fireEvent.click(screen.getByRole("button", { name: ar.auth.signup.submit }));
@@ -145,6 +151,8 @@ describe("signup form", () => {
   it("tells a person who already has an account to sign in", async () => {
     actions.signUpAction.mockResolvedValue({ ok: false, error: "email_taken" });
     renderIn(<SignupForm />);
+    type("First name", "Sam");
+    type("Last name", "Doe");
     type("Email", "a@b.co");
     type("Password", "12345678");
     fireEvent.click(screen.getByRole("button", { name: "Create account" }));
@@ -282,6 +290,28 @@ describe("password field", () => {
   });
 });
 
+describe("sign up: names", () => {
+  it("starts with first name and last name, then email and password", () => {
+    renderIn(<SignupForm />);
+    const autocomplete = screen
+      .getAllByRole("textbox")
+      .map((el) => el.getAttribute("autocomplete"));
+    expect(autocomplete).toEqual(["given-name", "family-name", "email"]);
+    expect(screen.getByLabelText("Password")).toHaveAttribute("autocomplete", "new-password");
+  });
+
+  it("asks for both names, in the page language, and does not call the server", async () => {
+    renderIn(<SignupForm />, "ar");
+    type(ar.auth.fields.email, "a@b.co");
+    type(ar.auth.fields.password, "12345678");
+    fireEvent.click(screen.getByRole("button", { name: ar.auth.signup.submit }));
+
+    expect(await screen.findAllByText(ar.auth.validation.name_required)).toHaveLength(2);
+    expect(actions.signUpAction).not.toHaveBeenCalled();
+    expect(screen.getByLabelText(ar.auth.fields.firstName)).toHaveAttribute("aria-invalid", "true");
+  });
+});
+
 describe("sign up: password rule and terms", () => {
   const rule = () => screen.getByText("At least 8 characters.").closest("p") as HTMLElement;
 
@@ -316,20 +346,30 @@ describe("sign up: password rule and terms", () => {
 });
 
 describe("brand panel", () => {
-  it("says what Fursa does, with a real example, and nothing invented", () => {
+  it("says what Fursa does, in words only", () => {
     const { container } = renderIn(<BrandPanel />);
     const panel = screen.getByRole("complementary");
 
     expect(panel).toHaveTextContent("Find the jobs that fit you, and see why.");
-    expect(panel).toHaveTextContent("Example");
-    expect(panel).toHaveTextContent(en.welcome.hero.why);
+    expect(panel).toHaveTextContent("Fursa scores each job against your profile");
     expect(panel).toHaveTextContent("Fursa never applies for you.");
     expect(panel).toHaveTextContent("Export your data or delete your account at any time.");
     expect(panel).toHaveTextContent("In Arabic, French and English.");
 
-    // No logos, photos or social buttons: only text.
+    // No example card or slip, no logos or photos, no social buttons: only text.
+    expect(panel).not.toHaveTextContent("Example");
+    expect(panel).not.toHaveTextContent(en.welcome.hero.title);
     expect(container.querySelector("img")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
+  });
+
+  it("the text block is centered in the panel, and the paragraph is justified", () => {
+    renderIn(<BrandPanel />);
+    const paragraph = screen.getByText(/Fursa scores each job against your profile/);
+    expect(paragraph).toHaveClass("text-justify");
+    // The block that holds the text is centered both ways inside the panel.
+    const centered = paragraph.parentElement?.parentElement as HTMLElement;
+    expect(centered).toHaveClass("flex", "items-center", "justify-center");
   });
 
   it("is only for laptops: hidden below the large breakpoint", () => {

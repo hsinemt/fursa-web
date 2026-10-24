@@ -267,14 +267,26 @@ describe("sign in: answers", () => {
 
 // ---- sign up ----------------------------------------------------------------------------
 
+const person = { firstName: "Amel", lastName: "Ben Salah" };
+
 describe("sign up", () => {
   it("sends the language, and the link back to this site in that language", async () => {
     behavior.signUpReturnsSession = false;
-    const result = await signUpAction({ email: "a@b.co", password: "12345678", locale: "ar" });
+    const result = await signUpAction({
+      ...person,
+      email: "a@b.co",
+      password: "12345678",
+      locale: "ar",
+    });
 
     expect(result).toEqual({ ok: true, next: "/check-email" });
     const request = seen.find((s) => s.path === "/auth/v1/signup");
-    expect(request?.body.data).toEqual({ locale: "ar" });
+    // The language for the API, and the name saved with the account.
+    expect(request?.body.data).toEqual({
+      locale: "ar",
+      first_name: "Amel",
+      last_name: "Ben Salah",
+    });
     expect(request?.query.get("redirect_to")).toBe(
       "http://localhost:3000/ar/auth/callback?next=%2Ffeed",
     );
@@ -282,15 +294,33 @@ describe("sign up", () => {
   });
 
   it("signs in at once when Supabase does not ask for confirmation", async () => {
-    const result = await signUpAction({ email: "a@b.co", password: "12345678", locale: "fr" });
+    const result = await signUpAction({
+      ...person,
+      email: "a@b.co",
+      password: "12345678",
+      locale: "fr",
+    });
     expect(result).toEqual({ ok: true, next: "/feed" });
     expect(accessCookies()).toHaveLength(1);
     expect(accessCookies()[0]?.options).toMatchObject({ httpOnly: true, sameSite: "lax" });
   });
 
+  it("asks for both names on the server too", async () => {
+    expect(
+      await signUpAction({
+        firstName: "",
+        lastName: "Doe",
+        email: "a@b.co",
+        password: "12345678",
+        locale: "en",
+      }),
+    ).toMatchObject({ ok: false, fieldErrors: { firstName: "name_required" } });
+    expect(seen).toEqual([]);
+  });
+
   it("rejects a short password on the server", async () => {
     expect(
-      await signUpAction({ email: "a@b.co", password: "1234567", locale: "en" }),
+      await signUpAction({ ...person, email: "a@b.co", password: "1234567", locale: "en" }),
     ).toMatchObject({
       ok: false,
       fieldErrors: { password: "password_short" },
