@@ -218,7 +218,7 @@ It is a testing tool: plain styling, English only, no translations required.
      - Basic SEO: title, description, language alternates.
    - Until the auth step exists, **Create account** and **Sign in** point to simple placeholder pages.
 2. **Auth**: signup, login, forgot password, reset password, email verification notice. A split screen (see "Auth pages" in `fursa design.md`): accent panel with the promise and an example, form on the other side.
-3. **Onboarding**: target roles, skills, locations, seniority, alert preferences. (CV upload comes later: the API has no endpoint for it yet.)
+3. **Onboarding**: target roles, skills, locations, seniority, alert preferences. (CV upload comes later: the API has no endpoint for it yet.) Built in step 6: five steps saved one by one, shown after sign up (see `docs/adr/0005-profile-and-onboarding.md` and "Profile and onboarding" in `fursa design.md`).
 4. **Job feed**: score, a short "why it matches you" explanation when there is one, status filter, "load more". (Search and richer filters need an API change first.)
 5. **Job detail**: sanitized description, score breakdown, save and apply actions, link to the original posting
 6. **Pipeline board**: saved, applied, interview, rejected (drag and drop). One feed query per status; moving a card is `PUT /jobs/{id}/status`

@@ -183,6 +183,14 @@ The public page is our own: it is set like the front page of a newspaper, with l
 
 Rules: no side lines (see "Shape"); no invented numbers, claims, logos or testimonials; only things the app does today are shown as services, and what is missing is said plainly in one line; samples are labeled "Example"; no gradients, glass, blobs or stock images.
 
+## Profile and onboarding
+
+- **Lists** (target roles, skills, places) use a **tag input**: type and press Enter or comma to add; each item is a chip (`--tint`, `--accent` text, 4 px corners) with a remove button that has an accessible name; Backspace on an empty field removes the last chip; text left in the field is added when it loses focus; pasted text with commas or new lines becomes several chips; a duplicate (any letter case) is ignored. Limits are the API's: 50 roles, 200 skills, 50 places.
+- **Profile page:** one column up to 640 px, each group (roles, skills, places, level, salary) under a hairline with a short explanation. One primary **Save** button, always available: with nothing changed it says "No changes to save." On success a toast; problems the API finds are shown beside the right field. Only the fields that changed are sent.
+- **Onboarding:** five steps (roles, skills, places, level, alerts), one question each, in a centered column up to 560 px. The step is written ("Step 2 of 5") and drawn as five thin segments. **Next** saves that step, **Skip for now** moves on without saving, **Back** returns, and the last step saves the alert preferences and goes to the feed. A new account lands here after sign up. Everything is prefilled if the profile already has data.
+- **Empty feed** (no target roles yet): the empty state "No matches yet. Add your target roles so Fursa can find jobs." with one action.
+- **Toasts:** one line, no exclamation mark, at the bottom and centered (above the tab bar on phones), a `--panel` bar with a hairline and the menu shadow. They stay 6 seconds, have a close button, and are announced politely to screen readers.
+
 ## Auth pages (sign in, sign up, password)
 
 A split screen, in our own identity:

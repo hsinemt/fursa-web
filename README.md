@@ -76,6 +76,8 @@ CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build
 - `src/proxy.ts`: locale routing and the Content-Security-Policy (nonce).
 - `src/lib/api/`: the API client. `schema.d.ts` is generated from `contract/openapi.json` (never edit it); `client.ts` is the fetch wrapper; `errors.ts` maps API error codes to translated messages. Use it as `const me = await call(api.GET("/v1/me"))`.
 - `src/lib/dev/` and `src/components/dev/`: the dev console (endpoint table checked against the contract, the runner, the cards). Development only.
+- `src/lib/profile/` and `src/components/features/{profile,onboarding}/`: the profile page (`/profile`), the five-step setup (`/onboarding`, shown after sign up) and the data hooks (TanStack Query). `values.ts` is plain logic (tags, salary checks, the patch of changed fields) and has its own tests.
+- `src/components/providers/app-providers.tsx` and `src/components/ui/toast.tsx`: the data cache and the toasts, shared by the signed-in screens.
 - `src/lib/auth/`: sign-in, sessions and cookies. **The only place that knows about Supabase**, and it runs on the server only. `actions.ts` has the Server Actions, `proxy.ts` refreshes the session, `cookies.ts` has the cookie rules.
 - `contract/openapi.json` and `api-contract.version`: the API contract this app is built against, and its pinned version.
 - `docs/adr/`: decisions.
