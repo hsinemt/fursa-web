@@ -8,7 +8,7 @@ import {
   networkError,
   toApiError,
   type Translate,
-} from "@/lib/api";
+} from "@/lib/api/errors";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 import fr from "@/messages/fr.json";

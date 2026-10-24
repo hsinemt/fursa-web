@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from "vitest";
-import { ApiError, call, createApiClient } from "@/lib/api";
+import { call, createApiClient } from "@/lib/api/client";
+import { ApiError } from "@/lib/api/errors";
 
 const BASE = "http://api.test";
 
