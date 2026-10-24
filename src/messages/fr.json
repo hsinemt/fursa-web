@@ -42,7 +42,7 @@
     },
     "settings": {
       "title": "Paramètres",
-      "placeholder": "Les notifications et vos données apparaîtront ici."
+      "placeholder": "Langue, apparence, alertes et votre compte."
     }
   },
   "actions": {
@@ -585,6 +585,34 @@
         "qualifications": "Profil et qualifications",
         "benefits": "Avantages"
       }
+    }
+  },
+  "settings": {
+    "alerts": {
+      "title": "Alertes",
+      "help": "Fursa vous signale les offres qui vous correspondent bien. Seules les nouvelles offres trouvées après l’activation d’un canal sont envoyées.",
+      "email": "M’envoyer des e-mails",
+      "unsubscribed": "Vous vous êtes désabonné des e-mails le {date}.",
+      "shared": "Le rythme et le score minimum s’appliquent à l’e-mail et à Telegram.",
+      "save": "Enregistrer",
+      "saved": "Alertes enregistrées",
+      "noChanges": "Aucune modification à enregistrer."
+    },
+    "telegram": {
+      "title": "Telegram",
+      "help": "Recevez les alertes dans une conversation Telegram. Il faut l’application Telegram.",
+      "notLinked": "Telegram n’est pas lié.",
+      "link": "Lier Telegram",
+      "open": "Ouvrir Telegram",
+      "openHelp": "Ouvrez le lien, puis appuyez sur Start dans la conversation. Il ne marche qu’une fois et expire dans {minutes} min.",
+      "waiting": "En attente de votre appui sur Start dans Telegram",
+      "expired": "Le lien a expiré. Liez Telegram à nouveau.",
+      "linked": "Telegram est lié.",
+      "linkedToast": "Telegram est lié",
+      "enabled": "Envoyer les alertes sur Telegram",
+      "saved": "Réglage Telegram enregistré",
+      "unlink": "Délier Telegram",
+      "unlinkedToast": "Telegram a été délié"
     }
   }
 }

@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { cookies } from "next/headers";
 import { use } from "react";
 import { SignOutButton } from "@/components/features/auth/sign-out-button";
+import { NotificationsSettings } from "@/components/features/notifications/notifications-settings";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { PlaceholderPage } from "@/components/layout/placeholder-page";
 import { ThemeList } from "@/components/layout/theme-switcher";
@@ -29,6 +30,7 @@ export default function SettingsPage() {
         <p className="mt-1 mb-4 text-slate">{theme("help")}</p>
         <ThemeList current={current} />
       </section>
+      <NotificationsSettings />
       <section className="mt-8 border-t border-line pt-6">
         <h2 className="text-md">{auth("account.title")}</h2>
         <p className="mt-1 text-slate">{auth("account.help")}</p>
