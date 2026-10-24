@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
 import { scoreBand } from "@/lib/utils/score";
 import { Faq } from "./faq";
+import { PipelineCard } from "./pipeline-card";
 import { HowStory } from "./how-story";
 import { Reveal } from "./reveal";
 import { RevealText } from "./reveal-text";
@@ -14,6 +15,13 @@ import { SortedList, type SortedJob } from "./sorted-list";
 
 const STEPS = ["one", "two", "three"] as const;
 const SAMPLE_SCORES = { one: 82, two: 68, three: 51 } as const;
+const PIPELINE_STEPS = [
+  { key: "collect", time: "08:01" },
+  { key: "read", time: "08:01" },
+  { key: "score", time: "08:02" },
+  { key: "reason", time: "08:02" },
+  { key: "alert", time: "08:03" },
+] as const;
 
 /**
  * A section with a "margin heading": on laptop the heading sits in a left column (right
@@ -173,6 +181,26 @@ export function WelcomeContent() {
         <Section id="services" title={t("services.title")} help={t("services.help")}>
           <ServicesIndex />
           <p className="mt-8 max-w-prose text-sm text-slate">{t("services.later")}</p>
+        </Section>
+
+        <Section id="pipeline" title={t("pipeline.title")} help={t("pipeline.help")}>
+          <PipelineCard
+            label={t("pipeline.label")}
+            tag={t("pipeline.tag")}
+            title={t("pipeline.job")}
+            company={t("pipeline.company")}
+            steps={PIPELINE_STEPS.map(({ key, time }) => ({
+              key,
+              time,
+              label: t(`pipeline.steps.${key}`),
+            }))}
+            workingLabel={t("pipeline.working")}
+            doneLabel={t("pipeline.done")}
+            resultText={t("pipeline.result")}
+            score={SAMPLE_SCORES.one}
+            scoreLabel={score(scoreBand(SAMPLE_SCORES.one))}
+            replayLabel={t("example.replay")}
+          />
         </Section>
       </div>
 

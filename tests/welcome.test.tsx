@@ -37,6 +37,7 @@ describe.each(["en", "fr", "ar"] as const)("welcome page (%s)", (locale) => {
       m.how.title,
       m.example.title,
       m.services.title,
+      m.pipeline.title,
       m.promise.title,
       m.data.title,
       m.faq.title,
@@ -65,7 +66,7 @@ describe.each(["en", "fr", "ar"] as const)("welcome page (%s)", (locale) => {
 
   it("shows how it works as three numbered steps", () => {
     const { container } = renderWelcome(locale);
-    const steps = container.querySelectorAll("ol > li");
+    const steps = container.querySelectorAll("#how ol > li");
     expect(steps).toHaveLength(3);
     expect(Array.from(steps).map((li) => li.querySelector("span")?.textContent)).toEqual([
       "1",
@@ -100,6 +101,14 @@ describe.each(["en", "fr", "ar"] as const)("welcome page (%s)", (locale) => {
     expect(screen.getByText(m.services.alerts.text)).toBeInTheDocument();
     expect(screen.queryByText(m.services.feed.text)).toBeNull();
     expect(screen.getByText(m.services.later)).toBeInTheDocument();
+  });
+
+  it("shows the pipeline card with five steps and the finished result", () => {
+    renderWelcome(locale);
+    const card = screen.getByRole("region", { name: m.pipeline.label });
+    expect(within(card).getAllByRole("listitem")).toHaveLength(5);
+    expect(within(card).getByText(m.pipeline.steps.score)).toBeInTheDocument();
+    expect(within(card).getByText(m.pipeline.result)).toBeInTheDocument();
   });
 
   it("says plainly that Fursa never applies for the user, and shows the data promise", () => {

@@ -161,6 +161,7 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **Reading line:** a 2 px accent line at the very top of the screen grows with the scroll position.
 - **Pinned story:** "How it works" pins a stage on the page while three steps scroll past. The big numeral of the current step turns accent and the stage cross-fades (300 ms) to that step's scene: profile chips appear one by one, scores count up and thin bars fill, an alert slides in.
 - **Sorted for you:** a thin accent rule passes down the example list, each score counts up (about 600 ms), then the rows slide into best-first order (200 ms each, 60 ms apart). Replay is available.
+- **Pipeline card:** the steps one job goes through (collecting, reading, scoring, writing the reason, sending the alert) run one after another, 900 ms each. The running step shows a thin accent bar filling in that time; a finished step gets a check and its time; the card ends with the result (score and what was sent). The "working" dots pulse only while it runs. Replay is available.
 - **Statement:** the accent band's statement rises word by word when it scrolls into view.
 - **Reveal:** other sections fade in and rise 8 px (200 ms) when they scroll into view.
 
@@ -174,6 +175,7 @@ The public page is our own: it is set like the front page of a newspaper, with l
 - **Big numeral:** the hero shows one job's score as a huge numeral in DM Serif Display, in `--accent`, with its word and the reason sentence under it. A score is always shown with its reason.
 - **Pinned story:** see "Motion". On phone and tablet the scenes sit under their step instead of being pinned.
 - **Statement band:** "Fursa never applies for you" is set very large on a full-width `--accent` band with `--on-accent` text. It is the only solid block of the accent color on the page.
+- **Pipeline card:** a `--panel` card with the job's name, step rows separated by hairlines (marker, name, time), and the result at the bottom. Markers are 20 px squares with 4 px corners: hollow (waiting), accent outline (running), accent fill with a check (done). No connecting line down the side.
 - **Index:** services are listed like a book's index: name, dotted leader, short description. Choosing one shows a small labeled sample beside it.
 - **Closing band:** a full-width `--tint` band with a large headline and the main action.
 - **Margin headings:** on laptop, section headings sit in a left margin column (right in Arabic) with the content beside them, under a hairline. On phone and tablet the heading sits above the content.
