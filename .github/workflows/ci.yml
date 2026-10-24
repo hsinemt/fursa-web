@@ -86,20 +86,31 @@ jobs:
       - name: Smoke test the container
         run: |
           docker run -d --name fursa-web -p 3000:3000 fursa-web:ci
+          # Public pages answer 200 (no sign-in needed, no Supabase settings needed)
           for i in $(seq 1 30); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/feed || true)
+            code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/login || true)
             [ "$code" = "200" ] && break
             sleep 1
           done
-          echo "GET /en/feed -> $code"
+          echo "GET /en/login -> $code"
           [ "$code" = "200" ]
+          welcome=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en)
+          echo "GET /en -> $welcome"
+          [ "$welcome" = "200" ]
+          # An app page without a session is sent to sign in, and comes back to it afterwards
+          read -r feed where < <(curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' http://localhost:3000/en/feed)
+          where=${where%$'\r'}
+          echo "GET /en/feed -> $feed $where"
+          [ "$feed" = "307" ]
+          [ "$where" = "http://localhost:3000/en/login?next=%2Ffeed" ]
           # The style page must not exist in a production image
           dev=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/en/dev/style)
           echo "GET /en/dev/style -> $dev"
           [ "$dev" = "404" ]
-          # Security headers are present
+          # Security headers are present (on a page and on the redirect)
+          curl -sI http://localhost:3000/en/login | grep -i '^content-security-policy:'
+          curl -sI http://localhost:3000/en/login | grep -i '^x-frame-options: DENY'
           curl -sI http://localhost:3000/en/feed | grep -i '^content-security-policy:'
-          curl -sI http://localhost:3000/en/feed | grep -i '^x-frame-options: DENY'
 
       - name: Container logs
         if: failure()
