@@ -76,7 +76,8 @@
     "hero": {
       "tag": "Example",
       "title": "Data engineer",
-      "why": "Your profile lists Python, SQL and Docker, which this job asks for."
+      "why": "Your profile lists Python, SQL and Docker, which this job asks for.",
+      "eyebrow": "Job matching in Arabic, French and English"
     },
     "how": {
       "title": "How it works",
@@ -204,6 +205,29 @@
     "closing": {
       "title": "Start with what you look for.",
       "text": "Create an account, then add your roles, skills, places and level."
+    },
+    "twin": "اعثر على الوظائف التي تناسبك.",
+    "twinLang": "ar",
+    "scenes": {
+      "profile": {
+        "title": "Your profile",
+        "roles": "Roles",
+        "skills": "Skills",
+        "places": "Places",
+        "level": "Level",
+        "role": "Data engineer",
+        "placeOne": "Tunis",
+        "placeTwo": "Remote",
+        "levelValue": "Senior"
+      },
+      "scoring": {
+        "title": "Scored against your profile"
+      },
+      "alert": {
+        "channel": "Telegram",
+        "title": "New match",
+        "text": "Data engineer, 82. Matches Python, SQL and Docker."
+      }
     }
   },
   "notFound": {

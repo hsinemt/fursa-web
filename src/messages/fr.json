@@ -76,7 +76,8 @@
     "hero": {
       "tag": "Exemple",
       "title": "Ingénieur données",
-      "why": "Votre profil indique Python, SQL et Docker, que cette offre demande."
+      "why": "Votre profil indique Python, SQL et Docker, que cette offre demande.",
+      "eyebrow": "La recherche d’offres en arabe, en français et en anglais"
     },
     "how": {
       "title": "Comment ça marche",
@@ -204,6 +205,29 @@
     "closing": {
       "title": "Commencez par ce que vous cherchez.",
       "text": "Créez un compte, puis indiquez vos postes, compétences, lieux et niveau."
+    },
+    "twin": "اعثر على الوظائف التي تناسبك.",
+    "twinLang": "ar",
+    "scenes": {
+      "profile": {
+        "title": "Votre profil",
+        "roles": "Postes",
+        "skills": "Compétences",
+        "places": "Lieux",
+        "level": "Niveau",
+        "role": "Ingénieur données",
+        "placeOne": "Tunis",
+        "placeTwo": "À distance",
+        "levelValue": "Senior"
+      },
+      "scoring": {
+        "title": "Notées selon votre profil"
+      },
+      "alert": {
+        "channel": "Telegram",
+        "title": "Nouvelle offre",
+        "text": "Ingénieur données, 82. Correspond à Python, SQL et Docker."
+      }
     }
   },
   "notFound": {

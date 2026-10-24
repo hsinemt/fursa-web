@@ -76,7 +76,8 @@
     "hero": {
       "tag": "مثال",
       "title": "مهندس بيانات",
-      "why": "يذكر ملفك Python وSQL وDocker، وهي مطلوبة في هذه الوظيفة."
+      "why": "يذكر ملفك Python وSQL وDocker، وهي مطلوبة في هذه الوظيفة.",
+      "eyebrow": "مطابقة الوظائف بالعربية والفرنسية والإنجليزية"
     },
     "how": {
       "title": "كيف تعمل",
@@ -204,6 +205,29 @@
     "closing": {
       "title": "ابدأ بما تبحث عنه.",
       "text": "أنشئ حسابًا، ثم أضف الوظائف والمهارات والأماكن والمستوى الذي تريده."
+    },
+    "twin": "Find the jobs that fit you.",
+    "twinLang": "en",
+    "scenes": {
+      "profile": {
+        "title": "ملفك",
+        "roles": "الوظائف",
+        "skills": "المهارات",
+        "places": "الأماكن",
+        "level": "المستوى",
+        "role": "مهندس بيانات",
+        "placeOne": "تونس",
+        "placeTwo": "عن بعد",
+        "levelValue": "أول"
+      },
+      "scoring": {
+        "title": "تقييم بحسب ملفك"
+      },
+      "alert": {
+        "channel": "تيليغرام",
+        "title": "وظيفة جديدة",
+        "text": "مهندس بيانات، 82. تطابق Python وSQL وDocker."
+      }
     }
   },
   "notFound": {
