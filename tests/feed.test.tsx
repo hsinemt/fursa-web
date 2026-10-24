@@ -7,7 +7,11 @@ import { AppProviders } from "@/components/providers/app-providers";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
-vi.mock("@/lib/auth/actions", () => ({ refreshSession: vi.fn(), signOutAction: vi.fn() }));
+vi.mock("@/lib/auth/actions", () => ({
+  refreshSession: vi.fn(),
+  signOutAction: vi.fn(),
+  accountDeletedAction: vi.fn(),
+}));
 const nav = vi.hoisted(() => ({
   replace: vi.fn(),
   pathname: "/feed",
