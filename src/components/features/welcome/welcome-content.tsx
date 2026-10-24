@@ -31,13 +31,13 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <Reveal className="mt-16">
+    <Reveal className="mt-12">
       <section
         id={id}
         aria-labelledby={`${id}-title`}
-        className="scroll-mt-6 border-t border-line pt-8 lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10"
+        className="scroll-mt-24 border-t border-line pt-6 lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10"
       >
-        <div className="lg:sticky lg:top-6 lg:self-start">
+        <div className="lg:sticky lg:top-24 lg:self-start">
           <RevealText
             id={`${id}-title`}
             text={title}
@@ -84,7 +84,7 @@ export function WelcomeContent() {
 
       <section
         aria-labelledby="welcome-title"
-        className="mx-auto w-full max-w-5xl px-4 pt-12 pb-16 sm:px-6 sm:pt-20 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center lg:gap-16"
+        className="mx-auto w-full max-w-5xl px-4 pt-10 pb-10 sm:px-6 sm:pt-14 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-center lg:gap-16"
       >
         <div>
           <p className="text-sm text-slate">{t("hero.eyebrow")}</p>
@@ -142,7 +142,7 @@ export function WelcomeContent() {
         <section
           id="how"
           aria-labelledby="how-title"
-          className="scroll-mt-6 border-t border-line pt-10"
+          className="scroll-mt-24 border-t border-line pt-6"
         >
           <RevealText
             id="how-title"
@@ -176,8 +176,8 @@ export function WelcomeContent() {
         </Section>
       </div>
 
-      <section aria-labelledby="promise-title" className="mt-20 bg-accent text-on-accent">
-        <div className="mx-auto w-full max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+      <section aria-labelledby="promise-title" className="mt-12 bg-accent text-on-accent">
+        <div className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
           <h2 id="promise-title" className="text-md font-medium text-on-accent">
             {t("promise.title")}
           </h2>
@@ -201,8 +201,8 @@ export function WelcomeContent() {
         </Section>
       </div>
 
-      <section aria-labelledby="closing-title" className="mt-20 bg-tint">
-        <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+      <section aria-labelledby="closing-title" className="mt-12 bg-tint">
+        <div className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
           <RevealText
             id="closing-title"
             text={t("closing.title")}

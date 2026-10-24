@@ -30,7 +30,7 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
   }, []);
 
   return (
-    <div className="mt-8 lg:grid lg:grid-cols-2 lg:gap-16">
+    <div className="mt-2 lg:grid lg:grid-cols-2 lg:gap-16">
       <ol>
         {steps.map((step, index) => (
           <li
@@ -40,7 +40,7 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
             }}
             data-index={index}
             data-active={active === index}
-            className="group flex min-h-[48vh] flex-col justify-center py-8 lg:min-h-[78vh]"
+            className="group flex flex-col justify-center py-8 lg:min-h-[24rem]"
           >
             <span
               aria-hidden="true"
@@ -61,7 +61,7 @@ export function HowStory({ steps, scenes }: { steps: readonly Step[]; scenes: Re
       </ol>
 
       <div className="hidden lg:block">
-        <div className="stage sticky top-24 grid">
+        <div className="stage sticky top-28 grid">
           {scenes.map((scene, index) => (
             <div
               key={steps[index]?.key ?? index}
