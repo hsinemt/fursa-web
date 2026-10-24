@@ -288,6 +288,6 @@ describe("right to left", () => {
     renderIn("ar");
     expect(await screen.findByRole("heading", { name: "التنبيهات" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "تيليجرام" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "ربط تيليجرام" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "ربط تيليجرام" })).toBeInTheDocument();
   });
 });

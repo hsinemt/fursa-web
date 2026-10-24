@@ -78,8 +78,8 @@ Rules:
 
 Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 px and up. Everything must work at all three, in both modes and both directions.
 
-**Navigation items:** Feed, Pipeline, Profile, Settings. (Documents is added when the API supports it.)
-- **Laptop and tablet:** a thin top bar: wordmark, the four items (the current one has a 2 px accent underline), then language, mode and the account menu on the far side.
+**Navigation items:** Feed, Pipeline, Profile, Settings (the top bar shows only Feed and Pipeline; the phone tab bar shows all four). (Documents is added when the API supports it.)
+- **Laptop and tablet:** a thin top bar: wordmark, the two work items **Feed** and **Pipeline** (the current one has a 2 px accent underline; Profile and Settings are not here, they are in the account menu), then the language and the **account menu** on the far side (in development, a Dev link before it).
 - **Public pages (welcome, privacy, terms):** the header is a floating bar that stays on screen while scrolling. It is a `--panel` bar with a hairline border and 8 px corners, inset from the page edges with a small gap above it, holding the masthead, the section links (laptop), language, appearance and Sign in. It gets the soft menu shadow once the page has scrolled. No line under it, no double rule.
 - **Phone:** a **bottom tab bar** with the four items (easy to reach with a thumb). Language, mode and account live under Settings.
 - The app's bar is `--panel`, flat, with a hairline below (or above on phones).
@@ -96,7 +96,7 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **Phone:** one list with tabs for the statuses.
 - A list view is available too. Moving a job is a drag on laptop and a menu on touch (drag is never the only way).
 
-**Settings:** a single column up to 640 px, grouped (Language, Notifications, Telegram, Your data), each group with a hairline and a short explanation.
+**Settings:** a **section list** and **cards** (see "Settings page"), up to 64 rem wide.
 
 ## Components
 
@@ -164,9 +164,19 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **Dates:** "3 days ago" for the row, the full date for "Posted" in the grid, in the person's language with Western digits.
 - **Errors:** a load failure is the error panel with a retry; for a 429 the message counts down and the retry waits. `job_not_found` says "This job is not in your matches." with a link back to the feed.
 
+## Settings page
+
+Same language as the profile page: a rail and cards, so the page has a shape instead of one long column.
+
+- **Rail** (laptop: the start side, 14 rem, stays in view while the cards scroll): the six groups as a list of links with a small outline icon each: **Language**, **Appearance**, **Alerts**, **Telegram**, **Your data**, **Account**. The link of the group on screen is marked with `--tint` and `--accent` text and `aria-current` (no side bar). On phone and tablet the rail is not shown and the cards follow each other.
+- **Cards** (`--panel`, 8 px corners, 20 px padding, 16 px between them, up to 48 rem wide): each has an outline icon, the title, one line of help, then its controls. Inside a card, controls keep their own borders (`--control`); a group of choices (language, appearance, frequency) is a row of toggle buttons.
+- **Your data** holds two rows separated by a hairline: *Download my data*, then *Delete my account*, so the destructive action is clearly apart and never sits next to a primary button.
+- **Account** shows the email and **Sign out**.
+- The only primary button of the page is **Save** in Alerts.
+
 ## Notifications settings
 
-On the settings page, in the groups **Language**, **Appearance**, **Alerts**, **Telegram** and **Account** (a single column up to 640 px, each group under a hairline with a short explanation; "Your data" comes in step 9).
+On the settings page (see "Settings page"), in the cards **Alerts** and **Telegram**.
 
 - **Alerts:** a checkbox "Send me emails". When email is on, or Telegram is on, the fields **Daily or Instant**, **Digest hour (UTC)** (daily only) and **Minimum score** appear, with one line saying they apply to email and Telegram. One **Save** button (the only primary button of the page): it sends only what changed, says "No changes to save." when nothing did, and shows a toast after saving. If the person unsubscribed from emails, a quiet line says when.
 - **Telegram:** when not linked, one sentence and a secondary **Link Telegram** button. After it is pressed: a secondary **Open Telegram** link (new tab), the line "Open the link, then press Start in the chat. It works once and expires in N min.", and "Waiting for you to press Start in Telegram" with a quiet status dot while the page checks. When the link expires the page says so and offers Link Telegram again. When linked: "Telegram is linked.", a checkbox "Send alerts to Telegram" that saves at once (toast), and a destructive-text **Unlink Telegram** button.
@@ -174,11 +184,22 @@ On the settings page, in the groups **Language**, **Appearance**, **Alerts**, **
 
 ## Your data (settings)
 
-A group **Your data** between Telegram and Account, in the same single column.
+A card **Your data** between Telegram and Account.
 
 - **Download my data:** a secondary button. It asks the API, saves a JSON file named `fursa-data-<date>.json` and says so in a toast. A quiet line under the button says the file holds personal data and should be kept somewhere safe. The data is never shown on the page.
 - **Delete my account:** a destructive-text button (danger-colored text on a secondary button). It opens a dialog: the title "Delete your account?", what is erased (profile, matches, alert settings), that it **cannot be undone**, and that the login at the sign-in provider is closed separately; then a field "Type DELETE to confirm" (Latin letters in every language, left to right) and two buttons: **Cancel** (secondary) and **Delete my account** (the filled danger button, which exists only inside this dialog; usable once the word matches). Errors appear in the dialog as the error panel with the code; the dialog stays open.
 - After deletion the person lands on the login page with the line "Your account was deleted."
+
+## Account menu
+
+In the top bar (tablet and laptop), the **sign out button is replaced by an avatar**: a round 36 px circle with the first letter of the email (`--accent` fill, `--on-accent` letter, heading font). It opens a menu (`--panel`, hairline, 8 px corners, the soft menu shadow, about 16 rem wide) with, in this order:
+
+1. The signed-in **email** (small, quiet, left to right, cut with an ellipsis when long), as a label, not an action.
+2. **Profile** and **Settings**, each with a small outline icon.
+3. A hairline, then **Appearance** with the three choices **Light**, **Dark** and **System** as a radio group (an icon each, a check on the chosen one); choosing one saves the cookie and the page changes at once.
+4. A hairline, then **Sign out** (with its icon).
+
+The separate light/dark button leaves the top bar: appearance lives in this menu (and in Settings). Keyboard: Enter or Space opens it, arrows move, Escape closes and returns the focus to the avatar. It works the same in Arabic (the menu opens toward the other side). On phones the top bar is hidden; the same things are in Settings.
 
 ## Right-to-left (Arabic)
 
