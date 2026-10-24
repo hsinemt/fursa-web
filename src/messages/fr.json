@@ -57,8 +57,6 @@
   },
   "later": {
     "placeholder": "Cette page est construite à une étape ultérieure.",
-    "login": "Se connecter",
-    "signup": "Créer un compte",
     "privacy": "Confidentialité",
     "terms": "Conditions"
   },
@@ -284,5 +282,76 @@
     "network_error": "Fursa ne peut pas joindre son serveur. Vérifiez votre connexion et réessayez.",
     "unknown": "Une erreur s’est produite. Réessayez.",
     "internal_error": "Une erreur s’est produite de notre côté. Réessayez plus tard."
+  },
+  "auth": {
+    "login": {
+      "title": "Se connecter",
+      "intro": "Bon retour. Connectez-vous pour voir vos offres.",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "createOne": "Créer un compte"
+    },
+    "signup": {
+      "title": "Créez votre compte",
+      "intro": "Créez un compte, puis dites à Fursa ce que vous cherchez.",
+      "submit": "Créer un compte",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "passwordHelp": "Au moins 8 caractères."
+    },
+    "forgot": {
+      "title": "Réinitialiser votre mot de passe",
+      "intro": "Saisissez votre e-mail. Si un compte existe, Fursa envoie un lien pour choisir un nouveau mot de passe.",
+      "submit": "Envoyer le lien",
+      "sent": "Si un compte existe pour cet e-mail, un lien est en route. Vérifiez votre boîte de réception.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Choisissez un nouveau mot de passe",
+      "intro": "Utilisez au moins 8 caractères.",
+      "submit": "Enregistrer le mot de passe"
+    },
+    "checkEmail": {
+      "title": "Vérifiez votre e-mail",
+      "text": "Fursa vous a envoyé un lien pour confirmer votre adresse. Ouvrez-le sur cet appareil pour terminer la création de votre compte.",
+      "spam": "Rien après quelques minutes ? Regardez dans vos courriers indésirables.",
+      "back": "Retour à la connexion"
+    },
+    "fields": {
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmez le nouveau mot de passe"
+    },
+    "validation": {
+      "email_invalid": "Saisissez une adresse e-mail comme nom@exemple.com.",
+      "password_required": "Saisissez votre mot de passe.",
+      "password_short": "Utilisez au moins 8 caractères.",
+      "password_long": "Utilisez 72 caractères au maximum.",
+      "password_mismatch": "Les deux mots de passe ne correspondent pas."
+    },
+    "errors": {
+      "invalid_credentials": "L’e-mail ou le mot de passe est incorrect. Vérifiez-les et réessayez.",
+      "email_not_confirmed": "Confirmez d’abord votre e-mail. Ouvrez le lien envoyé par Fursa.",
+      "email_taken": "Un compte existe déjà avec cet e-mail. Connectez-vous.",
+      "weak_password": "Ce mot de passe est trop faible. Utilisez au moins 8 caractères, avec des lettres et des chiffres.",
+      "same_password": "Choisissez un mot de passe différent de l’actuel.",
+      "rate_limited": "Trop de tentatives. Patientez un instant et réessayez.",
+      "signup_disabled": "La création de compte est désactivée pour le moment.",
+      "unavailable": "La connexion est temporairement indisponible. Réessayez plus tard.",
+      "not_configured": "La connexion n’est pas encore configurée sur ce serveur.",
+      "session_missing": "Ce lien n’est plus valide. Demandez-en un nouveau.",
+      "unknown": "Une erreur s’est produite. Réessayez."
+    },
+    "notices": {
+      "link_invalid": "Ce lien est invalide ou a expiré. Demandez-en un nouveau.",
+      "signed_out": "Vous êtes déconnecté."
+    },
+    "signOut": "Se déconnecter",
+    "account": {
+      "title": "Compte",
+      "help": "L’e-mail avec lequel vous vous connectez."
+    }
   }
 }
