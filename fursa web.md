@@ -278,9 +278,9 @@ Later features follow the same rule: `feat/<what-it-does>`, and a bug fix is `fi
 Where the build stands (update this when a step is merged).
 
 - **Done and merged:** steps 1 to 5 (skeleton, welcome, api-client, auth, dev-console), plus the CI smoke-test fix.
-- **Done and merged:** step 6 (profile, onboarding, language sync), tested by the user by hand.
-- **Done, on `feat/job-feed`, waiting for review, push, pull request and merge:** step 7 (job feed and job detail, see `docs/adr/0006-job-feed-and-detail.md`).
-- **Next:** step 8, `feat/notifications`, cut from an up-to-date `main` after step 7 is merged.
+- **Done and merged:** step 6 (profile, onboarding, language sync) and step 7 (job feed and job detail, see `docs/adr/0006-job-feed-and-detail.md`), both tested by the user by hand.
+- **Next:** step 8, `feat/notifications`, cut from an up-to-date `main`.
+- **Open improvements** (mostly waiting for API changes) are listed in `fursa improvements.md`: add an item when the user says "we will improve it", delete it when done.
 - **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
 
 How to work (kept from the start):
