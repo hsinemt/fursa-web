@@ -428,7 +428,16 @@
       "salary_range": "Le minimum est supérieur au maximum.",
       "currency_needed": "Ajoutez une devise pour le salaire.",
       "score_range": "Saisissez un nombre de 0 à 100."
-    }
+    },
+    "rail": {
+      "yourProfile": "Votre profil",
+      "noHeadline": "Ajoutez vos postes visés",
+      "strength": "Solidité du profil",
+      "strengthHelp": "Plus vous ajoutez, mieux Fursa peut noter les offres pour vous."
+    },
+    "unsaved": "Vous avez des modifications non enregistrées.",
+    "allSaved": "Toutes les modifications sont enregistrées.",
+    "discard": "Annuler les modifications"
   },
   "onboarding": {
     "title": "Configurez votre profil",

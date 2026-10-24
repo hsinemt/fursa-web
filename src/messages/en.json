@@ -428,7 +428,16 @@
       "salary_range": "The minimum is higher than the maximum.",
       "currency_needed": "Add a currency for the salary.",
       "score_range": "Enter a number from 0 to 100."
-    }
+    },
+    "rail": {
+      "yourProfile": "Your profile",
+      "noHeadline": "Add your target roles",
+      "strength": "Profile strength",
+      "strengthHelp": "The more you add, the better Fursa can score jobs for you."
+    },
+    "unsaved": "You have unsaved changes.",
+    "allSaved": "All changes are saved.",
+    "discard": "Discard changes"
   },
   "onboarding": {
     "title": "Set up your profile",

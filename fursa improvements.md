@@ -16,4 +16,5 @@ Things we agreed to improve later. Rule: when you say "we will improve it", the 
 
 ## Frontend only
 
+- **Profile page design.** The first redesign (summary rail with profile strength, section cards, save bar) is good but not finished: look again at the details, the empty state, dark mode, phone and tablet, and the spacing and weight of the cards.
 - Look at the feed in dark mode, on tablet and on phone after the full-width redesign (only laptop width was checked in a browser).
