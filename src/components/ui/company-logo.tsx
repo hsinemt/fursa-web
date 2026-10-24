@@ -21,7 +21,7 @@ function CompanyLogo({
 }: Omit<React.ComponentProps<"span">, "children"> & {
   name: string;
   src?: string | null;
-  size?: "md" | "lg";
+  size?: "sm" | "md" | "lg";
 }) {
   return (
     <span
@@ -29,7 +29,7 @@ function CompanyLogo({
       aria-hidden="true"
       className={cn(
         "inline-flex shrink-0 items-center justify-center overflow-hidden rounded-panel border border-line bg-panel font-heading text-ink",
-        size === "md" ? "size-10 text-lg" : "size-14 text-xl",
+        size === "sm" ? "size-8 text-md" : size === "md" ? "size-10 text-lg" : "size-14 text-xl",
         className,
       )}
       {...props}

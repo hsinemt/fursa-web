@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PipelineBoard } from "@/components/features/pipeline/pipeline-board";
 import { AppProviders } from "@/components/providers/app-providers";
+import { matchesSearch } from "@/lib/pipeline/values";
 import { insertByScore, removeFromPages, type FeedPage, type JobSummary } from "@/lib/feed/values";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
@@ -136,6 +137,17 @@ describe("pure list edits", () => {
   });
 });
 
+describe("matchesSearch", () => {
+  const j = { title: "Ingénieur DevOps H/F", company: "Extia" };
+  it("matches every word in the title or company, ignoring case and accents", () => {
+    expect(matchesSearch(j, "")).toBe(true);
+    expect(matchesSearch(j, "  ")).toBe(true);
+    expect(matchesSearch(j, "ingenieur")).toBe(true);
+    expect(matchesSearch(j, "DEVOPS extia")).toBe(true);
+    expect(matchesSearch(j, "devops google")).toBe(false);
+  });
+});
+
 describe("pipeline board", () => {
   it("asks for one list per status and shows the jobs in their columns, with counts", async () => {
     renderBoard();
@@ -194,6 +206,34 @@ describe("pipeline board", () => {
       "origin_not_allowed",
     );
     expect(within(column("Applied")).getByText("Job 3")).toBeInTheDocument();
+  });
+});
+
+describe("search and card layout", () => {
+  it("filters the loaded cards in every column by title or company, and says when none match", async () => {
+    renderBoard();
+    await screen.findByText("Job 1");
+    fireEvent.change(screen.getByRole("searchbox", { name: "Search roles or companies" }), {
+      target: { value: "company 3" },
+    });
+    expect(within(column("Applied")).getByText("Job 3")).toBeInTheDocument();
+    expect(screen.queryByText("Job 1")).not.toBeInTheDocument();
+    expect(within(column("Saved")).getByText("No job matches in this column.")).toBeInTheDocument();
+    expect(within(column("Saved")).getByRole("heading")).toHaveTextContent("0");
+    // A column that is truly empty still says what it is for.
+    expect(within(column("Interview")).getByText("Nothing here yet.")).toBeInTheDocument();
+  });
+
+  it("shows the company first, then the title, the place, the score and how long ago", async () => {
+    renderBoard();
+    const card = (await screen.findByText("Job 1")).closest("li")!;
+    expect(card.querySelector("[data-slot=company-logo]")).toHaveTextContent("C");
+    expect(within(card).getByText("Company 1")).toBeInTheDocument();
+    expect(within(card).getByRole("link", { name: "Job 1" })).toBeInTheDocument();
+    expect(within(card).getByText("Tunis")).toBeInTheDocument();
+    expect(within(card).getByText("89")).toBeInTheDocument();
+    expect(within(card).getByText("Strong")).toBeInTheDocument();
+    expect(within(card).getByText("yesterday")).toBeInTheDocument();
   });
 });
 

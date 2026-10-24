@@ -12,15 +12,18 @@ import {
   type DragEndEvent,
   type DragStartEvent,
 } from "@dnd-kit/core";
+import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { LoadError } from "@/components/features/feed/load-error";
 import { Button } from "@/components/ui/button";
+import { ICON_SM, iconProps } from "@/components/ui/icon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Status } from "@/components/ui/status";
 import { useToast } from "@/components/ui/toast";
 import { useFeed } from "@/lib/feed/hooks";
 import { flattenPages, type JobSummary, type UserJobStatus } from "@/lib/feed/values";
+import { matchesSearch } from "@/lib/pipeline/values";
 import { useMoveJob } from "@/lib/pipeline/hooks";
 import { cn } from "@/lib/utils/cn";
 import { BoardCard, CardBody, COLUMNS, isColumn, type Column } from "./pipeline-card";
@@ -33,10 +36,12 @@ function BoardColumn({
   query,
   visible,
   mode,
+  search,
   onMove,
 }: {
   status: Column;
   query: FeedQuery;
+  search: string;
   visible: boolean;
   mode: "board" | "list";
   onMove: (job: JobSummary, from: Column, to: UserJobStatus) => void;
@@ -44,15 +49,16 @@ function BoardColumn({
   const t = useTranslations("pipeline");
   const statusT = useTranslations("status");
   const { setNodeRef, isOver } = useDroppable({ id: status });
-  const items = flattenPages(query.data);
+  const loaded = flattenPages(query.data);
+  const items = loaded.filter((job) => matchesSearch(job, search));
 
   return (
     <section
       ref={setNodeRef}
       aria-label={statusT(status)}
       className={cn(
-        "min-w-0 rounded-panel p-2 transition-colors duration-150",
-        isOver && "bg-tint",
+        "min-h-[24rem] min-w-0 rounded-panel border p-2 transition-colors duration-150 ease-out",
+        isOver ? "border-accent bg-tint" : "border-transparent",
         visible ? "block" : "hidden sm:block",
         mode === "list" && !visible && "sm:hidden",
         mode === "board" && "sm:w-72 sm:shrink-0 sm:snap-start lg:w-auto",
@@ -63,7 +69,7 @@ function BoardColumn({
           {statusT(status)}
         </Status>
         {query.data ? (
-          <span className="tabular text-sm text-slate">
+          <span className="tabular rounded-chip bg-panel px-2 py-0.5 text-sm text-slate">
             {items.length}
             {query.hasNextPage ? "+" : ""}
           </span>
@@ -73,15 +79,21 @@ function BoardColumn({
       <div className="mt-3">
         {query.isPending ? (
           <div className="flex flex-col gap-2" aria-busy="true">
-            <Skeleton className="h-28 rounded-panel" />
-            <Skeleton className="h-28 rounded-panel" />
+            <Skeleton className="h-36 rounded-panel" />
+            <Skeleton className="h-36 rounded-panel" />
           </div>
         ) : query.isError && !query.data ? (
           <LoadError error={query.error} onRetry={() => void query.refetch()} />
         ) : items.length === 0 ? (
-          <div className="py-4">
-            <p className="font-medium text-ink">{t("empty.title")}</p>
-            <p className="mt-1 text-sm text-slate">{t("empty.text")}</p>
+          <div className="flex min-h-36 flex-col items-center justify-center rounded-panel border border-dashed border-line px-4 py-6 text-center">
+            {loaded.length > 0 ? (
+              <p className="text-sm text-slate">{t("noMatch")}</p>
+            ) : (
+              <>
+                <p className="font-medium text-ink">{t("empty.title")}</p>
+                <p className="mt-1 text-sm text-slate">{t("empty.text")}</p>
+              </>
+            )}
           </div>
         ) : (
           <>
@@ -138,6 +150,7 @@ export function PipelineBoard() {
 
   const [view, setView] = useState<"board" | "list">("board");
   const [tab, setTab] = useState<Column>("saved");
+  const [search, setSearch] = useState("");
   const [dragging, setDragging] = useState<JobSummary | null>(null);
 
   const sensors = useSensors(
@@ -210,10 +223,27 @@ export function PipelineBoard() {
         </div>
       </div>
 
+      <div className="relative mt-6">
+        <Search
+          className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate"
+          width={ICON_SM}
+          height={ICON_SM}
+          {...iconProps}
+        />
+        <input
+          type="search"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          aria-label={t("search.label")}
+          placeholder={t("search.placeholder")}
+          className="h-10 w-full rounded-control border border-control bg-panel ps-9 pe-3 text-base text-ink placeholder:text-slate pointer-coarse:h-11"
+        />
+      </div>
+
       <div
         role="tablist"
         aria-label={t("tabs")}
-        className={cn("mt-6 gap-1 overflow-x-auto", view === "list" ? "flex" : "flex sm:hidden")}
+        className={cn("mt-4 gap-1 overflow-x-auto", view === "list" ? "flex" : "flex sm:hidden")}
       >
         {COLUMNS.map((column) => (
           <button
@@ -257,7 +287,7 @@ export function PipelineBoard() {
       >
         <div
           className={cn(
-            "mt-6",
+            "mt-4",
             view === "board" &&
               "sm:flex sm:snap-x sm:gap-4 sm:overflow-x-auto sm:pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible",
           )}
@@ -267,6 +297,7 @@ export function PipelineBoard() {
               key={column}
               status={column}
               query={queries[column]}
+              search={search}
               visible={tab === column}
               mode={view}
               onMove={moveJob}
@@ -275,7 +306,7 @@ export function PipelineBoard() {
         </div>
         <DragOverlay>
           {dragging ? (
-            <div className="rounded-panel border border-line bg-panel p-3 shadow-menu">
+            <div className="rounded-panel border border-accent bg-panel p-3 shadow-menu">
               <CardBody job={dragging} />
             </div>
           ) : null}

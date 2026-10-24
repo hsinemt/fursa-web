@@ -670,6 +670,11 @@
       "over": "{title} est au-dessus de « {status} ».",
       "dropped": "{title} a été déposée dans « {status} ».",
       "cancelled": "Déplacement annulé. {title} a été remise."
-    }
+    },
+    "search": {
+      "label": "Rechercher un poste ou une entreprise",
+      "placeholder": "Rechercher un poste ou une entreprise"
+    },
+    "noMatch": "Aucune offre ne correspond dans cette colonne."
   }
 }

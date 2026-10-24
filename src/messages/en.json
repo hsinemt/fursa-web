@@ -670,6 +670,11 @@
       "over": "{title} is over {status}.",
       "dropped": "{title} was dropped in {status}.",
       "cancelled": "Move cancelled. {title} was put back."
-    }
+    },
+    "search": {
+      "label": "Search roles or companies",
+      "placeholder": "Search roles or companies"
+    },
+    "noMatch": "No job matches in this column."
   }
 }

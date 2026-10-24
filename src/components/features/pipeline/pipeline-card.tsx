@@ -1,7 +1,7 @@
 "use client";
 
 import { useDraggable } from "@dnd-kit/core";
-import { GripVertical, MoreHorizontal } from "lucide-react";
+import { GripVertical, MapPin, MoreHorizontal } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { DropdownMenu } from "radix-ui";
 import { CompanyLogo } from "@/components/ui/company-logo";
@@ -18,38 +18,42 @@ export type Column = (typeof COLUMNS)[number];
 export const isColumn = (value: unknown): value is Column =>
   COLUMNS.some((column) => column === value);
 
-/** What a card shows. Used by the card in a column and by the copy that follows the pointer. */
+/**
+ * What a card shows, top to bottom: the company (logo tile, name, then the actions), the title,
+ * the place, and a footer with the score and how long ago the job was posted. Used by the card
+ * in a column and by the copy that follows the pointer.
+ */
 export function CardBody({ job, actions }: { job: JobSummary; actions?: React.ReactNode }) {
   const scoreT = useTranslations("score");
   const locale = useLocale();
   const place = job.location ?? job.country;
-  const quiet = [place, timeAgo(job.posted_at, new Date(), locale)].filter(Boolean).join(" · ");
+  const ago = timeAgo(job.posted_at, new Date(), locale);
 
   return (
     <>
-      <div className="flex items-start gap-3">
-        <CompanyLogo name={job.company} />
-        <div className="min-w-0 flex-1">
-          <Link
-            href={`/jobs/${job.job_id}`}
-            dir="auto"
-            className="block truncate font-medium text-ink hover:underline"
-          >
-            {job.title}
-          </Link>
-          <p dir="auto" className="truncate text-sm text-slate">
-            {job.company}
-          </p>
-          {quiet ? (
-            <p dir="auto" className="truncate text-xs text-slate">
-              {quiet}
-            </p>
-          ) : null}
-        </div>
-      </div>
-      <div className="mt-3 flex items-center justify-between gap-2">
-        <Score value={job.score} label={scoreT(scoreBand(job.score))} />
+      <div className="flex items-center gap-2">
+        <CompanyLogo name={job.company} size="sm" />
+        <p dir="auto" className="min-w-0 flex-1 truncate text-sm text-slate">
+          {job.company}
+        </p>
         {actions}
+      </div>
+      <Link
+        href={`/jobs/${job.job_id}`}
+        dir="auto"
+        className="mt-3 line-clamp-2 block font-medium text-ink hover:underline"
+      >
+        {job.title}
+      </Link>
+      {place ? (
+        <p dir="auto" className="mt-1 flex items-center gap-1.5 text-sm text-slate">
+          <MapPin className="shrink-0" width={14} height={14} {...iconProps} />
+          <span className="truncate">{place}</span>
+        </p>
+      ) : null}
+      <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
+        <Score value={job.score} label={scoreT(scoreBand(job.score))} />
+        {ago ? <span className="text-xs text-slate">{ago}</span> : null}
       </div>
     </>
   );
@@ -111,6 +115,7 @@ function MoveMenu({
 /**
  * One job on the board. It can be dragged by the pointer from anywhere on the card (a short
  * press still opens the job), by the keyboard from the grip button, and moved with the menu.
+ * While it is dragged, the card stays behind as a faded dashed ghost.
  */
 export function BoardCard({
   job,
@@ -132,12 +137,16 @@ export function BoardCard({
       ref={setNodeRef}
       {...listeners}
       data-slot="board-card"
-      className={cn("rounded-panel bg-panel p-3", isDragging && "opacity-40")}
+      className={cn(
+        "rounded-panel border bg-panel p-3 transition-colors duration-150 ease-out",
+        "motion-safe:animate-[card-in_200ms_ease-out_both]",
+        isDragging ? "border-dashed border-control opacity-40" : "border-line hover:border-control",
+      )}
     >
       <CardBody
         job={job}
         actions={
-          <span className="flex items-center gap-1">
+          <span className="flex items-center">
             <MoveMenu job={job} from={status} onMove={onMove} />
             <button
               type="button"
