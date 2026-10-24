@@ -68,10 +68,16 @@
     "nav": {
       "how": "How it works",
       "example": "Example",
-      "data": "Your data"
+      "services": "What it does",
+      "faq": "Questions"
     },
     "headline": "Find the jobs that fit you.",
     "intro": "Fursa collects jobs from several sources, scores each one against your profile, and tells you about the good ones.",
+    "hero": {
+      "tag": "Example",
+      "title": "Data engineer",
+      "why": "Your profile lists Python, SQL and Docker, which this job asks for."
+    },
     "how": {
       "title": "How it works",
       "steps": {
@@ -90,33 +96,31 @@
       }
     },
     "example": {
-      "title": "Example",
-      "help": "Sample data, to show how your feed will look.",
-      "label": "Example feed",
+      "title": "Sorted for you, with the reason",
+      "help": "Sample data. Each job gets a score against your profile and a reason, best first.",
+      "tag": "Example",
+      "label": "Example list",
       "count": "3 matches",
       "order": "Best first",
+      "replay": "Replay",
       "jobs": {
         "one": {
           "title": "Data engineer",
-          "meta": "Example company · Tunis · 2 days ago"
+          "meta": "Example company · Tunis · 2 days ago",
+          "reason": "Matches Python, SQL and Docker. In Tunis, a place you chose."
         },
         "two": {
           "title": "Backend developer",
-          "meta": "Sample company · Remote · 5 days ago"
+          "meta": "Sample company · Remote · 5 days ago",
+          "reason": "Matches Python and Docker. Asks for Go, which your profile does not mention."
         },
         "three": {
           "title": "Platform engineer",
-          "meta": "Demo company · Sfax · 1 week ago"
+          "meta": "Demo company · Sfax · 1 week ago",
+          "reason": "Matches Docker. Asks for Kubernetes and Go, which your profile does not mention."
         }
       },
       "detail": {
-        "line": "Example company · Hybrid · Full time",
-        "level": "Level",
-        "levelValue": "Senior",
-        "mode": "Work mode",
-        "modeValue": "Hybrid",
-        "posted": "Posted",
-        "postedValue": "2 days ago",
         "matched": "Skills you have",
         "missing": "Skills not in your profile",
         "whyTitle": "Why it matches",
@@ -124,13 +128,82 @@
         "why": "Your profile lists Python, SQL and Docker, which this job asks for. The role is in Tunis, one of the places you chose. It also asks for Kubernetes, which your profile does not mention."
       }
     },
-    "doesNot": {
+    "services": {
+      "title": "What Fursa does",
+      "help": "Four things, all working today.",
+      "listLabel": "Services",
+      "sample": "Example",
+      "later": "Not available yet: CV upload and tailoring, cover letters, search and filters, statistics.",
+      "feed": {
+        "name": "Feed",
+        "line": "Scored, best first",
+        "text": "Jobs from several sources, each scored against your profile and shown best first. You can filter by status and load more."
+      },
+      "why": {
+        "name": "Why it matches",
+        "line": "Skills and a short note",
+        "text": "Each job shows the skills you have and the ones you lack, with a short note written by AI in your language."
+      },
+      "alerts": {
+        "name": "Alerts",
+        "line": "Telegram or email",
+        "text": "Get alerts daily or instantly, only above the minimum score you set.",
+        "email": "Email",
+        "telegram": "Telegram",
+        "daily": "Daily",
+        "instant": "Instant",
+        "minScore": "Minimum score",
+        "digest": "Digest hour (UTC)"
+      },
+      "pipeline": {
+        "name": "Pipeline",
+        "line": "Saved to interview",
+        "text": "Follow each job from saved to applied, interview or rejected.",
+        "fourth": "Support engineer"
+      }
+    },
+    "promise": {
       "title": "What Fursa does not do",
-      "text": "Fursa never applies for you. You read why a job matches, open the posting, and apply yourself."
+      "quote": "Fursa never applies for you.",
+      "text": "You read why a job matches, open the posting, and apply yourself."
     },
     "data": {
       "title": "Your data",
-      "text": "You can export your data or delete your account at any time."
+      "text": "You can export your data or delete your account at any time.",
+      "note": "Deleting your account cannot be undone."
+    },
+    "faq": {
+      "title": "Questions",
+      "items": {
+        "how": {
+          "q": "How does Fursa work?",
+          "a": "You tell Fursa the roles, skills, places and level you want. It collects jobs from several sources, scores each one against your profile and shows you the best first, with the reason."
+        },
+        "sources": {
+          "q": "Where do the jobs come from?",
+          "a": "Fursa collects them from several sources. Each job links to the original posting, where you apply."
+        },
+        "alerts": {
+          "q": "How do alerts work?",
+          "a": "You can turn on alerts on Telegram or by email, daily or instantly. You choose the minimum score and the hour of the daily digest."
+        },
+        "apply": {
+          "q": "Does Fursa apply for me?",
+          "a": "No. Fursa never applies for you. You read why a job matches, open the posting and apply yourself."
+        },
+        "data": {
+          "q": "What happens to my data?",
+          "a": "You can export all your data, or delete your account, at any time. Deleting cannot be undone."
+        },
+        "languages": {
+          "q": "Which languages does it support?",
+          "a": "Arabic, French and English. The interface and the short note on each job follow the language you choose."
+        }
+      }
+    },
+    "closing": {
+      "title": "Start with what you look for.",
+      "text": "Create an account, then add your roles, skills, places and level."
     }
   },
   "notFound": {
@@ -142,5 +215,11 @@
     "strong": "Strong",
     "good": "Good",
     "partial": "Partial"
+  },
+  "status": {
+    "saved": "Saved",
+    "applied": "Applied",
+    "interview": "Interview",
+    "rejected": "Rejected"
   }
 }
