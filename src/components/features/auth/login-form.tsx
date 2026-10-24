@@ -30,7 +30,7 @@ export function LoginForm({ next }: { next: string | null }) {
       onSubmit={form.handleSubmit((values) =>
         submit(() => signInAction({ ...values, locale, next: next ?? undefined })),
       )}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-5"
     >
       {error ? <ErrorPanel message={t(`errors.${error}`)} /> : null}
       <Field
@@ -46,13 +46,15 @@ export function LoginForm({ next }: { next: string | null }) {
         type="password"
         autoComplete="current-password"
         dir="ltr"
+        labelAction={
+          <Link href="/forgot-password" className="inline-link text-sm text-accent hover:underline">
+            {t("login.forgot")}
+          </Link>
+        }
         error={message(errors.password?.message)}
         {...form.register("password")}
       />
-      <Link href="/forgot-password" className="inline-link text-sm text-accent hover:underline">
-        {t("login.forgot")}
-      </Link>
-      <Button type="submit" variant="primary" disabled={pending} className="w-full">
+      <Button type="submit" variant="primary" disabled={pending} className="mt-1 w-full">
         {t("login.submit")}
       </Button>
     </form>
