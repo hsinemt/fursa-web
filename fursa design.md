@@ -10,7 +10,7 @@ The test console at `/dev` is exempt from these rules (plain and English only).
 2. **Data first.** Show the real information (title, company, place, date, source, score, why). Decoration never competes with it.
 3. **One accent.** One blue marks what matters: the selected row, the score, the main action. Everything else is ink, slate and line.
 4. **Our identity on a familiar structure.** We borrow how well-known job apps are *organized* (a few nav items, a list beside the detail, a board for tracking, a documents table). We never copy another product's visuals, wording, colors, icons or illustrations.
-5. **Light and dark from day one,** each designed on its own, not an inversion.
+5. **Light and dark from day one,** each designed on its own, not an inversion. In light mode the page is white and cards are the soft grey (`--panel`); in dark mode cards are lighter than the page.
 6. **Arabic is first-class.** Right-to-left is designed in, not mirrored at the end.
 7. **Calm tone.** Job hunting is stressful and people share personal data: no shouting, no urgency tricks, no upsell pressure.
 
@@ -20,8 +20,8 @@ All colors are CSS variables defined once (see "How to apply this"). **Component
 
 | Token | Use | Light | Dark |
 | --- | --- | --- | --- |
-| `--page` | App background | `#F7F8FA` | `#0E1621` |
-| `--panel` | Surfaces: lists, detail, dialogs | `#FFFFFF` | `#141E2B` |
+| `--page` | App background | `#FFFFFF` | `#0E1621` |
+| `--panel` | Surfaces (cards): lists, detail, dialogs, the floating header | `#F7F8FA` | `#141E2B` |
 | `--ink` | Main text | `#1B2430` | `#E8ECF2` |
 | `--slate` | Secondary text, metadata | `#5B6675` | `#9AA6B5` |
 | `--line` | Dividers and hairlines only | `#E1E5EB` | `#2A3646` |
@@ -36,7 +36,7 @@ All colors are CSS variables defined once (see "How to apply this"). **Component
 | `--warning` / `--warning-bg` | Heads-up, interview | `#8A5300` / `#FDF3DC` | `#E5B04A` / `#3A2C0C` |
 | `--focus` | Focus ring | `#1F4FA0` | `#6AA2F0` |
 
-Measured contrast, light / dark: ink on page 14.7 / 15.3, slate on page 5.5 / 7.4, text on accent 7.8 / 7.0, accent as link on page 7.4 / 7.0, accent on tint 6.8 / 5.5, control border on panel 3.3 / 3.6, success on its tint 4.7 / 6.4, danger on its tint 5.8 / 6.4, warning on its tint 5.7 / 6.9.
+Measured contrast, light / dark: ink on page 15.7 / 15.3, slate on page 5.8 / 7.4, text on accent 7.8 / 7.0, accent as link on page 7.8 / 7.0, accent on tint 6.8 / 5.5, control border on panel 3.1 / 3.6, success on its tint 4.7 / 6.4, danger on its tint 5.8 / 6.4, warning on its tint 5.7 / 6.9.
 
 Rules:
 - **Dark mode uses a dark `--on-accent`.** White text on the dark-mode blue fails contrast (2.6): never use it.
@@ -69,8 +69,9 @@ Rules:
 - **Corners:** 6 px for controls and chips (chips 4 px), 8 px for panels and dialogs. Nothing fully round except avatars and status dots.
 - **Borders:** 1 px hairlines in `--line`; controls use `--control`.
 - **No side lines.** Never put a colored or thick line on the start (or end) edge of a card, row, panel, quote or tab. No left-edge or right-edge accent bars of any kind, in any language direction. Hairlines on the top and bottom of a row or section are fine. A test fails the build if a side border appears in `src/`.
-- **Shadows:** none, except a soft one on menus, popovers and dialogs so they lift off the page.
+- **Shadows:** none, except a soft one on menus, popovers and dialogs so they lift off the page, and on the floating public header once the page has scrolled.
 - **Lists are rows, not cards:** full-width rows separated by hairlines. No card inside a card. No grid of identical boxes.
+- **Section rhythm (public pages):** 48 px between sections (24 px of it above the heading, under the hairline), 56 to 80 px of padding inside a full-width band. No block is taller than its content needs: pinned scroll steps are 384 px tall, never a share of the screen height. No large empty areas.
 - Content widths: forms and settings up to 640 px; reading text up to about 72 characters; the split view uses the full width.
 
 ## Layout, navigation and screen sizes
@@ -79,8 +80,9 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 
 **Navigation items:** Feed, Pipeline, Profile, Settings. (Documents is added when the API supports it.)
 - **Laptop and tablet:** a thin top bar: wordmark, the four items (the current one has a 2 px accent underline), then language, mode and the account menu on the far side.
+- **Public pages (welcome, privacy, terms):** the header is a floating bar that stays on screen while scrolling. It is a `--panel` bar with a hairline border and 8 px corners, inset from the page edges with a small gap above it, holding the masthead, the section links (laptop), language, appearance and Sign in. It gets the soft menu shadow once the page has scrolled. No line under it, no double rule.
 - **Phone:** a **bottom tab bar** with the four items (easy to reach with a thumb). Language, mode and account live under Settings.
-- The bar is white (`--panel`), flat, with a hairline below (or above on phones).
+- The app's bar is `--panel`, flat, with a hairline below (or above on phones).
 
 **Feed (the main screen):**
 - **Laptop:** a split view: the list on one side (about 360 to 420 px), the selected job's detail beside it. The list has a header ("12 matches", "Best first"), then rows.
@@ -167,7 +169,7 @@ Rules for all of them: each plays once per visit (Replay where it is offered); t
 ## Welcome page identity
 
 The public page is our own: it is set like the front page of a newspaper, with large type and one bold block of color, not like a product landing page. It reuses the app's tokens and components and adds only these pieces:
-- **Dual-script masthead:** "Fursa · فرصة" side by side (DM Serif Display and Plex Sans Arabic 500) above a double rule (a 2 px `--ink` line, then a 1 px `--line` line). It is the page's logo until a real one exists; the app screens keep the single wordmark.
+- **Dual-script masthead:** "Fursa · فرصة" side by side (DM Serif Display and Plex Sans Arabic 500) inside the floating header. It is the page's logo until a real one exists; the app screens keep the single wordmark.
 - **Twin headline:** the hero headline is followed by the same line in the other script (Arabic under English and French, English under Arabic), set large in `--slate`.
 - **Big numeral:** the hero shows one job's score as a huge numeral in DM Serif Display, in `--accent`, with its word and the reason sentence under it. A score is always shown with its reason.
 - **Pinned story:** see "Motion". On phone and tablet the scenes sit under their step instead of being pinned.

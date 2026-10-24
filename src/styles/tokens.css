@@ -12,8 +12,8 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --page: #f7f8fa;
-  --panel: #ffffff;
+  --page: #ffffff;
+  --panel: #f7f8fa;
   --ink: #1b2430;
   --slate: #5b6675;
   --line: #e1e5eb;
