@@ -1,7 +1,7 @@
 "use client";
 
 import { useDraggable } from "@dnd-kit/core";
-import { GripVertical, MapPin, MoreHorizontal } from "lucide-react";
+import { ChevronDown, GripVertical, MapPin, MoreHorizontal } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { DropdownMenu } from "radix-ui";
 import { CompanyLogo } from "@/components/ui/company-logo";
@@ -60,14 +60,17 @@ export function CardBody({ job, actions }: { job: JobSummary; actions?: React.Re
 }
 
 /** "Move to": the way to change a status without dragging (touch, or anyone who cannot drag). */
-function MoveMenu({
+export function MoveMenu({
   job,
   from,
   onMove,
+  variant = "icon",
 }: {
   job: JobSummary;
   from: UserJobStatus;
   onMove: (to: UserJobStatus) => void;
+  /** "icon": the dots on a card. "status": a "Status" button with a chevron (list rows). */
+  variant?: "icon" | "status";
 }) {
   const t = useTranslations("pipeline");
   const statusT = useTranslations("status");
@@ -80,13 +83,24 @@ function MoveMenu({
   return (
     <DropdownMenu.Root dir={locale === "ar" ? "rtl" : "ltr"}>
       <DropdownMenu.Trigger asChild>
-        <button
-          type="button"
-          aria-label={t("moveMenu", { title: job.title })}
-          className="inline-flex size-8 items-center justify-center rounded-control text-slate hover:bg-tint hover:text-ink pointer-coarse:size-11"
-        >
-          <MoreHorizontal width={ICON_SM} height={ICON_SM} {...iconProps} />
-        </button>
+        {variant === "status" ? (
+          <button
+            type="button"
+            aria-label={t("moveMenu", { title: job.title })}
+            className="inline-flex h-9 items-center gap-2 rounded-control border border-control px-3 text-base text-ink hover:bg-tint pointer-coarse:h-11"
+          >
+            {t("statusMenu")}
+            <ChevronDown width={ICON_SM} height={ICON_SM} {...iconProps} />
+          </button>
+        ) : (
+          <button
+            type="button"
+            aria-label={t("moveMenu", { title: job.title })}
+            className="inline-flex size-8 items-center justify-center rounded-control text-slate hover:bg-tint hover:text-ink pointer-coarse:size-11"
+          >
+            <MoreHorizontal width={ICON_SM} height={ICON_SM} {...iconProps} />
+          </button>
+        )}
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
@@ -140,7 +154,9 @@ export function BoardCard({
       className={cn(
         "rounded-panel border bg-panel p-3 transition-colors duration-150 ease-out",
         "motion-safe:animate-[card-in_200ms_ease-out_both]",
-        isDragging ? "border-dashed border-control opacity-40" : "border-line hover:border-control",
+        isDragging
+          ? "border-dashed border-control opacity-40"
+          : "border-line hover:border-control hover:bg-page",
       )}
     >
       <CardBody

@@ -327,6 +327,86 @@ describe("views", () => {
   });
 });
 
+describe("list view with the stepper", () => {
+  const openList = async () => {
+    renderBoard();
+    await screen.findByText("Job 1");
+    fireEvent.click(screen.getByRole("button", { name: "List" }));
+    return screen.findByRole("list", { name: "List" });
+  };
+
+  it("shows one row per job, all statuses together, Saved first", async () => {
+    const list = await openList();
+    const rows = within(list)
+      .getAllByRole("listitem")
+      .filter((li) => li.dataset.slot === "list-row");
+    expect(rows.map((r) => within(r).getByRole("link").textContent)).toEqual([
+      "Job 1",
+      "Job 2",
+      "Job 3",
+      "Job 4",
+    ]);
+    expect(within(rows[0]!).getByText("Company 1 · Tunis")).toBeInTheDocument();
+  });
+
+  it("draws the line of stops: the current one is not a button and the others move the job", async () => {
+    const list = await openList();
+    const stepper = within(list).getByRole("list", { name: "Progress of Job 3" }); // Job 3 is Applied
+    const stops = within(stepper).getAllByRole("listitem");
+    expect(stops.map((li) => li.querySelector("span")?.textContent)).toEqual([
+      "Saved",
+      "Applied",
+      "Interview",
+      "Rejected",
+    ]);
+    expect(stops[1]).toHaveAttribute("aria-current", "step");
+    expect(within(stops[1]!).queryByRole("button")).not.toBeInTheDocument();
+    // Saved was passed (a check), Interview and Rejected are still ahead.
+    expect(
+      within(stops[0]!).getByRole("button", { name: "Move to Saved" }).querySelector("svg"),
+    ).not.toBeNull();
+    expect(
+      within(stops[2]!).getByRole("button", { name: "Move to Interview" }).querySelector("svg"),
+    ).toBeNull();
+    // The date of the last change sits under the current stop.
+    expect(stops[1]).toHaveTextContent(/2026/);
+  });
+
+  it("a rejected job has no passed stops", async () => {
+    const list = await openList();
+    const stepper = within(list).getByRole("list", { name: "Progress of Job 4" });
+    const buttons = within(stepper).getAllByRole("button");
+    expect(buttons).toHaveLength(3);
+    expect(buttons.every((b) => b.querySelector("svg") === null)).toBe(true);
+  });
+
+  it("clicking a stop moves the job there (and says so)", async () => {
+    const list = await openList();
+    const stepper = within(list).getByRole("list", { name: "Progress of Job 1" });
+    fireEvent.click(within(stepper).getByRole("button", { name: "Move to Interview" }));
+    await screen.findByText("Moved to Interview.");
+    expect(puts()[0]!.body).toEqual({ status: "interview" });
+    await waitFor(() =>
+      expect(
+        within(within(list).getByRole("list", { name: "Progress of Job 1" })).getAllByRole(
+          "listitem",
+        )[2],
+      ).toHaveAttribute("aria-current", "step"),
+    );
+  });
+
+  it("has a Status menu on every row, and the search filters the rows", async () => {
+    const list = await openList();
+    expect(within(list).getByRole("button", { name: "Move Job 2" })).toHaveTextContent("Status");
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "company 4" } });
+    const rows = within(screen.getByRole("list", { name: "List" }))
+      .getAllByRole("listitem")
+      .filter((li) => li.dataset.slot === "list-row");
+    expect(rows).toHaveLength(1);
+    expect(within(rows[0]!).getByRole("link")).toHaveTextContent("Job 4");
+  });
+});
+
 describe("right to left", () => {
   it("shows the columns in Arabic", async () => {
     renderBoard("ar");

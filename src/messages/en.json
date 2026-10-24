@@ -675,6 +675,12 @@
       "label": "Search roles or companies",
       "placeholder": "Search roles or companies"
     },
-    "noMatch": "No job matches in this column."
+    "noMatch": "No job matches in this column.",
+    "statusMenu": "Status",
+    "noMatchList": "No job matches your search.",
+    "stepper": {
+      "label": "Progress of {title}",
+      "moveTo": "Move to {status}"
+    }
   }
 }

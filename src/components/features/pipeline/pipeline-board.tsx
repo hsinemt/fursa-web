@@ -27,6 +27,7 @@ import { matchesSearch } from "@/lib/pipeline/values";
 import { useMoveJob } from "@/lib/pipeline/hooks";
 import { cn } from "@/lib/utils/cn";
 import { BoardCard, CardBody, COLUMNS, isColumn, type Column } from "./pipeline-card";
+import { PipelineList } from "./pipeline-list";
 
 type FeedQuery = ReturnType<typeof useFeed>;
 
@@ -243,7 +244,7 @@ export function PipelineBoard() {
       <div
         role="tablist"
         aria-label={t("tabs")}
-        className={cn("mt-4 gap-1 overflow-x-auto", view === "list" ? "flex" : "flex sm:hidden")}
+        className="mt-4 flex gap-1 overflow-x-auto sm:hidden"
       >
         {COLUMNS.map((column) => (
           <button
@@ -288,8 +289,9 @@ export function PipelineBoard() {
         <div
           className={cn(
             "mt-4",
-            view === "board" &&
-              "sm:flex sm:snap-x sm:gap-4 sm:overflow-x-auto sm:pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible",
+            view === "board"
+              ? "sm:flex sm:snap-x sm:gap-4 sm:overflow-x-auto sm:pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible"
+              : "sm:hidden",
           )}
         >
           {COLUMNS.map((column) => (
@@ -304,6 +306,11 @@ export function PipelineBoard() {
             />
           ))}
         </div>
+        {view === "list" ? (
+          <div className="mt-4 hidden sm:block">
+            <PipelineList queries={queries} search={search} onMove={moveJob} />
+          </div>
+        ) : null}
         <DragOverlay>
           {dragging ? (
             <div className="rounded-panel border border-accent bg-panel p-3 shadow-menu">

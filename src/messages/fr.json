@@ -675,6 +675,12 @@
       "label": "Rechercher un poste ou une entreprise",
       "placeholder": "Rechercher un poste ou une entreprise"
     },
-    "noMatch": "Aucune offre ne correspond dans cette colonne."
+    "noMatch": "Aucune offre ne correspond dans cette colonne.",
+    "statusMenu": "Statut",
+    "noMatchList": "Aucune offre ne correspond à votre recherche.",
+    "stepper": {
+      "label": "Avancement de {title}",
+      "moveTo": "Déplacer vers « {status} »"
+    }
   }
 }
