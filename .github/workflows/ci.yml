@@ -39,6 +39,12 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      # Regenerate the API client from the committed contract: it must not change anything
+      - name: API client is in sync with the contract
+        run: |
+          pnpm generate:api:local
+          git diff --exit-code -- contract src/lib/api
+
       - name: Unit tests (includes the contrast test)
         run: pnpm test
 

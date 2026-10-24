@@ -30,14 +30,16 @@ The image is a multi-stage build (standalone Next.js output, non-root user, read
 
 ## Commands
 
-| Command          | What it does                                                     |
-| ---------------- | ---------------------------------------------------------------- |
-| `pnpm dev`       | Dev server on port 3000                                          |
-| `pnpm build`     | Production build (the style page is not part of it)              |
-| `pnpm lint`      | ESLint                                                           |
-| `pnpm typecheck` | TypeScript                                                       |
-| `pnpm test`      | Unit tests, including the contrast test that fails on weak color |
-| `pnpm format`    | Prettier (`format:check` only checks)                            |
+| Command                   | What it does                                                                                  |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| `pnpm dev`                | Dev server on port 3000                                                                       |
+| `pnpm build`              | Production build (the style page is not part of it)                                           |
+| `pnpm generate:api`       | Refresh `contract/openapi.json` from `../fursa-api`, check its version, regenerate the client |
+| `pnpm generate:api:local` | Regenerate the client from the committed contract only (what CI runs)                         |
+| `pnpm lint`               | ESLint                                                                                        |
+| `pnpm typecheck`          | TypeScript                                                                                    |
+| `pnpm test`               | Unit tests, including the contrast test that fails on weak color                              |
+| `pnpm format`             | Prettier (`format:check` only checks)                                                         |
 
 CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build and `pnpm audit` on every push and pull request.
 
@@ -48,6 +50,8 @@ CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build
 - `src/app/[locale]/`: pages. `(app)` is the signed-in shell (top bar, bottom tab bar).
 - `src/messages/`: `ar.json`, `fr.json`, `en.json`. Every text is a key; a test checks the three have the same keys.
 - `src/proxy.ts`: locale routing and the Content-Security-Policy (nonce).
+- `src/lib/api/`: the API client. `schema.d.ts` is generated from `contract/openapi.json` (never edit it); `client.ts` is the fetch wrapper; `errors.ts` maps API error codes to translated messages. Use it as `const me = await call(api.GET("/v1/me"))`.
+- `contract/openapi.json` and `api-contract.version`: the API contract this app is built against, and its pinned version.
 - `docs/adr/`: decisions.
 
 ## Rules
