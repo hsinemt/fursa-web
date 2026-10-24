@@ -68,10 +68,17 @@
     "nav": {
       "how": "Comment ça marche",
       "example": "Exemple",
-      "data": "Vos données"
+      "services": "Ce qu’il fait",
+      "faq": "Questions"
     },
     "headline": "Trouvez les offres qui vous correspondent.",
     "intro": "Fursa rassemble des offres de plusieurs sources, note chacune selon votre profil et vous signale les meilleures.",
+    "hero": {
+      "tag": "Exemple",
+      "title": "Ingénieur données",
+      "why": "Votre profil indique Python, SQL et Docker, que cette offre demande.",
+      "eyebrow": "La recherche d’offres en arabe, en français et en anglais"
+    },
     "how": {
       "title": "Comment ça marche",
       "steps": {
@@ -90,33 +97,31 @@
       }
     },
     "example": {
-      "title": "Exemple",
-      "help": "Données fictives, pour montrer à quoi ressemblera votre liste d’offres.",
-      "label": "Exemple de liste d’offres",
+      "title": "Triées pour vous, avec la raison",
+      "help": "Données fictives. Chaque offre reçoit une note selon votre profil et une raison, les meilleures d’abord.",
+      "tag": "Exemple",
+      "label": "Exemple de liste",
       "count": "3 offres",
       "order": "Les meilleures d’abord",
+      "replay": "Rejouer",
       "jobs": {
         "one": {
           "title": "Ingénieur données",
-          "meta": "Entreprise exemple · Tunis · il y a 2 jours"
+          "meta": "Entreprise exemple · Tunis · il y a 2 jours",
+          "reason": "Correspond à Python, SQL et Docker. À Tunis, un lieu que vous avez choisi."
         },
         "two": {
           "title": "Développeur backend",
-          "meta": "Entreprise fictive · À distance · il y a 5 jours"
+          "meta": "Entreprise fictive · À distance · il y a 5 jours",
+          "reason": "Correspond à Python et Docker. Demande Go, que votre profil ne mentionne pas."
         },
         "three": {
           "title": "Ingénieur plateforme",
-          "meta": "Société démo · Sfax · il y a 1 semaine"
+          "meta": "Société démo · Sfax · il y a 1 semaine",
+          "reason": "Correspond à Docker. Demande Kubernetes et Go, que votre profil ne mentionne pas."
         }
       },
       "detail": {
-        "line": "Entreprise exemple · Hybride · Temps plein",
-        "level": "Niveau",
-        "levelValue": "Senior",
-        "mode": "Mode de travail",
-        "modeValue": "Hybride",
-        "posted": "Publiée",
-        "postedValue": "il y a 2 jours",
         "matched": "Compétences que vous avez",
         "missing": "Compétences absentes de votre profil",
         "whyTitle": "Pourquoi cette offre vous correspond",
@@ -124,13 +129,123 @@
         "why": "Votre profil indique Python, SQL et Docker, que cette offre demande. Le poste est à Tunis, un des lieux que vous avez choisis. Elle demande aussi Kubernetes, que votre profil ne mentionne pas."
       }
     },
-    "doesNot": {
+    "services": {
+      "title": "Ce que fait Fursa",
+      "help": "Quatre choses, toutes disponibles aujourd’hui.",
+      "listLabel": "Services",
+      "sample": "Exemple",
+      "later": "Pas encore disponible : envoi et adaptation du CV, lettres de motivation, recherche et filtres, statistiques.",
+      "feed": {
+        "name": "Liste d’offres",
+        "line": "Notées, les meilleures d’abord",
+        "text": "Des offres de plusieurs sources, chacune notée selon votre profil et classée des meilleures aux moins bonnes. Vous pouvez filtrer par statut et en charger davantage."
+      },
+      "why": {
+        "name": "Pourquoi elle correspond",
+        "line": "Compétences et courte note",
+        "text": "Chaque offre montre les compétences que vous avez et celles qui vous manquent, avec une courte note rédigée par l’IA dans votre langue."
+      },
+      "alerts": {
+        "name": "Alertes",
+        "line": "Telegram ou e-mail",
+        "text": "Recevez des alertes chaque jour ou immédiatement, uniquement au-dessus du score minimum que vous fixez.",
+        "email": "E-mail",
+        "telegram": "Telegram",
+        "daily": "Quotidien",
+        "instant": "Immédiat",
+        "minScore": "Score minimum",
+        "digest": "Heure du résumé (UTC)"
+      },
+      "pipeline": {
+        "name": "Suivi",
+        "line": "De l’enregistrement à l’entretien",
+        "text": "Suivez chaque offre, de enregistrée à envoyée, entretien ou refusée.",
+        "fourth": "Ingénieur support"
+      }
+    },
+    "promise": {
       "title": "Ce que Fursa ne fait pas",
-      "text": "Fursa ne postule jamais à votre place. Vous lisez pourquoi une offre vous correspond, vous ouvrez l’annonce et vous postulez vous-même."
+      "quote": "Fursa ne postule jamais à votre place.",
+      "text": "Vous lisez pourquoi une offre vous correspond, vous ouvrez l’annonce et vous postulez vous-même."
     },
     "data": {
       "title": "Vos données",
-      "text": "Vous pouvez exporter vos données ou supprimer votre compte à tout moment."
+      "text": "Vous pouvez exporter vos données ou supprimer votre compte à tout moment.",
+      "note": "La suppression du compte est définitive."
+    },
+    "faq": {
+      "title": "Questions",
+      "items": {
+        "how": {
+          "q": "Comment fonctionne Fursa ?",
+          "a": "Vous indiquez à Fursa les postes, compétences, lieux et niveau que vous voulez. Il rassemble des offres de plusieurs sources, note chacune selon votre profil et vous montre les meilleures d’abord, avec la raison."
+        },
+        "sources": {
+          "q": "D’où viennent les offres ?",
+          "a": "Fursa les rassemble à partir de plusieurs sources. Chaque offre renvoie vers l’annonce d’origine, où vous postulez."
+        },
+        "alerts": {
+          "q": "Comment fonctionnent les alertes ?",
+          "a": "Vous pouvez activer des alertes sur Telegram ou par e-mail, chaque jour ou immédiatement. Vous choisissez le score minimum et l’heure du résumé quotidien."
+        },
+        "apply": {
+          "q": "Fursa postule-t-il à ma place ?",
+          "a": "Non. Fursa ne postule jamais à votre place. Vous lisez pourquoi une offre vous correspond, vous ouvrez l’annonce et vous postulez vous-même."
+        },
+        "data": {
+          "q": "Que deviennent mes données ?",
+          "a": "Vous pouvez exporter toutes vos données, ou supprimer votre compte, à tout moment. La suppression est définitive."
+        },
+        "languages": {
+          "q": "Quelles langues sont disponibles ?",
+          "a": "L’arabe, le français et l’anglais. L’interface et la courte note sur chaque offre suivent la langue que vous choisissez."
+        }
+      }
+    },
+    "closing": {
+      "title": "Commencez par ce que vous cherchez.",
+      "text": "Créez un compte, puis indiquez vos postes, compétences, lieux et niveau."
+    },
+    "twin": "اعثر على الوظائف التي تناسبك.",
+    "twinLang": "ar",
+    "scenes": {
+      "profile": {
+        "title": "Votre profil",
+        "roles": "Postes",
+        "skills": "Compétences",
+        "places": "Lieux",
+        "level": "Niveau",
+        "role": "Ingénieur données",
+        "placeOne": "Tunis",
+        "placeTwo": "À distance",
+        "levelValue": "Senior"
+      },
+      "scoring": {
+        "title": "Notées selon votre profil"
+      },
+      "alert": {
+        "channel": "Telegram",
+        "title": "Nouvelle offre",
+        "text": "Ingénieur données, 82. Correspond à Python, SQL et Docker."
+      }
+    },
+    "pipeline": {
+      "title": "Derrière chaque offre",
+      "help": "Chaque offre passe par les mêmes étapes avant que vous en entendiez parler.",
+      "tag": "Exemple",
+      "label": "Exemple des étapes pour une offre",
+      "job": "Ingénieur données",
+      "company": "Entreprise exemple",
+      "working": "Fursa travaille",
+      "done": "Terminé",
+      "result": "Alerte envoyée sur Telegram",
+      "steps": {
+        "collect": "Récupération de l’annonce",
+        "read": "Lecture des compétences, du lieu et du niveau",
+        "score": "Notation selon votre profil",
+        "reason": "Rédaction de la raison",
+        "alert": "Envoi de l’alerte"
+      }
     }
   },
   "notFound": {
@@ -142,5 +257,11 @@
     "strong": "Fort",
     "good": "Bon",
     "partial": "Partiel"
+  },
+  "status": {
+    "saved": "Enregistrée",
+    "applied": "Envoyée",
+    "interview": "Entretien",
+    "rejected": "Refusée"
   }
 }

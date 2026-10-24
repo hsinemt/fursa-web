@@ -93,3 +93,10 @@ describe("csp upgrade-insecure-requests", () => {
     expect(buildCsp({ ...base })).not.toContain("upgrade-insecure-requests");
   });
 });
+
+describe("cn with our type scale", () => {
+  it("keeps a custom size next to a color", () => {
+    expect(cn("text-title", "text-slate")).toBe("text-title text-slate");
+    expect(cn("text-md text-ink", "text-display")).toBe("text-ink text-display");
+  });
+});
