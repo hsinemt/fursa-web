@@ -90,11 +90,7 @@ Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 
 - **A row** shows: title, then company, place and how long ago on a quieter line, and the score on the end. The selected row has `--tint` as its background (and `aria-current`); the detail beside it shows what is selected. No side bar.
 - **The detail** has this order: title; company, work mode, type and salary on one line; the **facts grid** (level, work mode, posted, and more); the matched and missing skills; the **"Why it matches"** note; the score breakdown; the description (plain text); actions.
 
-**Pipeline:**
-- **Laptop:** a board with a column per status.
-- **Tablet:** the board scrolls sideways with snapping.
-- **Phone:** one list with tabs for the statuses.
-- A list view is available too. Moving a job is a drag on laptop and a menu on touch (drag is never the only way).
+**Pipeline:** the four tracked statuses (Saved, Applied, Interview, Rejected). See "Pipeline board" below.
 
 **Settings:** a single column up to 640 px, grouped (Language, Notifications, Telegram, Your data), each group with a hairline and a short explanation.
 
@@ -179,6 +175,18 @@ A group **Your data** between Telegram and Account, in the same single column.
 - **Download my data:** a secondary button. It asks the API, saves a JSON file named `fursa-data-<date>.json` and says so in a toast. A quiet line under the button says the file holds personal data and should be kept somewhere safe. The data is never shown on the page.
 - **Delete my account:** a destructive-text button (danger-colored text on a secondary button). It opens a dialog: the title "Delete your account?", what is erased (profile, matches, alert settings), that it **cannot be undone**, and that the login at the sign-in provider is closed separately; then a field "Type DELETE to confirm" (Latin letters in every language, left to right) and two buttons: **Cancel** (secondary) and **Delete my account** (the filled danger button, which exists only inside this dialog; usable once the word matches). Errors appear in the dialog as the error panel with the code; the dialog stays open.
 - After deletion the person lands on the login page with the line "Your account was deleted."
+
+## Pipeline board
+
+The full-width screen for jobs the person is following. New jobs are not here (they are in the feed).
+
+- **Columns:** Saved, Applied, Interview, Rejected, left to right (right to left in Arabic). Each column has a header (the status dot and word, and how many jobs are loaded, with "+" when there are more) under a hairline, then its **cards**. A column has no panel of its own, so cards are never inside another card; the board sits on the page. A card is `--panel` with 8 px corners and 12 px padding, with the **logo tile** (40 px), the title, the company, the place and age on a quieter line, and the **score** (plain number and word) at the end. No side lines. The title is a link to the job.
+- **Moving a job:** by **drag and drop** (grab the card anywhere; a short press still opens the job), **by keyboard** (focus a card, Space, arrows to another column, Space to drop, Escape to cancel; the instructions and announcements are translated) and by the **Move to** menu on every card (a small button with an accessible name: Saved, Applied, Interview, Rejected, and "Back to new"), which is how touch screens move a job. Drag is never the only way.
+- **At once, and undone on failure:** the card moves before the answer. If the API refuses, it goes back and a toast says so. Moving is `PUT /v1/jobs/{id}/status`. A drop on the same column does nothing. While a card is dragged, the column under it takes `--tint`, and the dragged card follows the pointer (a copy, with the menu shadow).
+- **Loading:** one feed query per status (20 jobs each), "Load more" at the bottom of a column, skeleton cards while it loads, the error panel with a retry inside a column that failed (the others keep working).
+- **Empty column:** one quiet line that names the column and says how a job gets there ("Move a job here from the feed or another column.").
+- **Screen sizes:** **laptop** four columns share the width; **tablet** the columns are 18 rem wide and the board scrolls sideways with snapping; **phone** (and the **List** view on any size): the four statuses as tabs and one column at a time, full width.
+- **View switch:** **Board** and **List** (two toggle buttons with `aria-pressed`) at the end of the page title row, on tablet and laptop;. Phones always use the list.
 
 ## Right-to-left (Arabic)
 
