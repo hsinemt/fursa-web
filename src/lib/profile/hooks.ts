@@ -28,10 +28,12 @@ export function useUpdateProfile() {
   });
 }
 
-export function usePreferences() {
+/** `poll`: ask again every 3 seconds (used while waiting for Telegram to be linked). */
+export function usePreferences({ poll = false }: { poll?: boolean } = {}) {
   return useQuery({
     queryKey: keys.preferences,
     queryFn: () => call(api.GET("/v1/notifications/preferences")),
+    refetchInterval: poll ? 3000 : false,
   });
 }
 
