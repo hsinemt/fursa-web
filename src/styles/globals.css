@@ -55,6 +55,9 @@
   /* Type: IBM Plex only, two weights (400, 500) */
   --font-sans: var(--font-body);
   --font-heading: var(--font-display);
+  /* Fixed scripts, used by the dual-script masthead whatever the page language */
+  --font-serif: var(--font-plex-serif), Georgia, "Times New Roman", serif;
+  --font-arabic: var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
   --font-weight-semibold: 500;
   --font-weight-bold: 500;
 
@@ -171,5 +174,54 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+/*
+ * Welcome page sequences (see "Motion" and "Welcome page identity" in fursa design.md).
+ * Each one shows its final state by default; scripts only add a "pending" state for
+ * things below the fold, and "reduce motion" cancels all of it.
+ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 150ms ease-out;
+}
+
+[data-reveal] {
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.ledger-fill {
+  transform-origin: top;
+  transition: transform 200ms ease-out;
+}
+
+[data-ledger="pending"] .ledger-fill {
+  transform: scaleY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-ledger="pending"] .ledger-fill {
+    transform: none;
   }
 }
