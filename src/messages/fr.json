@@ -325,14 +325,18 @@
       "newPassword": "Nouveau mot de passe",
       "confirmPassword": "Confirmez le nouveau mot de passe",
       "showPassword": "Afficher le mot de passe",
-      "hidePassword": "Masquer le mot de passe"
+      "hidePassword": "Masquer le mot de passe",
+      "firstName": "Prénom",
+      "lastName": "Nom"
     },
     "validation": {
       "email_invalid": "Saisissez une adresse e-mail comme nom@exemple.com.",
       "password_required": "Saisissez votre mot de passe.",
       "password_short": "Utilisez au moins 8 caractères.",
       "password_long": "Utilisez 72 caractères au maximum.",
-      "password_mismatch": "Les deux mots de passe ne correspondent pas."
+      "password_mismatch": "Les deux mots de passe ne correspondent pas.",
+      "name_required": "Saisissez votre nom.",
+      "name_long": "Utilisez 60 caractères au maximum."
     },
     "errors": {
       "invalid_credentials": "L’e-mail ou le mot de passe est incorrect. Vérifiez-les et réessayez.",

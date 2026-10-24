@@ -64,13 +64,13 @@ export async function signUpAction(input: unknown): Promise<AuthResult> {
   const client = await createAuthClient();
   if (!client) return notConfigured;
 
-  const { email, password, locale } = parsed.data;
+  const { email, password, locale, firstName, lastName } = parsed.data;
   const { data, error } = await client.supabase.auth.signUp({
     email,
     password,
     options: {
       // The API reads user_metadata.locale the first time this person signs in.
-      data: { locale },
+      data: { locale, first_name: firstName, last_name: lastName },
       emailRedirectTo: callbackUrl(locale, HOME_FOR_SIGNED_IN),
     },
   });

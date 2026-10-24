@@ -17,7 +17,7 @@ export function SignupForm() {
   const message = useValidationMessage();
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { firstName: "", lastName: "", email: "", password: "" },
   });
   const { pending, error, submit } = useAuthSubmit<keyof SignupValues>({
     setFieldError: (field, key) => form.setError(field, { message: key }),
@@ -33,6 +33,22 @@ export function SignupForm() {
       className="flex flex-col gap-5"
     >
       {error ? <ErrorPanel message={t(`errors.${error}`)} /> : null}
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field
+          label={t("fields.firstName")}
+          autoComplete="given-name"
+          dir="auto"
+          error={message(errors.firstName?.message)}
+          {...form.register("firstName")}
+        />
+        <Field
+          label={t("fields.lastName")}
+          autoComplete="family-name"
+          dir="auto"
+          error={message(errors.lastName?.message)}
+          {...form.register("lastName")}
+        />
+      </div>
       <Field
         label={t("fields.email")}
         type="email"

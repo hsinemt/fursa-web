@@ -20,7 +20,14 @@ export const loginSchema = z.object({
   password: z.string().min(1, "password_required"),
 });
 
-export const signupSchema = z.object({ email, password: newPassword });
+const name = z.string().trim().min(1, "name_required").max(60, "name_long");
+
+export const signupSchema = z.object({
+  firstName: name,
+  lastName: name,
+  email,
+  password: newPassword,
+});
 
 export const forgotSchema = z.object({ email });
 

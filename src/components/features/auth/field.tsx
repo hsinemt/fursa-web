@@ -14,6 +14,8 @@ const KNOWN_VALIDATION = [
   "password_short",
   "password_long",
   "password_mismatch",
+  "name_required",
+  "name_long",
 ] as const;
 
 /** Turns a validation key from the schemas into a translated sentence. */

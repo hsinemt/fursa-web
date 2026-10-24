@@ -325,14 +325,18 @@
       "newPassword": "كلمة المرور الجديدة",
       "confirmPassword": "أكّد كلمة المرور الجديدة",
       "showPassword": "إظهار كلمة المرور",
-      "hidePassword": "إخفاء كلمة المرور"
+      "hidePassword": "إخفاء كلمة المرور",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة"
     },
     "validation": {
       "email_invalid": "أدخل بريدًا إلكترونيًا مثل name@example.com.",
       "password_required": "أدخل كلمة المرور.",
       "password_short": "استخدم 8 أحرف على الأقل.",
       "password_long": "استخدم 72 حرفًا على الأكثر.",
-      "password_mismatch": "كلمتا المرور غير متطابقتين."
+      "password_mismatch": "كلمتا المرور غير متطابقتين.",
+      "name_required": "أدخل اسمك.",
+      "name_long": "استخدم 60 حرفًا على الأكثر."
     },
     "errors": {
       "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة. راجعهما وحاول مجددًا.",
