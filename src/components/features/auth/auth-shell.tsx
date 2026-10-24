@@ -3,9 +3,8 @@ import { ErrorPanel } from "@/components/ui/error-panel";
 import { ICON_MD, iconProps } from "@/components/ui/icon";
 
 /**
- * The frame of every auth page: a title, one sentence, an optional notice, the form in a
- * panel, and a line of links under it. Forms are narrow (up to 448 px), as `fursa design.md`
- * asks (forms up to 640 px).
+ * The frame of every auth page, on the form side of the split screen: the title, one sentence,
+ * an optional notice, the form (no card around it), and a line of links under it.
  */
 export function AuthShell({
   title,
@@ -21,9 +20,9 @@ export function AuthShell({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto w-full max-w-md px-4 py-10 sm:py-14">
+    <div>
       <h1 className="font-heading text-title text-balance text-ink">{title}</h1>
-      {intro ? <p className="mt-2 text-slate">{intro}</p> : null}
+      {intro ? <p className="mt-2 text-md text-slate">{intro}</p> : null}
       {notice ? (
         <div className="mt-6">
           {notice.kind === "error" ? (
@@ -41,8 +40,8 @@ export function AuthShell({
           )}
         </div>
       ) : null}
-      <div className="mt-6 rounded-panel border border-line bg-panel p-6">{children}</div>
-      {footer ? <div className="mt-6 text-slate">{footer}</div> : null}
+      <div className="mt-8">{children}</div>
+      {footer ? <div className="mt-8 text-slate">{footer}</div> : null}
     </div>
   );
 }
