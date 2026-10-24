@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils/cn";
 import { LanguageSwitcher } from "./language-switcher";
-import { NAV_ITEMS } from "./nav-items";
+import { isCurrentNav, NAV_ITEMS } from "./nav-items";
 import { Wordmark } from "./wordmark";
 
 /**
@@ -29,7 +29,7 @@ export function TopBar({
         <Wordmark className="flex items-center" />
         <nav aria-label={a11y("mainNavigation")} className="flex items-stretch gap-1">
           {NAV_ITEMS.map(({ key, href }) => {
-            const current = pathname === href || pathname.startsWith(`${href}/`);
+            const current = isCurrentNav(href, pathname);
             return (
               <Link
                 key={key}

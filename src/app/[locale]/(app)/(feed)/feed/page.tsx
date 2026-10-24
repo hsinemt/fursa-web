@@ -1,12 +1,6 @@
-import { useTranslations } from "next-intl";
-import { FeedNudge } from "@/components/features/profile/feed-nudge";
-import { PlaceholderPage } from "@/components/layout/placeholder-page";
+import { PickAJob } from "@/components/features/feed/feed-shell";
 
+/** The list is in the layout; this is the open-job side while no job is chosen (laptop only). */
 export default function FeedPage() {
-  const t = useTranslations("pages.feed");
-  return (
-    <PlaceholderPage title={t("title")} description={t("placeholder")}>
-      <FeedNudge />
-    </PlaceholderPage>
-  );
+  return <PickAJob />;
 }
