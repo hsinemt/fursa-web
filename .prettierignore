@@ -4,3 +4,6 @@ pnpm-lock.yaml
 coverage
 fursa design.md
 fursa web.md
+
+src/lib/api/schema.d.ts
+contract

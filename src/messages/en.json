@@ -57,8 +57,6 @@
   },
   "later": {
     "placeholder": "This page is built in a later step.",
-    "login": "Sign in",
-    "signup": "Create account",
     "privacy": "Privacy",
     "terms": "Terms"
   },
@@ -263,5 +261,113 @@
     "applied": "Applied",
     "interview": "Interview",
     "rejected": "Rejected"
+  },
+  "errors": {
+    "missing_token": "Your session expired. Sign in again.",
+    "invalid_token": "Your session expired. Sign in again.",
+    "token_expired": "Your session expired. Sign in again.",
+    "account_deleted": "This account has been deleted.",
+    "email_required": "Your account has no email address, so Fursa cannot continue.",
+    "origin_not_allowed": "Fursa cannot reach its server from this address. Try again later.",
+    "validation_error": "Some fields are not valid. Check them and try again.",
+    "invalid_salary_range": "The minimum salary is higher than the maximum.",
+    "invalid_cursor": "The list changed. Fursa is reloading it from the start.",
+    "job_not_found": "This job is not in your matches.",
+    "telegram_not_linked": "Link Telegram first, then try again.",
+    "telegram_not_configured": "Telegram is not set up on this server.",
+    "rate_limited": "Too many requests. Try again in {seconds} seconds.",
+    "rate_limited_soon": "Too many requests. Try again in a moment.",
+    "auth_unavailable": "Sign-in is temporarily unavailable. Try again later.",
+    "auth_not_configured": "Sign-in is temporarily unavailable. Try again later.",
+    "network_error": "Fursa cannot reach its server. Check your connection and try again.",
+    "unknown": "Something went wrong. Try again.",
+    "internal_error": "Something went wrong on our side. Try again later."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "intro": "Welcome back. Sign in to see your matches.",
+      "submit": "Sign in",
+      "forgot": "Forgot your password?",
+      "noAccount": "No account yet?",
+      "createOne": "Create an account"
+    },
+    "signup": {
+      "title": "Create your account",
+      "intro": "Create an account, then tell Fursa what you look for.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "passwordHelp": "At least 8 characters.",
+      "terms": "By creating an account you agree to the <terms>Terms</terms> and the <privacy>Privacy policy</privacy>."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "intro": "Enter your email. If an account exists, Fursa sends a link to choose a new password.",
+      "submit": "Send the link",
+      "sent": "If an account exists for this email, a link is on its way. Check your inbox.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "intro": "Use at least 8 characters.",
+      "submit": "Save password"
+    },
+    "checkEmail": {
+      "title": "Check your email",
+      "text": "Fursa sent you a link to confirm your address. Open it on this device to finish creating your account.",
+      "spam": "Nothing after a few minutes? Look in your spam folder.",
+      "back": "Back to sign in"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm the new password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "firstName": "First name",
+      "lastName": "Last name"
+    },
+    "validation": {
+      "email_invalid": "Enter an email address like name@example.com.",
+      "password_required": "Enter your password.",
+      "password_short": "Use at least 8 characters.",
+      "password_long": "Use at most 72 characters.",
+      "password_mismatch": "The two passwords do not match.",
+      "name_required": "Enter your name.",
+      "name_long": "Use at most 60 characters."
+    },
+    "errors": {
+      "invalid_credentials": "The email or the password is not right. Check them and try again.",
+      "email_not_confirmed": "Confirm your email first. Open the link Fursa sent you.",
+      "email_taken": "An account with this email already exists. Sign in instead.",
+      "weak_password": "This password is too weak. Use at least 8 characters, with letters and numbers.",
+      "same_password": "Choose a password different from the current one.",
+      "rate_limited": "Too many attempts. Wait a moment and try again.",
+      "signup_disabled": "Creating accounts is turned off for now.",
+      "unavailable": "Sign-in is temporarily unavailable. Try again later.",
+      "not_configured": "Sign-in is not set up on this server yet.",
+      "session_missing": "This link is no longer valid. Ask for a new one.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "notices": {
+      "link_invalid": "This link is invalid or has expired. Ask for a new one.",
+      "signed_out": "You are signed out."
+    },
+    "signOut": "Sign out",
+    "account": {
+      "title": "Account",
+      "help": "The email you sign in with."
+    },
+    "panel": {
+      "headline": "Find the jobs that fit you, and see why.",
+      "text": "Fursa scores each job against your profile and tells you the reason, so you decide where to apply.",
+      "points": {
+        "apply": "Fursa never applies for you.",
+        "data": "Export your data or delete your account at any time.",
+        "languages": "In Arabic, French and English."
+      }
+    }
   }
 }

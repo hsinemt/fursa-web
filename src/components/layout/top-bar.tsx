@@ -12,7 +12,13 @@ import { Wordmark } from "./wordmark";
  * 2 px accent underline), then language and appearance on the far side.
  * Hidden on phones, where the bottom tab bar takes over.
  */
-export function TopBar({ themeControl }: { themeControl: React.ReactNode }) {
+export function TopBar({
+  themeControl,
+  accountControl,
+}: {
+  themeControl: React.ReactNode;
+  accountControl?: React.ReactNode;
+}) {
   const t = useTranslations("nav");
   const a11y = useTranslations("a11y");
   const pathname = usePathname();
@@ -44,6 +50,7 @@ export function TopBar({ themeControl }: { themeControl: React.ReactNode }) {
         <div className="ms-auto flex items-center gap-2">
           <LanguageSwitcher />
           {themeControl}
+          {accountControl}
         </div>
       </div>
     </header>
