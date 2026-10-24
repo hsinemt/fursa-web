@@ -17,8 +17,8 @@ type JobRowProps = Omit<React.ComponentProps<"li">, "title" | "children"> & {
 
 /**
  * One row of a job list: title, then company, place and age on a quieter line,
- * and the score at the end. The selected row has --tint and a 3 px accent bar on
- * its start edge (it flips to the right in Arabic). Rows, not cards.
+ * and the score at the end. The selected row has --tint as
+ * its background; no side bar. Rows, not cards.
  */
 export function JobRow({
   title,
@@ -35,8 +35,8 @@ export function JobRow({
       data-slot="job-row"
       aria-current={selected ? "true" : undefined}
       className={cn(
-        "flex items-center gap-4 border-s-[3px] px-4 py-3 transition-colors duration-200 ease-out",
-        selected ? "border-accent bg-tint" : "border-transparent",
+        "flex items-center gap-4 px-4 py-3 transition-colors duration-200 ease-out",
+        selected && "bg-tint",
         className,
       )}
       {...props}

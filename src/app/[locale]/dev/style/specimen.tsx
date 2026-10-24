@@ -250,15 +250,12 @@ export function Specimen({ theme, dir }: { theme: Theme; dir: Dir }) {
         </div>
       </Block>
 
-      <Block title="Score and rows (selected row: tint and a 3 px accent bar on the start edge)">
+      <Block title="Score and rows (selected row: tint background)">
         <ul className="divide-y divide-line overflow-hidden rounded-panel border border-line bg-panel">
           {s.rows.map((row, i) => (
             <li
               key={row.title}
-              className={cn(
-                "flex items-center gap-4 border-s-[3px] px-4 py-3",
-                i === 0 ? "border-accent bg-tint" : "border-transparent",
-              )}
+              className={cn("flex items-center gap-4 px-4 py-3", i === 0 && "bg-tint")}
             >
               <div className="min-w-0 flex-1">
                 <p dir="auto" className="truncate font-medium">
@@ -277,10 +274,7 @@ export function Specimen({ theme, dir }: { theme: Theme; dir: Dir }) {
       <Block title="Loading (skeleton rows)">
         <div className="divide-y divide-line overflow-hidden rounded-panel border border-line bg-panel">
           {[0, 1].map((n) => (
-            <div
-              key={n}
-              className="flex items-center gap-4 border-s-[3px] border-transparent px-4 py-3"
-            >
+            <div key={n} className="flex items-center gap-4 px-4 py-3">
               <div className="flex-1 space-y-2">
                 <Skeleton className="h-4 w-2/3" />
                 <Skeleton className="h-4 w-1/2" />

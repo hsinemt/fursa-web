@@ -39,6 +39,13 @@ describe("guardrails", () => {
     expect(offenders(physical, (n) => n.endsWith(".css"))).toEqual([]);
   });
 
+  it("has no side borders: no accent bar or line on the start or end edge of anything", () => {
+    // border-s, border-e, border-l, border-r (with or without a size or color). Top and
+    // bottom hairlines (border-t, border-b) are fine. See "No side lines" in fursa design.md.
+    const side = /(?<![\w-])border-[selr](?![a-z])/;
+    expect(offenders(side, (n) => n.endsWith(".css"))).toEqual([]);
+  });
+
   it("has no raw hex colors outside tokens.css", () => {
     expect(
       offenders(/#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b/, (n) => n.endsWith("tokens.css")),
