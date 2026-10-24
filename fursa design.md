@@ -79,7 +79,7 @@ Rules:
 Breakpoints: **phone** under 640 px, **tablet** 640 to 1023 px, **laptop** 1024 px and up. Everything must work at all three, in both modes and both directions.
 
 **Navigation items:** Feed, Pipeline, Profile, Settings. (Documents is added when the API supports it.)
-- **Laptop and tablet:** a thin top bar: wordmark, the four items (the current one has a 2 px accent underline), then language, mode and the account menu on the far side.
+- **Laptop and tablet:** a thin top bar: wordmark, the four items (the current one has a 2 px accent underline), then the language and the **account menu** on the far side (in development, a Dev link before it).
 - **Public pages (welcome, privacy, terms):** the header is a floating bar that stays on screen while scrolling. It is a `--panel` bar with a hairline border and 8 px corners, inset from the page edges with a small gap above it, holding the masthead, the section links (laptop), language, appearance and Sign in. It gets the soft menu shadow once the page has scrolled. No line under it, no double rule.
 - **Phone:** a **bottom tab bar** with the four items (easy to reach with a thumb). Language, mode and account live under Settings.
 - The app's bar is `--panel`, flat, with a hairline below (or above on phones).
@@ -189,6 +189,17 @@ A card **Your data** between Telegram and Account.
 - **Download my data:** a secondary button. It asks the API, saves a JSON file named `fursa-data-<date>.json` and says so in a toast. A quiet line under the button says the file holds personal data and should be kept somewhere safe. The data is never shown on the page.
 - **Delete my account:** a destructive-text button (danger-colored text on a secondary button). It opens a dialog: the title "Delete your account?", what is erased (profile, matches, alert settings), that it **cannot be undone**, and that the login at the sign-in provider is closed separately; then a field "Type DELETE to confirm" (Latin letters in every language, left to right) and two buttons: **Cancel** (secondary) and **Delete my account** (the filled danger button, which exists only inside this dialog; usable once the word matches). Errors appear in the dialog as the error panel with the code; the dialog stays open.
 - After deletion the person lands on the login page with the line "Your account was deleted."
+
+## Account menu
+
+In the top bar (tablet and laptop), the **sign out button is replaced by an avatar**: a round 36 px circle with the first letter of the email (`--accent` fill, `--on-accent` letter, heading font). It opens a menu (`--panel`, hairline, 8 px corners, the soft menu shadow, about 16 rem wide) with, in this order:
+
+1. The signed-in **email** (small, quiet, left to right, cut with an ellipsis when long), as a label, not an action.
+2. **Profile** and **Settings**, each with a small outline icon.
+3. A hairline, then **Appearance** with the three choices **Light**, **Dark** and **System** as a radio group (an icon each, a check on the chosen one); choosing one saves the cookie and the page changes at once.
+4. A hairline, then **Sign out** (with its icon).
+
+The separate light/dark button leaves the top bar: appearance lives in this menu (and in Settings). Keyboard: Enter or Space opens it, arrows move, Escape closes and returns the focus to the avatar. It works the same in Arabic (the menu opens toward the other side). On phones the top bar is hidden; the same things are in Settings.
 
 ## Right-to-left (Arabic)
 
