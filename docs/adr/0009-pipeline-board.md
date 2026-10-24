@@ -12,6 +12,7 @@ Status: accepted. Date: 2026-10-25.
 6. **Counts are loaded counts.** The API gives no total, so a column header shows how many are loaded and "+" while there is another page.
 7. **Search is client-side.** The API has no search, so the board's search field filters the cards already loaded (title or company, ignoring case and accents). A column header counts the matches.
 8. **Drag states and motion.** The dragged copy has an accent border and the menu shadow, the original stays as a faded dashed ghost, the target column takes a tint and an accent border, and a card that arrives fades in and rises 6 px. The fade is turned off by `prefers-reduced-motion` (`motion-safe`).
+9. **List view is rows with a stepper** (idea taken from how other trackers show progress). Each row shows Saved, Applied, Interview, Rejected as stops on a line; the stops are buttons that move the job, so it is a second direct way to change status next to drag and the menu. Phones keep the tabs and cards. The date under the current stop is the job's `updated_at` (when its status last changed).
 
 ## Not done here
 
