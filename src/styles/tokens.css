@@ -1,0 +1,97 @@
+/*
+ * Fursa design tokens. The ONLY place raw color values live.
+ * Source of truth: "fursa design.md". Change that file first, then this one.
+ * tests/contrast.test.ts reads this file and fails if a color pair is too weak.
+ *
+ * Light is the default. Dark applies with data-theme="dark", or with
+ * data-theme="system" when the OS prefers dark (the system block repeats the
+ * dark values; a test checks both copies stay identical).
+ */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --page: #f7f8fa;
+  --panel: #ffffff;
+  --ink: #1b2430;
+  --slate: #5b6675;
+  --line: #e1e5eb;
+  --control: #858fa0;
+  --accent: #1f4fa0;
+  --accent-hover: #1a4388;
+  --accent-press: #153875;
+  --on-accent: #ffffff;
+  --tint: #eaf0fa;
+  --success: #1f7a4d;
+  --success-bg: #e6f4ec;
+  --danger: #b42318;
+  --danger-bg: #fdecea;
+  --warning: #8a5300;
+  --warning-bg: #fdf3dc;
+  --focus: #1f4fa0;
+
+  /* Status dots that are not one of the colors above */
+  --status-interview: #b26b00;
+  --status-rejected: #b4574d;
+
+  --shadow-pop: 0 4px 16px rgb(27 36 48 / 0.12);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page: #0e1621;
+  --panel: #141e2b;
+  --ink: #e8ecf2;
+  --slate: #9aa6b5;
+  --line: #2a3646;
+  --control: #66758a;
+  --accent: #6aa2f0;
+  --accent-hover: #86b5f4;
+  --accent-press: #9cc3f7;
+  --on-accent: #0e1621;
+  --tint: #1b2a44;
+  --success: #52c28a;
+  --success-bg: #12301f;
+  --danger: #f2877c;
+  --danger-bg: #3a1a17;
+  --warning: #e5b04a;
+  --warning-bg: #3a2c0c;
+  --focus: #6aa2f0;
+
+  --status-interview: #e5b04a;
+  --status-rejected: #e08a80;
+
+  --shadow-pop: 0 4px 16px rgb(0 0 0 / 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    color-scheme: dark;
+
+    --page: #0e1621;
+    --panel: #141e2b;
+    --ink: #e8ecf2;
+    --slate: #9aa6b5;
+    --line: #2a3646;
+    --control: #66758a;
+    --accent: #6aa2f0;
+    --accent-hover: #86b5f4;
+    --accent-press: #9cc3f7;
+    --on-accent: #0e1621;
+    --tint: #1b2a44;
+    --success: #52c28a;
+    --success-bg: #12301f;
+    --danger: #f2877c;
+    --danger-bg: #3a1a17;
+    --warning: #e5b04a;
+    --warning-bg: #3a2c0c;
+    --focus: #6aa2f0;
+
+    --status-interview: #e5b04a;
+    --status-rejected: #e08a80;
+
+    --shadow-pop: 0 4px 16px rgb(0 0 0 / 0.4);
+  }
+}
