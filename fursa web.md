@@ -280,8 +280,10 @@ Where the build stands (update this when a step is merged).
 - **Done and merged:** steps 1 to 5 (skeleton, welcome, api-client, auth, dev-console), plus the CI smoke-test fix.
 - **Done and merged:** step 6 (profile, onboarding, language sync) and step 7 (job feed and job detail, see `docs/adr/0006-job-feed-and-detail.md`), both tested by the user by hand.
 - **Done and merged:** step 8 (alerts and Telegram linking on the settings page, see `docs/adr/0007-notifications-settings.md`).
-- **Done, on `feat/account-data`, waiting for review, push, pull request and merge:** step 9 (data export and account deletion, see `docs/adr/0008-account-data.md`).
-- **Next:** step 10, `feat/pipeline` (pipeline board), cut from an up-to-date `main` after step 9 is merged.
+- **Done and merged:** step 9 (data export and account deletion, see `docs/adr/0008-account-data.md`) and the profile page redesign.
+- **Done, on `feat/pipeline`, waiting for review, push, pull request and merge:** step 10 (the pipeline board with drag and drop, see `docs/adr/0009-pipeline-board.md`).
+- **Waiting for merge:** `feat/settings-design` (settings page cards, account menu in the top bar, Profile and Settings moved out of the top bar).
+- **Next:** step 11, `feat/polish` (privacy and terms pages, polish, accessibility pass, e2e tests in LTR and RTL), cut from an up-to-date `main`.
 - **Open improvements** (mostly waiting for API changes) are listed in `fursa improvements.md`: add an item when the user says "we will improve it", delete it when done.
 - **Welcome page:** to be revisited and optimized after the essential API screens (steps 7 to 10).
 
