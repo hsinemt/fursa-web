@@ -163,7 +163,7 @@ export function PipelineList({
             className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-panel border border-line bg-panel p-3 transition-colors duration-150 ease-out hover:border-control motion-safe:animate-[card-in_200ms_ease-out_both]"
           >
             <div className="flex min-w-0 flex-1 basis-64 items-center gap-3">
-              <CompanyLogo name={job.company} />
+              <CompanyLogo name={job.company} src={job.company_logo_url} />
               <div className="min-w-0">
                 <Link
                   href={`/jobs/${job.job_id}`}

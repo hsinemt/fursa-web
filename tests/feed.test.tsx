@@ -50,6 +50,7 @@ const summary = (n: number, extra: Record<string, unknown> = {}) => ({
   explanation: n === 1 ? "Your Python and SQL match." : null,
   title: `Job ${n}`,
   company: `Company ${n}`,
+  company_logo_url: null,
   location: "Tunis",
   country: "Tunisia",
   remote: null,
@@ -211,17 +212,10 @@ describe("feed list", () => {
     expect(group.className).not.toContain("flex-wrap");
   });
 
-  it("sorts the loaded jobs by posting date when Newest is chosen, and keeps it in the address", async () => {
-    answers["GET /v1/feed"] = () =>
-      json({
-        items: [
-          summary(1, { posted_at: "2026-09-01T00:00:00Z" }),
-          summary(2, { posted_at: "2026-10-20T00:00:00Z" }),
-        ],
-        next_cursor: null,
-      });
+  it("asks the API for the newest first, and keeps the order in the address and the job links", async () => {
     const first = feed();
     await screen.findByText("Job 1");
+    expect(feedCalls().at(-1)!.query.has("sort")).toBe(false); // best first is the API's default
     fireEvent.change(screen.getByRole("combobox", { name: "Sort jobs" }), {
       target: { value: "newest" },
     });
@@ -231,14 +225,30 @@ describe("feed list", () => {
     nav.search = new URLSearchParams("sort=newest&status=saved");
     feed();
     await screen.findByText("Job 1");
-    const titles = screen.getAllByRole("listitem").map((li) => li.textContent ?? "");
-    expect(titles[0]).toContain("Job 2");
-    expect(titles[1]).toContain("Job 1");
+    const call = feedCalls().at(-1)!;
+    expect(call.query.get("sort")).toBe("newest");
+    expect(call.query.get("status")).toBe("saved");
     expect(screen.getByRole("link", { name: /Job 1/ })).toHaveAttribute(
       "href",
       `/jobs/${ID1}?status=saved&sort=newest`,
     );
-    expect(feedCalls().at(-1)!.query.has("sort")).toBe(false);
+  });
+
+  it("shows the jobs in the order the API sent, without sorting them again", async () => {
+    answers["GET /v1/feed"] = () =>
+      json({
+        items: [
+          summary(2, { posted_at: "2026-01-01T00:00:00Z" }),
+          summary(1, { posted_at: "2026-10-20T00:00:00Z" }),
+        ],
+        next_cursor: null,
+      });
+    nav.search = new URLSearchParams("sort=newest");
+    feed();
+    await screen.findByText("Job 1");
+    const rows = screen.getAllByRole("listitem").map((li) => li.textContent ?? "");
+    expect(rows[0]).toContain("Job 2");
+    expect(rows[1]).toContain("Job 1");
   });
 
   it("shows the status of a job that is not new, and Closed for a closed posting", async () => {

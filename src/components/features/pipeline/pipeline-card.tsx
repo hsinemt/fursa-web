@@ -32,7 +32,7 @@ export function CardBody({ job, actions }: { job: JobSummary; actions?: React.Re
   return (
     <>
       <div className="flex items-center gap-2">
-        <CompanyLogo name={job.company} size="sm" />
+        <CompanyLogo name={job.company} src={job.company_logo_url} size="sm" />
         <p dir="auto" className="min-w-0 flex-1 truncate text-sm text-slate">
           {job.company}
         </p>

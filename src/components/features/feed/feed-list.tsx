@@ -16,11 +16,15 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { ApiError } from "@/lib/api/errors";
 import { feedKeys, useFeed } from "@/lib/feed/hooks";
 import {
-  feedQuery,
+  filterCount,
+  parseParams,
+  paramsQuery,
+  withoutFilters,
+  type FeedParams,
+} from "@/lib/feed/params";
+import {
   flattenPages,
-  parseFilter,
   parseSort,
-  sortJobs,
   type Sort,
   STATUSES,
   timeAgo,
@@ -30,6 +34,7 @@ import {
 import { useProfile } from "@/lib/profile/hooks";
 import { scoreBand } from "@/lib/utils/score";
 import { cn } from "@/lib/utils/cn";
+import { FiltersPopover, SearchBox } from "./feed-filters";
 import { LoadError } from "./load-error";
 
 /** The id of the open job, read from `/jobs/<id>`. */
@@ -38,9 +43,9 @@ export function jobIdFromPath(pathname: string): string | null {
   return match?.[1] ? decodeURIComponent(match[1]) : null;
 }
 
-/** The address of a job, keeping the status filter and the sort. */
-export function jobHref(id: string, status: UserJobStatus | null, sort: Sort): string {
-  return `/jobs/${id}${feedQuery(status, sort)}`;
+/** The address of a job, keeping the status, the order and the filters of the list. */
+export function jobHref(id: string, params: FeedParams): string {
+  return `/jobs/${id}${paramsQuery(params)}`;
 }
 
 /** The quiet lines of a row: the company, then "place · 3 days ago · Closed". */
@@ -142,27 +147,27 @@ export function FeedList({ onJob }: { onJob: boolean }) {
   const search = useSearchParams();
   const profile = useProfile();
 
-  const filter = parseFilter(search.get("status"));
-  const sort = parseSort(search.get("sort"));
+  const params = parseParams(search);
+  const { status: filter, sort } = params;
+  const filters = filterCount(params);
   const selectedId = jobIdFromPath(pathname);
-  const query = useFeed(filter);
-  const items = sortJobs(flattenPages(query.data), sort);
+  // The API sorts and filters; the page only passes the choices on.
+  const query = useFeed(filter, { sort, filters: params });
+  const items = flattenPages(query.data);
   const error = query.error;
 
   // A cursor the API no longer accepts: start the list again from the first page.
   useEffect(() => {
     if (error instanceof ApiError && error.code === "invalid_cursor") {
       toast.show(errors("invalid_cursor"));
-      void client.resetQueries({ queryKey: feedKeys.list(filter) });
+      void client.resetQueries({ queryKey: feedKeys.list(filter, { sort, filters: params }) });
     }
-  }, [error, client, filter, toast, errors]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- params is rebuilt every render; its parts are in the key below
+  }, [error, client, toast, errors, filter, sort, paramsQuery(params)]);
 
-  const changeFilter = (next: UserJobStatus | null) => {
-    router.replace(`${pathname}${feedQuery(next, sort)}`);
-  };
-  const changeSort = (next: Sort) => {
-    router.replace(`${pathname}${feedQuery(filter, next)}`);
-  };
+  const go = (next: FeedParams) => router.replace(`${pathname}${paramsQuery(next)}`);
+  const changeFilter = (next: UserJobStatus | null) => go({ ...params, status: next });
+  const changeSort = (next: Sort) => go({ ...params, sort: next });
 
   const Heading = onJob ? "h2" : "h1";
   const now = new Date();
@@ -177,6 +182,10 @@ export function FeedList({ onJob }: { onJob: boolean }) {
             {t("title")}
           </Heading>
           <SortSelect value={sort} onChange={changeSort} />
+        </div>
+        <div className="mt-3 flex items-center gap-2">
+          <SearchBox value={params.q} onCommit={(q) => go({ ...params, q })} />
+          <FiltersPopover params={params} onChange={go} />
         </div>
         <StatusFilter value={filter} onChange={changeFilter} />
       </div>
@@ -193,7 +202,17 @@ export function FeedList({ onJob }: { onJob: boolean }) {
             <LoadError className="m-4" error={error} onRetry={() => void query.refetch()} />
           )
         ) : items.length === 0 ? (
-          filter ? (
+          filters > 0 ? (
+            <div className="px-4">
+              <EmptyState
+                title={t("filters.noMatch.title")}
+                description={t("filters.noMatch.text")}
+                action={
+                  <Button onClick={() => go(withoutFilters(params))}>{t("filters.clear")}</Button>
+                }
+              />
+            </div>
+          ) : filter ? (
             <EmptyState
               className="px-4"
               title={t("emptyFilter.title")}
@@ -217,7 +236,7 @@ export function FeedList({ onJob }: { onJob: boolean }) {
                   key={job.job_id}
                   link={(content, className) => (
                     <Link
-                      href={jobHref(job.job_id, filter, sort)}
+                      href={jobHref(job.job_id, params)}
                       aria-current={job.job_id === selectedId ? "true" : undefined}
                       className={className}
                     >
@@ -226,7 +245,7 @@ export function FeedList({ onJob }: { onJob: boolean }) {
                   )}
                   selected={job.job_id === selectedId}
                   title={job.title}
-                  leading={<CompanyLogo name={job.company} />}
+                  leading={<CompanyLogo name={job.company} src={job.company_logo_url} />}
                   meta={metaLines(job, now, locale, t("closed"))}
                   reason={job.explanation ?? undefined}
                   ring
