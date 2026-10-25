@@ -40,7 +40,7 @@ describe("paths", () => {
   it("protects the app screens, not the public pages or the style page", () => {
     for (const path of [
       "/feed",
-      "/pipeline",
+      "/tracker",
       "/profile",
       "/settings",
       "/jobs/12",

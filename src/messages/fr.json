@@ -10,7 +10,7 @@
   },
   "nav": {
     "feed": "Offres",
-    "pipeline": "Suivi",
+    "tracker": "Suivi",
     "profile": "Profil",
     "settings": "Paramètres",
     "accountMenu": "Menu du compte"
@@ -34,7 +34,7 @@
       "title": "Offres"
     },
     "pipeline": {
-      "title": "Suivi"
+      "title": "Suivi des candidatures"
     },
     "profile": {
       "title": "Profil",
@@ -149,7 +149,7 @@
         "digest": "Heure du résumé (UTC)"
       },
       "pipeline": {
-        "name": "Suivi",
+        "name": "Suivi des candidatures",
         "line": "De l’enregistrement à l’entretien",
         "text": "Suivez chaque offre, de enregistrée à envoyée, entretien ou refusée.",
         "fourth": "Ingénieur support"

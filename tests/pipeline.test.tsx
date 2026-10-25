@@ -15,7 +15,7 @@ vi.mock("@/lib/auth/actions", () => ({
 }));
 vi.mock("@/i18n/navigation", () => ({
   useRouter: () => ({ replace: vi.fn() }),
-  usePathname: () => "/pipeline",
+  usePathname: () => "/tracker",
   Link: ({ href, children, ...props }: React.ComponentProps<"a"> & { href: string }) => (
     <a href={href} {...props}>
       {children}
@@ -410,7 +410,7 @@ describe("list view with the stepper", () => {
 describe("right to left", () => {
   it("shows the columns in Arabic", async () => {
     renderBoard("ar");
-    expect(await screen.findByRole("heading", { name: "المتابعة" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "متابعة الوظائف" })).toBeInTheDocument();
     expect(await screen.findByText("Job 1")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "لوحة", pressed: true })).toBeInTheDocument();
   });
