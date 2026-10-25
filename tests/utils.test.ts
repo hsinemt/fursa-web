@@ -80,6 +80,12 @@ describe("csp", () => {
     expect(apiOrigin("not a url")).toBe("http://localhost:8000");
   });
 
+  it("lets images load from the API origin (copied company logos) and from https sources", () => {
+    const local = buildCsp({ nonce: "x", apiUrl: "http://localhost:8000", isDev: true });
+    expect(local).toContain("img-src 'self' data: blob: https: http://localhost:8000;");
+    expect(csp).toContain("img-src 'self' data: blob: https: https://api.fursa.app;");
+  });
+
   it("only allows eval in development", () => {
     expect(buildCsp({ nonce: "x", isDev: true })).toContain("'unsafe-eval'");
   });

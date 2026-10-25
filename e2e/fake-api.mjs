@@ -7,6 +7,9 @@ const PORT = Number(process.env.PORT ?? 8100);
 const ALLOWED = process.env.ALLOWED_ORIGIN ?? "http://localhost:3100";
 
 const day = 86_400_000;
+// [id, title, company, score, place, country, days ago, work mode, level, type, logo]
+// Best first: 1, 2, 3. Newest first: 3, 1, 2.
+const LOGO = "https://logos.example.test/example.svg";
 const jobs = [
   [
     "11111111-1111-4111-8111-111111111111",
@@ -15,6 +18,11 @@ const jobs = [
     82,
     "Tunis",
     "Tunisia",
+    0.9,
+    "hybrid",
+    "senior",
+    "full_time",
+    LOGO,
   ],
   [
     "22222222-2222-4222-8222-222222222222",
@@ -23,23 +31,55 @@ const jobs = [
     68,
     "Paris",
     "France",
+    2,
+    "onsite",
+    "mid",
+    "full_time",
+    null,
   ],
-  ["33333333-3333-4333-8333-333333333333", "Platform engineer", "Demo company", 51, "Remote", null],
-].map(([job_id, title, company, score, location, country], index) => ({
-  job_id,
-  title,
-  company,
-  score,
-  location,
-  country,
-  remote: null,
-  url: `https://jobs.example.com/${index + 1}`,
-  source: "example",
-  posted_at: new Date(Date.now() - (index + 1) * day).toISOString(),
-  is_active: true,
-  updated_at: new Date(Date.now() - index * day).toISOString(),
-  explanation: index === 0 ? "Your Python and SQL experience match this role." : null,
-}));
+  [
+    "33333333-3333-4333-8333-333333333333",
+    "Platform engineer",
+    "Demo company",
+    51,
+    "Remote",
+    null,
+    0.2,
+    "remote",
+    "senior",
+    "contract",
+    null,
+  ],
+].map(
+  (
+    [job_id, title, company, score, location, country, daysAgo, mode, level, type, logo],
+    index,
+  ) => ({
+    job_id,
+    title,
+    company,
+    company_logo_url: logo,
+    score,
+    location,
+    country,
+    remote: mode === "remote" ? true : null,
+    url: `https://jobs.example.com/${index + 1}`,
+    source: "example",
+    posted_at: null, // worked out when asked, so "posted within a day" stays true
+    is_active: true,
+    updated_at: new Date(Date.now() - index * day).toISOString(),
+    explanation: index === 0 ? "Your Python and SQL experience match this role." : null,
+    // what the AI "read": the filters use it, and it is never sent as such
+    facts: { mode, level, type, daysAgo },
+  }),
+);
+
+/** The job as the API sends it: without the fake's own facts. */
+const postedAt = (job) => new Date(Date.now() - job.facts.daysAgo * day).toISOString();
+const publicJob = ({ facts, ...job }) => ({
+  ...job,
+  posted_at: new Date(Date.now() - facts.daysAgo * day).toISOString(),
+});
 
 const fresh = () => ({
   status: new Map(),
@@ -80,7 +120,7 @@ const error = (status, code, message) => ({
 });
 
 const statusOf = (job) => state.status.get(job.job_id) ?? "new";
-const summary = (job) => ({ ...job, status: statusOf(job) });
+const summary = (job) => ({ ...publicJob(job), status: statusOf(job) });
 const detail = (job) => ({
   ...summary(job),
   description:
@@ -123,9 +163,30 @@ function handle(req, url, body) {
     return { status: 200, body: state.profile };
   }
   if (route === "GET /v1/feed") {
-    const wanted = url.searchParams.get("status");
-    const items = jobs.filter((j) => !wanted || statusOf(j) === wanted).map(summary);
-    return { status: 200, body: { items, next_cursor: null } };
+    const q = url.searchParams;
+    const wanted = q.get("status");
+    const words = (q.get("q") ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+    const many = (name) => q.getAll(name);
+    const minScore = q.get("min_score") === null ? null : Number(q.get("min_score"));
+    const within =
+      q.get("posted_within_days") === null ? null : Number(q.get("posted_within_days"));
+    let items = jobs.filter((j) => {
+      const haystack = [j.title, j.company, j.location, j.country].join(" ").toLowerCase();
+      return (
+        (!wanted || statusOf(j) === wanted) &&
+        words.every((w) => haystack.includes(w)) &&
+        (minScore === null || j.score >= minScore) &&
+        (many("work_mode").length === 0 || many("work_mode").includes(j.facts.mode)) &&
+        (many("level").length === 0 || many("level").includes(j.facts.level)) &&
+        (many("employment_type").length === 0 || many("employment_type").includes(j.facts.type)) &&
+        (within === null || Date.parse(postedAt(j)) >= Date.now() - within * day)
+      );
+    });
+    items =
+      q.get("sort") === "newest"
+        ? items.sort((a, b) => a.facts.daysAgo - b.facts.daysAgo)
+        : items.sort((a, b) => b.score - a.score);
+    return { status: 200, body: { items: items.map(summary), next_cursor: null } };
   }
   const job = url.pathname.match(/^\/v1\/jobs\/([^/]+)(\/status)?$/);
   if (job) {

@@ -62,6 +62,7 @@ describe("API contract", () => {
 
 describe("generate:api version pin", () => {
   it("refuses a contract of another version and changes nothing", () => {
+    const pinned = readFileSync(path.join(root, "api-contract.version"), "utf8").trim();
     const other = { ...contract, info: { ...contract.info, version: "9.9.9" } };
     const dir = mkdtempSync(path.join(tmpdir(), "fursa-contract-"));
     const file = path.join(dir, "openapi.json");
@@ -76,7 +77,7 @@ describe("generate:api version pin", () => {
 
     expect(run.status).toBe(1);
     expect(run.stderr).toContain("9.9.9");
-    expect(run.stderr).toContain("pinned to 0.3.2");
+    expect(run.stderr).toContain(`pinned to ${pinned}`);
     expect(hash("contract/openapi.json")).toBe(contractBefore);
     expect(hash("src/lib/api/schema.d.ts")).toBe(typesBefore);
   });

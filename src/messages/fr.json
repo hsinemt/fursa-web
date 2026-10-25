@@ -510,6 +510,31 @@
     "sort": {
       "best": "Meilleure correspondance",
       "newest": "Plus récentes"
+    },
+    "filters": {
+      "button": "Filtres",
+      "title": "Filtrer les offres",
+      "active": "{count} filtres actifs",
+      "searchLabel": "Rechercher des offres",
+      "searchPlaceholder": "Poste, entreprise ou lieu",
+      "workMode": "Mode de travail",
+      "level": "Niveau",
+      "type": "Type de contrat",
+      "posted": "Publiée",
+      "any": "Toutes",
+      "days": {
+        "1": "Dernières 24 heures",
+        "3": "3 derniers jours",
+        "7": "7 derniers jours",
+        "30": "30 derniers jours"
+      },
+      "score": "Score minimum",
+      "scoreAtLeast": "{score} et plus",
+      "clear": "Effacer les filtres",
+      "noMatch": {
+        "title": "Aucune offre ne correspond à ces filtres.",
+        "text": "Essayez avec moins de filtres ou une recherche plus large."
+      }
     }
   },
   "job": {
@@ -695,7 +720,8 @@
             "Votre profil : postes visés, compétences, lieux, niveau et fourchette de salaire.",
             "Les offres que Fursa a trouvées pour vous, votre score pour chacune, la courte note écrite sur chacune et le statut que vous lui avez donné.",
             "Vos réglages d’alertes et, si vous le liez, votre conversation Telegram.",
-            "La langue et l’apparence que vous avez choisies."
+            "La langue et l’apparence que vous avez choisies.",
+            "La plupart des logos d’entreprise se chargent depuis le site d’offres qui les héberge, et ce site voit l’adresse de votre navigateur quand le logo se charge. Les logos LinkedIn sont copiés sur Fursa et se chargent depuis Fursa."
           ]
         },
         {

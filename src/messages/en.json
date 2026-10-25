@@ -510,6 +510,31 @@
     "sort": {
       "best": "Best match",
       "newest": "Newest"
+    },
+    "filters": {
+      "button": "Filters",
+      "title": "Filter jobs",
+      "active": "{count} filters on",
+      "searchLabel": "Search jobs",
+      "searchPlaceholder": "Search title, company or place",
+      "workMode": "Work mode",
+      "level": "Level",
+      "type": "Job type",
+      "posted": "Posted",
+      "any": "Any",
+      "days": {
+        "1": "Last 24 hours",
+        "3": "Last 3 days",
+        "7": "Last 7 days",
+        "30": "Last 30 days"
+      },
+      "score": "Minimum score",
+      "scoreAtLeast": "{score} and up",
+      "clear": "Clear filters",
+      "noMatch": {
+        "title": "No job matches these filters.",
+        "text": "Try fewer filters or a wider search."
+      }
     }
   },
   "job": {
@@ -695,7 +720,8 @@
             "Your profile: target roles, skills, places, level and salary range.",
             "The jobs Fursa matched to you, your score for each, the short note written about each one and the status you gave it.",
             "Your alert settings and, if you link it, your Telegram chat.",
-            "The language and appearance you chose."
+            "The language and appearance you chose.",
+            "Most company logos are loaded from the job site that hosts them, and that site sees your browser's address when the logo loads. LinkedIn logos are copied to Fursa and loaded from Fursa."
           ]
         },
         {

@@ -54,8 +54,18 @@ export interface paths {
         };
         /**
          * Feed
-         * @description Your matches, best score first. Pass `next_cursor` as `cursor` for the next page; it is
-         *     null on the last page. Filter with `status` (new, saved, applied, interview, rejected).
+         * @description Your matches. Pass `next_cursor` as `cursor` for the next page; it is null on the last
+         *     page. A cursor only continues the `sort` it was made for (any other is a 400).
+         *
+         *     - `sort`: `best` (highest score first, the default) or `newest` (most recently posted first).
+         *     - `status`: new, saved, applied, interview or rejected.
+         *     - `q`: words that must all appear in the title, company or place (case does not matter).
+         *     - `min_score`: only matches scoring at least this (0 to 100).
+         *     - `work_mode`, `level`, `employment_type`: repeat the parameter to allow several values.
+         *     - `posted_within_days`: only jobs posted (or collected) in the last 1 to 90 days.
+         *
+         *     Jobs the AI has not read yet have no level or type, so they are left out when one of those
+         *     filters is used; `work_mode` falls back to the source's remote flag.
          */
         get: operations["feed_v1_feed_get"];
         put?: never;
@@ -373,6 +383,11 @@ export interface components {
          * @enum {string}
          */
         DeliveryStatus: "queued" | "sent" | "dead";
+        /**
+         * EmploymentType
+         * @enum {string}
+         */
+        EmploymentType: "full_time" | "part_time" | "contract" | "internship" | "temporary";
         /** ErrorBody */
         ErrorBody: {
             /**
@@ -407,6 +422,11 @@ export interface components {
             next_cursor: string | null;
         };
         /**
+         * FeedSort
+         * @enum {string}
+         */
+        FeedSort: "best" | "newest";
+        /**
          * Frequency
          * @enum {string}
          */
@@ -419,6 +439,8 @@ export interface components {
             } | null;
             /** Company */
             company: string;
+            /** Company Logo Url */
+            company_logo_url: string | null;
             /** Country */
             country: string | null;
             /** Description */
@@ -461,6 +483,8 @@ export interface components {
         JobSummary: {
             /** Company */
             company: string;
+            /** Company Logo Url */
+            company_logo_url: string | null;
             /** Country */
             country: string | null;
             /** Explanation */
@@ -493,6 +517,11 @@ export interface components {
             /** Url */
             url: string;
         };
+        /**
+         * Level
+         * @enum {string}
+         */
+        Level: "intern" | "junior" | "mid" | "senior" | "lead" | "principal";
         /** LiveResponse */
         LiveResponse: {
             /**
@@ -653,6 +682,11 @@ export interface components {
          * @enum {string}
          */
         UserJobStatus: "new" | "saved" | "applied" | "interview" | "rejected";
+        /**
+         * WorkMode
+         * @enum {string}
+         */
+        WorkMode: "onsite" | "hybrid" | "remote";
     };
     responses: never;
     parameters: never;
@@ -742,6 +776,13 @@ export interface operations {
                 status?: components["schemas"]["UserJobStatus"] | null;
                 limit?: number;
                 cursor?: string | null;
+                sort?: components["schemas"]["FeedSort"];
+                q?: string | null;
+                min_score?: number | null;
+                work_mode?: components["schemas"]["WorkMode"][] | null;
+                level?: components["schemas"]["Level"][] | null;
+                employment_type?: components["schemas"]["EmploymentType"][] | null;
+                posted_within_days?: number | null;
             };
             header?: never;
             path?: never;

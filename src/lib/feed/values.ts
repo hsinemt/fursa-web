@@ -26,24 +26,6 @@ export function parseSort(raw: string | null | undefined): Sort {
   return raw === "newest" ? "newest" : "best";
 }
 
-/** The query part of a feed or job address that keeps the filter and the sort. */
-export function feedQuery(status: UserJobStatus | null, sort: Sort): string {
-  const parts = [status ? `status=${status}` : "", sort === "newest" ? "sort=newest" : ""].filter(
-    Boolean,
-  );
-  return parts.length > 0 ? `?${parts.join("&")}` : "";
-}
-
-/** Newest posting first (jobs without a date last). "best" keeps the API order. */
-export function sortJobs(items: JobSummary[], sort: Sort): JobSummary[] {
-  if (sort === "best") return items;
-  const time = (job: JobSummary) => (job.posted_at ? Date.parse(job.posted_at) || 0 : 0);
-  return items
-    .map((job, index) => ({ job, index }))
-    .sort((a, b) => time(b.job) - time(a.job) || a.index - b.index)
-    .map(({ job }) => job);
-}
-
 // ---------------------------------------------------------------------------
 // Scraped text is untrusted: it becomes plain text here and React escapes it.
 // ---------------------------------------------------------------------------

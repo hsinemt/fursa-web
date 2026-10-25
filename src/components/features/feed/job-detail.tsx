@@ -26,6 +26,7 @@ import { ScoreBreakdown } from "./score-breakdown";
 import { StatusGroup } from "./status-group";
 import { ApiError } from "@/lib/api/errors";
 import { useJob, useSetStatus } from "@/lib/feed/hooks";
+import { paramsQuery, parseParams } from "@/lib/feed/params";
 import {
   formatDate,
   formatSalary,
@@ -33,9 +34,6 @@ import {
   missingSkills,
   paragraphs,
   splitSections,
-  feedQuery,
-  parseFilter,
-  parseSort,
   readBreakdown,
   readFacts,
   safeHttpUrl,
@@ -199,7 +197,7 @@ function Detail({ job }: { job: JobDetail }) {
     <article className="grid gap-x-8 gap-y-6 min-[1180px]:grid-cols-[minmax(0,1fr)_20rem]">
       <header className="min-w-0 min-[1180px]:col-start-1">
         <div className="flex items-start gap-4">
-          <CompanyLogo name={job.company} size="lg" />
+          <CompanyLogo name={job.company} src={job.company_logo_url} size="lg" />
           <div className="min-w-0">
             <h1 dir="auto" className="text-xl">
               {job.title}
@@ -323,7 +321,7 @@ export function JobDetailScreen({ id }: { id: string }) {
   const t = useTranslations("job");
   const errors = useTranslations("errors");
   const search = useSearchParams();
-  const suffix = feedQuery(parseFilter(search.get("status")), parseSort(search.get("sort")));
+  const suffix = paramsQuery(parseParams(search));
   const query = useJob(id);
 
   return (

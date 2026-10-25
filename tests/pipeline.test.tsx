@@ -41,6 +41,7 @@ const job = (n: number, status: string, extra: Partial<JobSummary> = {}): JobSum
   explanation: null,
   title: `Job ${n}`,
   company: `Company ${n}`,
+  company_logo_url: null,
   location: "Tunis",
   country: "Tunisia",
   remote: null,

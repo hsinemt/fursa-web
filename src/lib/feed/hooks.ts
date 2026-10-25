@@ -8,22 +8,23 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query";
 import { api, call } from "@/lib/api";
+import { feedKeys, FILTER_DEFAULTS, type FeedOptions } from "./keys";
+import { apiFilters } from "./params";
+
+export { feedKeys };
+export type { FeedOptions };
 import { setStatusInPages, type FeedPage, type JobDetail, type UserJobStatus } from "./values";
 
 /** Jobs per request. Never load everything: the next page comes from `next_cursor`. */
 export const PAGE_SIZE = 20;
 
-export const feedKeys = {
-  all: ["feed"] as const,
-  list: (status: UserJobStatus | null) => ["feed", status ?? "all"] as const,
-  job: (id: string) => ["job", id] as const,
-};
-
 type Pages = InfiniteData<FeedPage, unknown>;
 
-export function useFeed(status: UserJobStatus | null) {
+export function useFeed(status: UserJobStatus | null, options: FeedOptions = {}) {
+  const sort = options.sort ?? "best";
+  const filters = { ...FILTER_DEFAULTS, ...options.filters };
   return useInfiniteQuery({
-    queryKey: feedKeys.list(status),
+    queryKey: feedKeys.list(status, options),
     initialPageParam: null as string | null,
     queryFn: ({ pageParam }) =>
       call(
@@ -33,6 +34,8 @@ export function useFeed(status: UserJobStatus | null) {
               status: status ?? undefined,
               limit: PAGE_SIZE,
               cursor: pageParam ?? undefined,
+              sort: sort === "best" ? undefined : sort,
+              ...apiFilters(filters),
             },
           },
         }),

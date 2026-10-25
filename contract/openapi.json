@@ -155,6 +155,17 @@
         "title": "DeliveryStatus",
         "type": "string"
       },
+      "EmploymentType": {
+        "enum": [
+          "full_time",
+          "part_time",
+          "contract",
+          "internship",
+          "temporary"
+        ],
+        "title": "EmploymentType",
+        "type": "string"
+      },
       "ErrorBody": {
         "properties": {
           "code": {
@@ -221,6 +232,14 @@
         "title": "FeedResponse",
         "type": "object"
       },
+      "FeedSort": {
+        "enum": [
+          "best",
+          "newest"
+        ],
+        "title": "FeedSort",
+        "type": "string"
+      },
       "Frequency": {
         "enum": [
           "instant",
@@ -246,6 +265,17 @@
           "company": {
             "title": "Company",
             "type": "string"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
           },
           "country": {
             "anyOf": [
@@ -367,6 +397,7 @@
           "explanation",
           "title",
           "company",
+          "company_logo_url",
           "location",
           "country",
           "remote",
@@ -387,6 +418,17 @@
           "company": {
             "title": "Company",
             "type": "string"
+          },
+          "company_logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Logo Url"
           },
           "country": {
             "anyOf": [
@@ -485,6 +527,7 @@
           "explanation",
           "title",
           "company",
+          "company_logo_url",
           "location",
           "country",
           "remote",
@@ -496,6 +539,18 @@
         ],
         "title": "JobSummary",
         "type": "object"
+      },
+      "Level": {
+        "enum": [
+          "intern",
+          "junior",
+          "mid",
+          "senior",
+          "lead",
+          "principal"
+        ],
+        "title": "Level",
+        "type": "string"
       },
       "LiveResponse": {
         "properties": {
@@ -941,6 +996,15 @@
         ],
         "title": "UserJobStatus",
         "type": "string"
+      },
+      "WorkMode": {
+        "enum": [
+          "onsite",
+          "hybrid",
+          "remote"
+        ],
+        "title": "WorkMode",
+        "type": "string"
       }
     },
     "securitySchemes": {
@@ -953,7 +1017,7 @@
   },
   "info": {
     "title": "Fursa API",
-    "version": "0.3.2"
+    "version": "0.4.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -1046,7 +1110,7 @@
     },
     "/v1/feed": {
       "get": {
-        "description": "Your matches, best score first. Pass `next_cursor` as `cursor` for the next page; it is\nnull on the last page. Filter with `status` (new, saved, applied, interview, rejected).",
+        "description": "Your matches. Pass `next_cursor` as `cursor` for the next page; it is null on the last\npage. A cursor only continues the `sort` it was made for (any other is a 400).\n\n- `sort`: `best` (highest score first, the default) or `newest` (most recently posted first).\n- `status`: new, saved, applied, interview or rejected.\n- `q`: words that must all appear in the title, company or place (case does not matter).\n- `min_score`: only matches scoring at least this (0 to 100).\n- `work_mode`, `level`, `employment_type`: repeat the parameter to allow several values.\n- `posted_within_days`: only jobs posted (or collected) in the last 1 to 90 days.\n\nJobs the AI has not read yet have no level or type, so they are left out when one of those\nfilters is used; `work_mode` falls back to the source's remote flag.",
         "operationId": "feed_v1_feed_get",
         "parameters": [
           {
@@ -1091,6 +1155,125 @@
                 }
               ],
               "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/FeedSort",
+              "default": "best"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "min_score",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Score"
+            }
+          },
+          {
+            "in": "query",
+            "name": "work_mode",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/WorkMode"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Work Mode"
+            }
+          },
+          {
+            "in": "query",
+            "name": "level",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/Level"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Level"
+            }
+          },
+          {
+            "in": "query",
+            "name": "employment_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/EmploymentType"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Employment Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "posted_within_days",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 90,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Posted Within Days"
             }
           }
         ],

@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { cn } from "@/lib/utils/cn";
 
@@ -8,8 +10,9 @@ export function companyInitial(name: string): string {
 }
 
 /**
- * A company's logo tile: 8 px corners, --panel fill, a hairline and the initial in the heading
- * font. The API sends no logo yet; when it does, pass `src` and the image replaces the initial.
+ * A company's logo tile: 8 px corners, --panel fill, a hairline. It shows the logo the source
+ * gave (`src`, an https address loaded straight from the source's own server, with no referrer
+ * sent), and the company's initial in the heading font when there is none or it does not load.
  * Decorative (the company name is always written beside it).
  */
 function CompanyLogo({
@@ -23,6 +26,10 @@ function CompanyLogo({
   src?: string | null;
   size?: "sm" | "md" | "lg";
 }) {
+  // The address that failed, so a new `src` gets its own try.
+  const [failed, setFailed] = React.useState<string | null>(null);
+  const showImage = Boolean(src) && failed !== src;
+
   return (
     <span
       data-slot="company-logo"
@@ -34,9 +41,17 @@ function CompanyLogo({
       )}
       {...props}
     >
-      {src ? (
-        // eslint-disable-next-line @next/next/no-img-element -- the logo host is not known yet
-        <img src={src} alt="" className="size-full object-contain" />
+      {showImage ? (
+        // eslint-disable-next-line @next/next/no-img-element -- the logo comes from the job's source, not from our own files
+        <img
+          src={src ?? undefined}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          onError={() => setFailed(src ?? null)}
+          className="size-full object-contain p-0.5"
+        />
       ) : (
         companyInitial(name)
       )}
