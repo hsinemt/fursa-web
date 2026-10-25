@@ -35,7 +35,7 @@ test("feed to job to pipeline: save a job and move it along", async ({ page }, t
   await expect(description.getByText("We build data tools.")).toBeVisible();
 
   // It is now in the Saved column of the pipeline; move it to Applied with the menu.
-  await page.goto(`/${locale}/pipeline`);
+  await page.goto(`/${locale}/tracker`);
   const saved = page.getByRole("region", { name: m.status.saved });
   await expect(saved.getByRole("link", { name: "Data engineer" })).toBeVisible();
   await page
@@ -61,7 +61,7 @@ test("the pipeline board moves a card by dragging it", async ({ page }, testInfo
     data: { status: "saved" },
     headers: { Origin: "http://localhost:3100", Cookie: "fursa_access_token=x" },
   });
-  await page.goto(`/${locale}/pipeline`);
+  await page.goto(`/${locale}/tracker`);
   const card = page.locator('[data-slot="board-card"]', { hasText: "Data engineer" });
   await expect(card).toBeVisible();
   const target = page.getByRole("region", { name: m.status.interview });
@@ -100,7 +100,7 @@ test("every signed-in screen passes the accessibility check", async ({ page }, t
   const screens = [
     `/${locale}/feed`,
     `/${locale}/jobs/${FIRST_JOB}`,
-    `/${locale}/pipeline`,
+    `/${locale}/tracker`,
     `/${locale}/profile`,
     `/${locale}/settings`,
   ];
@@ -110,7 +110,7 @@ test("every signed-in screen passes the accessibility check", async ({ page }, t
     await expectNoA11yViolations(page);
   }
   // The list view of the pipeline too.
-  await page.goto(`/${locale}/pipeline`);
+  await page.goto(`/${locale}/tracker`);
   await page.getByRole("button", { name: m.pipeline.view.list, exact: true }).click();
   await expectNoA11yViolations(page);
 });
@@ -125,7 +125,7 @@ test("the main signed-in screens pass the accessibility check in dark mode", asy
   for (const path of [
     `/${locale}/feed`,
     `/${locale}/jobs/${FIRST_JOB}`,
-    `/${locale}/pipeline`,
+    `/${locale}/tracker`,
     `/${locale}/profile`,
     `/${locale}/settings`,
   ]) {
@@ -134,4 +134,16 @@ test("the main signed-in screens pass the accessibility check in dark mode", asy
     await page.waitForLoadState("networkidle");
     await expectNoA11yViolations(page);
   }
+});
+
+test("the old /pipeline address goes to the job tracker", async ({ page }, testInfo) => {
+  const { locale, m } = where(testInfo);
+  await page.goto(`/${locale}/pipeline`);
+  await expect(page).toHaveURL(new RegExp(`/${locale}/tracker`));
+  await expect(page.getByRole("heading", { level: 1, name: m.pages.pipeline.title })).toBeVisible();
+  // The top bar names it too, and marks it as the current page.
+  await expect(page.getByRole("link", { name: m.nav.tracker })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
 });

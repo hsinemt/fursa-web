@@ -30,17 +30,17 @@ const wrap = (ui: React.ReactElement) =>
   );
 
 describe("navigation", () => {
-  it("the top bar shows Feed and Pipeline only; Profile and Settings live in the account menu", () => {
-    expect(TOP_BAR_ITEMS.map((i) => i.key)).toEqual(["feed", "pipeline"]);
+  it("the top bar shows Feed and Job tracker only; Profile and Settings live in the account menu", () => {
+    expect(TOP_BAR_ITEMS.map((i) => i.key)).toEqual(["feed", "tracker"]);
     wrap(<TopBar />);
     const nav = screen.getByRole("navigation", { name: "Main navigation", hidden: true });
     const links = within(nav).getAllByRole("link", { hidden: true });
-    expect(links.map((a) => a.textContent)).toEqual(["Feed", "Pipeline"]);
+    expect(links.map((a) => a.textContent)).toEqual(["Feed", "Job tracker"]);
     expect(links[0]).toHaveAttribute("aria-current", "page");
   });
 
   it("the phone tab bar keeps all four, because phones have no account menu", () => {
-    expect(NAV_ITEMS.map((i) => i.key)).toEqual(["feed", "pipeline", "profile", "settings"]);
+    expect(NAV_ITEMS.map((i) => i.key)).toEqual(["feed", "tracker", "profile", "settings"]);
     wrap(<TabBar />);
     const nav = screen.getByRole("navigation", { name: "Main navigation", hidden: true });
     expect(within(nav).getAllByRole("link", { hidden: true })).toHaveLength(4);

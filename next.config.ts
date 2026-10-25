@@ -32,6 +32,13 @@ const nextConfig: NextConfig = {
   pageExtensions,
   poweredByHeader: false,
   reactStrictMode: true,
+  // The tracker used to live at /pipeline: old links and bookmarks go to the new address.
+  async redirects() {
+    return [
+      { source: "/:locale(en|fr|ar)/pipeline", destination: "/:locale/tracker", permanent: true },
+      { source: "/pipeline", destination: "/tracker", permanent: true },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

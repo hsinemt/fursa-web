@@ -10,7 +10,7 @@
   },
   "nav": {
     "feed": "Feed",
-    "pipeline": "Pipeline",
+    "tracker": "Job tracker",
     "profile": "Profile",
     "settings": "Settings",
     "accountMenu": "Account menu"
@@ -34,7 +34,7 @@
       "title": "Feed"
     },
     "pipeline": {
-      "title": "Pipeline"
+      "title": "Job tracker"
     },
     "profile": {
       "title": "Profile",
@@ -149,7 +149,7 @@
         "digest": "Digest hour (UTC)"
       },
       "pipeline": {
-        "name": "Pipeline",
+        "name": "Job tracker",
         "line": "Saved to interview",
         "text": "Follow each job from saved to applied, interview or rejected.",
         "fourth": "Support engineer"
@@ -648,7 +648,7 @@
       "board": "Board",
       "list": "List"
     },
-    "tabs": "Pipeline statuses",
+    "tabs": "Job tracker statuses",
     "moveTo": "Move to",
     "backToNew": "Back to new",
     "moveMenu": "Move {title}",

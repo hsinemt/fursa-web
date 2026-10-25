@@ -3,7 +3,7 @@ import { locales } from "@/i18n/routing";
 /** Screens that need a signed-in user (the app). Everything else is public. */
 const PROTECTED_PREFIXES = [
   "/feed",
-  "/pipeline",
+  "/tracker",
   "/profile",
   "/settings",
   "/jobs",

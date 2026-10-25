@@ -8,7 +8,7 @@ import { isCurrentNav, TOP_BAR_ITEMS } from "./nav-items";
 import { Wordmark } from "./wordmark";
 
 /**
- * Tablet and laptop: a thin top bar. Wordmark, Feed and Pipeline (the current one has a
+ * Tablet and laptop: a thin top bar. Wordmark, Feed and Job tracker (the current one has a
  * 2 px accent underline), then language and appearance on the far side.
  * Hidden on phones, where the bottom tab bar takes over.
  */
