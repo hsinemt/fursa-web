@@ -2,7 +2,7 @@
 
 Frontend for Fursa, a job-matching service. Next.js (App Router), TypeScript strict, Tailwind, shadcn/ui, next-intl (Arabic right to left, French, English).
 
-It talks to `fursa-api` only over HTTP. Planning files: `fursa web.md` (how it is built) and `fursa design.md` (how it looks; it wins on anything visual).
+It talks to `fursa-api` only over HTTP. The planning notes (`fursa web.md`: how it is built; `fursa design.md`: how it looks, and it wins on anything visual; `fursa improvements.md`; `docs/adr/`: decisions) are kept by the project owner and are not part of this repository.
 
 ## Setup (Windows, PowerShell)
 
@@ -91,7 +91,6 @@ CI (`.github/workflows/ci.yml`) runs format check, lint, typecheck, tests, build
 - `src/components/providers/app-providers.tsx` and `src/components/ui/toast.tsx`: the data cache and the toasts, shared by the signed-in screens.
 - `src/lib/auth/`: sign-in, sessions and cookies. **The only place that knows about Supabase**, and it runs on the server only. `actions.ts` has the Server Actions, `proxy.ts` refreshes the session, `cookies.ts` has the cookie rules.
 - `contract/openapi.json` and `api-contract.version`: the API contract this app is built against, and its pinned version.
-- `docs/adr/`: decisions.
 
 ## Rules
 
