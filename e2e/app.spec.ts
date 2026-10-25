@@ -147,3 +147,99 @@ test("the old /pipeline address goes to the job tracker", async ({ page }, testI
     "page",
   );
 });
+
+test("search, filters and the newest sort are answered by the API", async ({ page }, testInfo) => {
+  const { locale, m } = where(testInfo);
+  const f = m.feed.filters;
+  const rows = page.getByRole("list", { name: m.feed.jobList }).getByRole("link");
+  await page.goto(`/${locale}/feed`);
+  await expect(rows).toHaveCount(3);
+
+  // Search: the words go to the API (title, company or place) and into the address.
+  const search = page.getByRole("searchbox", { name: f.searchLabel });
+  await search.fill("backend");
+  await expect(page).toHaveURL(/q=backend/);
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText("Backend developer");
+  await search.fill("paris");
+  await expect(rows).toHaveCount(1); // the place counts too
+  await search.fill("");
+  await expect(rows).toHaveCount(3);
+  await expect(page).not.toHaveURL(/q=/);
+
+  // Filters: work mode, then level on top of it.
+  await page.getByRole("button", { name: new RegExp(`^${f.button}`) }).click();
+  const panel = page.getByRole("dialog");
+  await panel.getByRole("button", { name: m.job.workMode.remote, exact: true }).click();
+  await expect(page).toHaveURL(/mode=remote/);
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText("Platform engineer");
+  await panel
+    .getByRole("button", { name: m.profile.seniority.options.junior, exact: true })
+    .click();
+  await expect(page.getByText(f.noMatch.title)).toBeVisible();
+  await panel.getByRole("button", { name: f.clear }).click();
+  await expect(rows).toHaveCount(3);
+  await expect(page).not.toHaveURL(/mode=|level=/);
+
+  // Minimum score and how recent.
+  await panel.getByRole("button", { name: f.scoreAtLeast.replace("{score}", "70") }).click();
+  await expect(rows).toHaveCount(1);
+  await panel.getByRole("button", { name: f.clear }).click();
+  await expect(page).not.toHaveURL(/score=/); // wait for the change before the next choice
+  await expect(rows).toHaveCount(3);
+  await panel.getByRole("button", { name: f.days["1"] }).click();
+  await expect(rows).toHaveCount(2); // posted within a day: the data engineer and the platform engineer
+  await panel.getByRole("button", { name: f.clear }).click();
+  await expect(page).not.toHaveURL(/days=/);
+  await expect(rows).toHaveCount(3);
+
+  // The newest first: the API orders it, not the page.
+  await page.keyboard.press("Escape");
+  await page.getByRole("combobox", { name: m.feed.sortLabel }).selectOption("newest");
+  await expect(page).toHaveURL(/sort=newest/);
+  await expect(rows.first()).toContainText("Platform engineer");
+  await page.getByRole("combobox", { name: m.feed.sortLabel }).selectOption("best");
+  await expect(rows.first()).toContainText("Data engineer");
+});
+
+test("a job's company logo is shown, and the others show their initial", async ({
+  page,
+}, testInfo) => {
+  const { locale, m } = where(testInfo);
+  await page.route("https://logos.example.test/**", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40"/></svg>',
+    }),
+  );
+  await page.goto(`/${locale}/feed`);
+  const list = page.getByRole("list", { name: m.feed.jobList });
+  const first = list.getByRole("listitem").first();
+  const image = first.locator("[data-slot=company-logo] img");
+  await expect(image).toHaveAttribute("src", "https://logos.example.test/example.svg");
+  // It really loaded: the page's security policy lets company logos through.
+  await expect
+    .poll(() => image.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0))
+    .toBe(true);
+  // A job with no logo shows the company's initial.
+  const second = list.getByRole("listitem").nth(1);
+  await expect(second.locator("[data-slot=company-logo] img")).toHaveCount(0);
+  await expect(second.locator("[data-slot=company-logo]")).toHaveText("S");
+
+  // The job page shows it too.
+  await first.getByRole("link").click();
+  await expect(page.locator("article [data-slot=company-logo] img")).toHaveAttribute(
+    "src",
+    "https://logos.example.test/example.svg",
+  );
+});
+
+test("the filters panel passes the accessibility check", async ({ page }, testInfo) => {
+  const { locale, m } = where(testInfo);
+  await page.goto(`/${locale}/feed`);
+  await page.getByRole("button", { name: new RegExp(`^${m.feed.filters.button}`) }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expectNoA11yViolations(page);
+});
