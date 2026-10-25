@@ -721,7 +721,7 @@
             "The jobs Fursa matched to you, your score for each, the short note written about each one and the status you gave it.",
             "Your alert settings and, if you link it, your Telegram chat.",
             "The language and appearance you chose.",
-            "The job sites that host a company's logo see your browser's address when the logo loads."
+            "Most company logos are loaded from the job site that hosts them, and that site sees your browser's address when the logo loads. LinkedIn logos are copied to Fursa and loaded from Fursa."
           ]
         },
         {

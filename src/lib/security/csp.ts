@@ -36,7 +36,8 @@ export function buildCsp(opts: {
     ],
     // Inline style attributes are used by Radix and next/font; scripts stay strict.
     "style-src": ["'self'", "'unsafe-inline'"],
-    "img-src": ["'self'", "data:", "blob:", "https:"],
+    // `api`: the company logos Fursa keeps its own copy of (plain http on a local API).
+    "img-src": ["'self'", "data:", "blob:", "https:", api],
     "font-src": ["'self'"],
     "connect-src": [
       "'self'",

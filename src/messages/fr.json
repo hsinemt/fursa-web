@@ -721,7 +721,7 @@
             "Les offres que Fursa a trouvées pour vous, votre score pour chacune, la courte note écrite sur chacune et le statut que vous lui avez donné.",
             "Vos réglages d’alertes et, si vous le liez, votre conversation Telegram.",
             "La langue et l’apparence que vous avez choisies.",
-            "Les sites d’offres qui hébergent le logo d’une entreprise voient l’adresse de votre navigateur quand le logo se charge."
+            "La plupart des logos d’entreprise se chargent depuis le site d’offres qui les héberge, et ce site voit l’adresse de votre navigateur quand le logo se charge. Les logos LinkedIn sont copiés sur Fursa et se chargent depuis Fursa."
           ]
         },
         {
