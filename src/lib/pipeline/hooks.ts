@@ -56,7 +56,8 @@ export function useMoveJob() {
         const which = listStatus(key);
         if (which === from && from !== to) {
           client.setQueryData(key, removeFromPages(data, id).data);
-        } else if (which === to && moved) {
+        } else if (which === to && moved && key.length === 2) {
+          // Only a plain list: a list with a sort or filters may not want this job.
           client.setQueryData(key, insertByScore(data, moved));
         } else if (which === "all") {
           client.setQueryData(key, setStatusInPages(data, id, to));

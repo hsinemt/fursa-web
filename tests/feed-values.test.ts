@@ -6,11 +6,9 @@ import {
   formatSalary,
   htmlToText,
   missingSkills,
-  feedQuery,
   paragraphs,
   parseSort,
   repairText,
-  sortJobs,
   parseFilter,
   readBreakdown,
   readFacts,
@@ -29,6 +27,7 @@ const job = (id: string, extra: Partial<JobSummary> = {}): JobSummary => ({
   explanation: null,
   title: "Data engineer",
   company: "Acme",
+  company_logo_url: null,
   location: null,
   country: null,
   remote: null,
@@ -236,26 +235,11 @@ describe("navigation", () => {
   });
 });
 
-describe("sort and address", () => {
-  it("reads the sort and builds the query that keeps both choices", () => {
+describe("sort", () => {
+  it("reads the sort from the address", () => {
     expect(parseSort("newest")).toBe("newest");
     expect(parseSort("whatever")).toBe("best");
     expect(parseSort(null)).toBe("best");
-    expect(feedQuery(null, "best")).toBe("");
-    expect(feedQuery("saved", "best")).toBe("?status=saved");
-    expect(feedQuery(null, "newest")).toBe("?sort=newest");
-    expect(feedQuery("applied", "newest")).toBe("?status=applied&sort=newest");
-  });
-
-  it("puts the newest posting first, jobs without a date last, and keeps ties in API order", () => {
-    const list = [
-      job("old", { posted_at: "2026-10-01T00:00:00Z" }),
-      job("none", { posted_at: null }),
-      job("new", { posted_at: "2026-10-20T00:00:00Z" }),
-      job("new2", { posted_at: "2026-10-20T00:00:00Z" }),
-    ];
-    expect(sortJobs(list, "newest").map((j) => j.job_id)).toEqual(["new", "new2", "old", "none"]);
-    expect(sortJobs(list, "best")).toBe(list);
   });
 });
 
